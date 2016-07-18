@@ -1,13 +1,8 @@
 ---
 title: "Geospatial analysis in R"
 author: "Philippe Marchand"
-output: 
-  html_document:
-    toc: true
-    toc_depth: 1
+output: html_document
 ---
-
-# Geospatial analysis in R
 
 This lesson presents a brief overview of some of the key R packages for geospatial analysis. Specifically, we will learn how to perform the following spatial processing tasks in R:
 
