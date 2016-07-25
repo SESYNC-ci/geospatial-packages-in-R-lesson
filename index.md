@@ -55,7 +55,8 @@ print r, 'is of', type(r)
 ```
 {:.output}
 
-In the code above, we introduced the `print` statement, which prints the output of multiple Python expressions on the same line, separated by spaces. 
+In the code above, we introduced the `print` statement, which prints the output
+of multiple Python expressions on the same line, separated by spaces. 
 Note that quoted character strings (here, 'is of') are printed as is. 
 
 Let's define a new string variable.
@@ -86,40 +87,12 @@ s + 'four'
 ```
 {:.output}
 
-Note that Python will throw an error if you try to paste together a string and numeric value. 
-
-```python
-s + r
-```
-{:.input}
-
-```
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-TypeError: cannot concatenate 'str' and 'int' objects
-```
-{:.output}
-
-You can, however, convert numbers into strings with the `str()` function. 
-
-```python
-s + str(r)
-```
-{:.input}
-
-```
-'three4.5'
-```
-{:.output}
-
-**Question**: If `x` is a float, what does `int(x)` do? How is it different 
-from `round(x)`?
-
 
 ## Lists
 
 Python offers different types of objects to represent collections of values,
-the most common being a *list*. It is created by listing multiple values or variables, separated by commas and enclosed by square brackets.
+the most common being a *list*. It is created by listing multiple values or
+variables, separated by commas and enclosed by square brackets.
 
 ```python
 lst = [r, s, 'another string']
@@ -272,7 +245,8 @@ would be to write `lst = lst.append(100)`, which overwrites `lst` with a null
 value!
 
 **Question**: What is the output of `len(lst[2])`? What does it mean?
-(Like the `+` operator, this is another case of a function that behaves differently depending of the type of data it's applied to.)
+(Like the `+` operator, this is another case of a function that behaves
+differently depending of the type of data it's applied to.)
 
 
 ## Dictionaries
@@ -322,54 +296,38 @@ numbers, email addresses, etc.?
 
 ## Loops and conditionals
 
-A `while` loop executes a block of statements as long as a specified condition holds.
+A `for` loop takes a list and executes a block of code once for each
+element of the list.
 
 ```python
-i = 1
-while i < 5:   
-    print i
-    i += 1  # This is shorthand for i = i + 1
+for i in range(1, 5):
+    j = i * 2
+    print j
 ```
 {:.input}
 
 ```
-1
 2
-3
 4
+6
+8
 ```
 {:.output}
 
-Note the pattern of the block above: the while statement is followed by a column,
+The `range(i, j)` function creates a list of integers from `i` to `j - 1`; just
+like in the case of list slices, the upper bound is excluded. 
+
+Note the pattern of the block above: the `for` statement is followed by a colon,
 each line in the following block is indented at the same level, and there is no
 delimiter or statement indicating the end of the block. Compared with other
 programming languages where code indentation only serves to enhance readability, 
 code blocks in Python are defined by changes in indentation. 
 
-The example above, where we iterate over a set of values, can be written more 
-efficiently as a `for` loop.
-
-```python
-for i in range(1, 5):
-    print i
-```
-{:.input}
-
-```
-1
-2
-3
-4
-```
-{:.output}
-
-The `range(i, j)` function creates a list of integers from `i` to `j - 1`; just like
-in the case of list slices, the upper bound is excluded. 
-
-A `for` loop can be used to iterate over the elements of any list. In the following example, we create a contact list (as a list of dictionaries), then perform a loop
-over all contacts. Within the loop, we use a conditional statement (`if`) to check
-if the name is 'Ann'. If so, we print the phone number; if not (`else` block), we
-print the name.
+A `for` loop can be used to iterate over the elements of any list. In the
+following example, we create a contact list (as a list of dictionaries), then
+perform a loop over all contacts. Within the loop, we use a conditional 
+statement (`if`) to check if the name is 'Ann'. If so, we print the phone 
+number; if not (`else` block), we print the name.
 
 ```python
 contacts = [ {'name': 'Ann', 'phone': '555-111-2222'},
@@ -388,9 +346,9 @@ Bob
 ```
 {:.output}
 
-**Exercise**: Write a loop that prints all even numbers between 1 and 9. Note that
-if `i` is even, `i %% 2 == 0`, where `%%` is the modulo (or division remainder)
-operator.
+**Exercise**: Write a loop that prints all even numbers between 1 and 9. 
+Note:  if `i` is even, `i %% 2 == 0`, where `%%` is the modulo (or division
+remainder) operator.
 
 
 ## Defining a function
@@ -413,7 +371,8 @@ add_2(10)
 ```
 {:.output}
 
-The `def` keyword is followed by the function name, its arguments enclosed in parentheses (separated by commas if there are more than one), and a colon. The
+The `def` keyword is followed by the function name, its arguments enclosed in
+parentheses (separated by commas if there are more than one), and a colon. The
 `return` statement passes the specified result as the output of the function. 
 A simple `return` line with no output value just exits the function.
 
@@ -531,7 +490,6 @@ In the last example, `vect` was multipled element-wise to each row of `mat`.To
 multiply a matrix and a vector (or two matrices, or two vectors in a dot-product), 
 use the `dot` method.
 
-
 ```python
 mat.dot(vect)   # Alternate syntax is np.dot(mat, vect)
 ```
@@ -593,7 +551,6 @@ surveys.loc[1:3, ['plot_id', 'species_id']]
 ```
 {:.output}
 
-
 We can also select a whole column by writing its name in square brackets. Here,
 we select the *weight* column and call the `describe` method to get summary
 statistics for that column.
@@ -647,6 +604,9 @@ M          36.188229  44.353134
 ```
 {:.output}
 
+**Exercise**: Knowing that the `count` method (e.g. `surveys.count()`) returns the number of rows in a data frame, find which month had the most observations recorded
+in *surveys*.
+
 
 ### matplotlib / pyplot
 
@@ -674,7 +634,7 @@ as bar and line graphs. To create the histogram of one variable from the data
 frame, you may use a different method, `hist`.
 
 ```python
-plt.close()
+plt.close() # close the current plot to start a new one
 surveys_dm.hist('weight')
 plt.show()
 ```
