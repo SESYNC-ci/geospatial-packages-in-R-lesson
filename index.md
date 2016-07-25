@@ -26,15 +26,15 @@ The type of a variable is automatically set when a value is assigned to it,
  using the `=` operator. It can be queried with the built-in `type()`
  function.
  
-~~~
+```python
 i = 3
 type(i)
-~~~
+```
 {:.input}
 
-~~~
+```
 <type 'int'>
-~~~
+```
 {:.output}
 
 Python supports the usual arithmetic operators:
@@ -44,15 +44,15 @@ and comparison operators:
  
 Both `int` and `float` values can be mixed within an expression; the result is a `float`.
 
-~~~
+```python
 r = i + 1.5
 print r, 'is of', type(r)
-~~~
+```
 {:.input}
 
-~~~
+```
 4.5 is of <type 'float'>
-~~~
+```
 {:.output}
 
 In the code above, we introduced the `print` statement, which prints the output of multiple Python expressions on the same line, separated by spaces. 
@@ -60,15 +60,15 @@ Note that quoted character strings (here, 'is of') are printed as is.
 
 Let's define a new string variable.
 
-~~~
+```python
 s = 'three'
 type(s)
-~~~
+```
 {:.input}
 
-~~~
+```
 <type 'str'>
-~~~
+```
 {:.output}
 
 
@@ -76,40 +76,40 @@ In Python, the same operator can perform different functions based on the
 data types of the operands. See what happens if you "add" two character
 strings.
 
-~~~
+```python
 s + 'four'
-~~~
+```
 {:.input}
 
-~~~
+```
 'threefour'
-~~~
+```
 {:.output}
 
 Note that Python will throw an error if you try to paste together a string and numeric value. 
 
-~~~
+```python
 s + r
-~~~
+```
 {:.input}
 
-~~~
+```
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
 TypeError: cannot concatenate 'str' and 'int' objects
-~~~
+```
 {:.output}
 
 You can, however, convert numbers into strings with the `str()` function. 
 
-~~~
+```python
 s + str(r)
-~~~
+```
 {:.input}
 
-~~~
+```
 'three4.5'
-~~~
+```
 {:.output}
 
 **Question**: If `x` is a float, what does `int(x)` do? How is it different 
@@ -121,15 +121,15 @@ from `round(x)`?
 Python offers different types of objects to represent collections of values,
 the most common being a *list*. It is created by listing multiple values or variables, separated by commas and enclosed by square brackets.
 
-~~~
+```python
 lst = [r, s, 'another string']
 lst
-~~~
+```
 {:.input}
 
-~~~
+```
 [4.5, 'three', 'another string']
-~~~
+```
 {:.output}
 
 
@@ -138,40 +138,40 @@ lst
 You can retrieve individual elements of a list by their index; note that in 
 Python, the first element has an index of 0.
 
-~~~
+```python
 lst[1]
-~~~
+```
 {:.input}
 
-~~~
+```
 'three'
-~~~
+```
 {:.output}
 
 Negative indices are also possible: -1 is the last item in the list, 
 -2 the second-to-last item, etc.
 
-~~~
+```python
 lst[-1]
-~~~
+```
 {:.input}
 
-~~~
+```
 'another string'
-~~~
+```
 {:.output}
 
 The syntax `list[i:j]` selects a sub-list starting with the element at index
 `i` and ending with the element at index `j - 1`.
 
-~~~
+```python
 lst[0:2]
-~~~
+```
 {:.input}
 
-~~~
+```
 [4.5, 'three']
-~~~
+```
 {:.output}
 
 A blank space before or after the ":" indicates the start or end of the list,
@@ -182,11 +182,11 @@ respectively. For example, the previous example could have been written
 A potentially useful trick to remember the list subsetting rules in Python is
 to picture the indices as "dividers" between list elements.
 
-~~~
+```
  0     1         2                  3 
  | 4.5 | 'three' | 'another string' |
 -3    -2        -1
-~~~
+```
 
 Positive indices are written at the top and negative indices at the bottom. 
 `list[i]` returns the element to the right of `i` whereas `list[i:j]` returns
@@ -197,15 +197,15 @@ elements between `i` and `j`.
 Lists can be nested within other lists: in this case, multiple sets of brackets
 might be necessary to access individual elements.
 
-~~~
+```python
 nested_list = [1, 2, 3, [11, 12, 13]]
 nested_list[3][1]
-~~~
+```
 {:.input}
 
-~~~
+```
 12
-~~~
+```
 {:.output}
 
 ### List methods
@@ -214,50 +214,50 @@ The Python language includes multiple functions that work with lists.
 Here are a few examples. Note that code lines starting with `#` are comments,
 which serve to document the code but are ignored by the Python interpreter.
 
-~~~
+```python
 # Returns the length of a list
 len(lst)
-~~~
+```
 {:.input}
 
-~~~
+```
 3
-~~~ 
+```
 {:.output}
 
-~~~
+```python
 # Returns the position of an element in a list
 lst.index(4.5)
-~~~
+```
 {:.input}
 
-~~~
+```
 0
-~~~
+```
 {:.output}
 
-~~~
+```python
 # Appends an element to the end of a list
 lst.append(100)
 lst
-~~~
+```
 {:.input}
 
-~~~
+```
 [4.5, 'three', 'another string', 100]
-~~~
+```
 {:.output}
 
-~~~
+```python
 # Reverse the order of a list's elements
 lst.reverse()
 lst
-~~~
+```
 {:.input}
 
-~~~
+```
 [100, 'another string', 'three', 4.5]
-~~~
+```
 {:.output}
 
 The last three examples feature a special type of functions called *methods*.
@@ -285,29 +285,29 @@ A dictionary is defined as a list of `key:value` pairs enclosed by curly
 brackets. Individual values are accessed using square brackets, as for lists,
 except that keys are used as the indices.
 
-~~~
+```python
 animals = {'Snowy':'dog', 'Garfield':'cat', 'Bugs':'rabbit'}
 animals['Bugs']
-~~~
+```
 {:.input}
 
-~~~
+```
 'rabbit'
-~~~
+```
 {:.output}
 
 To add an element to the dictionary, we "select" a new key and assign 
 it a value.
 
-~~~
+```python
 animals['Lassie'] = 'dog'
 animals
-~~~
+```
 {:.input}
 
-~~~
+```
 {'Garfield': 'cat', 'Lassie': 'dog', 'Bugs': 'rabbit', 'Snowy': 'dog'}
-~~~
+```
 {:.output}
 
 Note that the keys of a dictionary must be unique. Assigning a value to an 
@@ -324,20 +324,20 @@ numbers, email addresses, etc.?
 
 A `while` loop executes a block of statements as long as a specified condition holds.
 
-~~~
+```python
 i = 1
 while i < 5:   
     print i
     i += 1  # This is shorthand for i = i + 1
-~~~
+```
 {:.input}
 
-~~~
+```
 1
 2
 3
 4
-~~~
+```
 {:.output}
 
 Note the pattern of the block above: the while statement is followed by a column,
@@ -349,18 +349,18 @@ code blocks in Python are defined by changes in indentation.
 The example above, where we iterate over a set of values, can be written more 
 efficiently as a `for` loop.
 
-~~~
+```python
 for i in range(1, 5):
     print i
-~~~
+```
 {:.input}
 
-~~~
+```
 1
 2
 3
 4
-~~~
+```
 {:.output}
 
 The `range(i, j)` function creates a list of integers from `i` to `j - 1`; just like
@@ -371,7 +371,7 @@ over all contacts. Within the loop, we use a conditional statement (`if`) to che
 if the name is 'Ann'. If so, we print the phone number; if not (`else` block), we
 print the name.
 
-~~~
+```python
 contacts = [ {'name': 'Ann', 'phone': '555-111-2222'},
              {'name': 'Bob', 'phone': '555-333-4444'} ]
 for c in contacts:
@@ -379,13 +379,13 @@ for c in contacts:
         print c['phone']
     else: 
         print c['name']
-~~~
+```
 {:.input}
 
-~~~
+```
 555-111-2222
 Bob
-~~~
+```
 {:.output}
 
 **Exercise**: Write a loop that prints all even numbers between 1 and 9. Note that
@@ -399,18 +399,18 @@ We already saw examples of a few built-in functions, such as `type()` or `len()`
 You can define your own Python functions as a block of code starting with a `def`
 statement.
 
-~~~
+```python
 def add_2(num):
     result = num + 2
     return result
 
 add_2(10)
-~~~
+```
 {:.input}
 
-~~~
+```
 12
-~~~
+```
 {:.output}
 
 The `def` keyword is followed by the function name, its arguments enclosed in parentheses (separated by commas if there are more than one), and a colon. The
@@ -422,5 +422,125 @@ arguments in parentheses, in the same order as in its definition.
 
 **Exercise**: Create a function that takes a list as an argument and returns
 its first and last elements as a new list.
+
+
+## Python modules for scientific computing
+
+So far we have only covered elements of the base Python language. However, most of
+Python's useful tools for scientific programming can be found in its extensions, 
+called modules. 
+
+### NumPy
+
+Because Python lists are meant to contain elements of any data type, they are not
+so useful as numeric vectors. In particular, the `+` and `*` operations do not
+perform numerical calculations when applied to lists, rather, they respectively 
+concatenate and duplicate list elements.
+
+```python
+add_list = [1, 2] + [3, 4]
+mult_list = [5, 6] * 2
+print add_list, mult_list
+```
+{:.input}
+
+```
+[1, 2, 3, 4] [5, 6, 5, 6]
+```
+{:.output}
+
+The **NumPy** package and its `array` type provide a solution to define vectors,
+matrices and higher-dimension arrays.
+
+```python
+import numpy as np
+vect = np.array([5, 20, 12])
+vect
+```
+{:.input}
+
+```
+array([ 5, 20, 12])
+```
+{:.output}
+
+The first line of this code, `import numpy as np`, gives Python access to functions
+from the `numpy` module, using the `module.function` syntax. To save time typing 
+module names, Python programmers often define short aliases for them, such as `np` 
+here. This allows us to write `np.array` instead of `numpy.array` on the following 
+line. 
+
+The definition of the array itself looks much like a Python list, and array
+subsetting follows the same conventions as list subsetting. The main difference is
+for multidimensional arrays, where the indices in each dimensions can be 
+separated by commas within one set of brackets. As an example, we create a 2 x 3
+matrix and selected the first two columns.
+
+```python
+mat = np.array([[1, 2, 3], [4, 5, 6]])
+mat[:, 0:2]
+```
+{:.input}
+
+```
+array([[1, 2],
+       [4, 5]])
+```
+{:.output}
+
+
+The initial ":" (with no indices) is interpreted as "select all rows".
+
+Arithmetic operators and basic mathematical functions (e.g. exp, sqrt) are
+applied element-wise to NumPy arrays.
+
+```python
+vect + np.array([1, 2, 3])
+```
+{:.input}
+
+```
+array([ 6, 22, 15])
+```
+{:.output}
+
+
+```python
+vect * 2
+```
+{:.input}
+
+```
+array([10, 40, 24])
+```
+{:.output}
+
+
+```python
+mat * vect
+```
+{:.input}
+
+```
+array([[  5,  40,  36],
+       [ 20, 100,  72]])
+```
+{:.output}
+
+In the last example, `vect` was multipled element-wise to each row of `mat`.To 
+multiply a matrix and a vector (or two matrices, or two vectors in a dot-product), 
+use the `dot` method.
+
+
+```python
+mat.dot(vect)   # Alternate syntax is np.dot(mat, vect)
+```
+{:.input}
+
+```
+array([ 81, 192])
+```
+{:.output}
+
 
 
