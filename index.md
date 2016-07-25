@@ -13,7 +13,7 @@ Instructor: Philippe Marchand
   computing.
 - Used in a wide range of domains, both in academia and industry.
 - Large user community: it's easy to get help and to find free, 
-  open-source modules for specialized problems.
+  open-source packages for specialized problems.
 
 
 ## Data types and variables
@@ -271,7 +271,7 @@ no value. A common mistake -- especially for those used to program in R --
 would be to write `lst = lst.append(100)`, which overwrites `lst` with a null
 value!
 
-**Question**: What is the output of len(lst[2])? What does it mean?
+**Question**: What is the output of `len(lst[2])`? What does it mean?
 (Like the `+` operator, this is another case of a function that behaves differently depending of the type of data it's applied to.)
 
 
@@ -424,11 +424,11 @@ arguments in parentheses, in the same order as in its definition.
 its first and last elements as a new list.
 
 
-## Python modules for scientific computing
+## Python packages for scientific computing
 
 So far we have only covered elements of the base Python language. However, most of
-Python's useful tools for scientific programming can be found in its extensions, 
-called modules. 
+Python's useful tools for scientific programming can be found in packages that extend
+its base functionalities. 
 
 ### NumPy
 
@@ -465,8 +465,8 @@ array([ 5, 20, 12])
 {:.output}
 
 The first line of this code, `import numpy as np`, gives Python access to functions
-from the `numpy` module, using the `module.function` syntax. To save time typing 
-module names, Python programmers often define short aliases for them, such as `np` 
+from the `numpy` package, using the `package.function` syntax. To save time typing 
+package names, Python programmers often define short aliases for them, such as `np` 
 here. This allows us to write `np.array` instead of `numpy.array` on the following 
 line. 
 
@@ -543,4 +543,141 @@ array([ 81, 192])
 {:.output}
 
 
+### pandas
 
+If you have used the statistical programming language R, you are familiar with
+*data frames*, two-dimensional data structures where each column can hold a 
+different type of data, as in a spreadsheet.
+
+The data analysis library **pandas** provides a data frame object type for
+Python, along with functions to subset, filter reshape and aggregate data
+stored in data frames.
+ 
+After importing pandas, we call its `read_csv` function to load the Portal 
+surveys data from the file *surveys.csv*.
+
+```python
+import pandas as pd
+surveys = pd.read_csv("data/surveys.csv")
+surveys.head()
+```
+{:.input}
+
+```
+   record_id  month  day  year  plot_id species_id sex  hindfoot_length    weight
+0          1      7   16  1977        2         NL   M               32       NaN
+1          2      7   16  1977        3         NL   M               33       NaN
+2          3      7   16  1977        2         DM   F               37       NaN
+3          4      7   16  1977        7         DM   M               36       NaN
+4          5      7   16  1977        3         DM   M               35       NaN
+
+```
+{:.output}
+
+By default, the `head` method of a data frame shows its first five rows.
+To select a subset of rows and columns from the data frame, we can use
+the `loc` method, specifying a range of row indices and a list of 
+column names. Note that unlike the usual way we specify number ranges in
+Python, the end of the range (row 3) is *included* here.
+
+```python
+surveys.loc[1:3, ['plot_id', 'species_id']]
+```
+{:.input}
+
+```
+   plot_id species_id
+1        3         NL
+2        2         DM
+3        7         DM
+```
+{:.output}
+
+
+We can also select a whole column by writing its name in square brackets. Here,
+we select the *weight* column and call the `describe` method to get summary
+statistics for that column.
+
+```python
+surveys['weight'].describe()
+```
+{:.input}
+
+```
+count    32283.000000
+mean        42.672428
+std         36.631259
+min          4.000000
+25%         20.000000
+50%         37.000000
+75%         48.000000
+max        280.000000
+Name: weight, dtype: float64
+```
+{:.output}
+
+The `loc` method can also filter rows, if we specify a logical condition in
+place of the row indices. For example, here is how we could get the subset of
+*surveys* where the species is "DM", and save it in a new data frame. Note 
+that when we don't specify any column names after the comma, all columns are
+kept.
+
+```python
+surveys_dm = surveys.loc[surveys['species_id'] == 'DM', ]
+```
+{:.input}
+
+Another useful feature of pandas is the `groupby` method, which defines
+groups of rows based on their values for a given variable. After grouping
+a data frame, we can use statistical methods (like `mean`) to get summary
+statistics by group.
+
+```python
+surveys_group = surveys_dm.groupby('sex')
+surveys_group['hindfoot_length', 'weight'].mean()
+```
+{:.input}
+
+```
+     hindfoot_length     weight
+sex
+F          35.712692  41.609685
+M          36.188229  44.353134
+
+```
+{:.output}
+
+
+### matplotlib / pyplot
+
+To complete this lesson, we will draw plots of our data using the 
+**matplotlib** package and more specifically its **pyplot** subpackage.
+The pandas package works particularly well with pyplot, since it defines
+plotting methods that work specifically for data frames. 
+
+In the following, we import pyplot, then call the `plot` method to create
+a scatterplot of *weight* against *hindfoot_length* from the *surveys_dm*
+data. The `plt.show()` function opens a new window showing the active plot.
+
+```python
+import matplotlib.pyplot as plt
+surveys_dm.plot('hindfoot_length', 'weight', kind = 'scatter')
+plt.show()
+```
+{:.input}
+
+![scatterplot](basic_python_scatter.png)
+
+
+Besides `scatter`, the `plot` method supports other kinds of plots such
+as bar and line graphs. To create the histogram of one variable from the data
+frame, you may use a different method, `hist`.
+
+```python
+plt.close()
+surveys_dm.hist('weight')
+plt.show()
+```
+{:.input}
+
+![histogram](basic_python_hist.png)
