@@ -347,7 +347,7 @@ Bob
 {:.output}
 
 **Exercise**: Write a loop that prints all even numbers between 1 and 9. 
-Note:  if `i` is even, `i %% 2 == 0`, where `%%` is the modulo (or division
+Note:  if `i` is even, `i % 2 == 0`, where `%` is the modulo (or division
 remainder) operator.
 
 
