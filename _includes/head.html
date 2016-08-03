@@ -6,8 +6,10 @@
   <title>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
   <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
 
-  <link rel="stylesheet" href="{{ site.baseurl }}/stylesheets/styles.css">
   <style type="text/css">
+    
+   {% include styles.css %}
+    
    .text-document pre {
        background-color: #000000;
    }

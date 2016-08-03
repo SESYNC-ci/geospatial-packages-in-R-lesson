@@ -626,7 +626,7 @@ plt.show()
 ```
 {:.input}
 
-![scatterplot](basic_python_scatter.png)
+![scatterplot]({{ site.baseurl }}/images/basic_python_scatter.png)
 
 
 Besides `scatter`, the `plot` method supports other kinds of plots such
@@ -640,4 +640,4 @@ plt.show()
 ```
 {:.input}
 
-![histogram](basic_python_hist.png)
+![histogram]({{ site.baseurl }}/images/basic_python_hist.png)
