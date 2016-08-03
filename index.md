@@ -14,7 +14,7 @@ Instructor: Philippe Marchand
 - Used in a wide range of domains, both in academia and industry.
 - Large user community: it's easy to get help and to find free, 
   open-source packages for specialized problems.
-
+  
 
 ## Data types and variables
 
@@ -347,7 +347,7 @@ Bob
 {:.output}
 
 **Exercise**: Write a loop that prints all even numbers between 1 and 9. 
-Note:  if `i` is even, `i %% 2 == 0`, where `%%` is the modulo (or division
+Note:  if `i` is even, `i % 2 == 0`, where `%` is the modulo (or division
 remainder) operator.
 
 
@@ -641,3 +641,10 @@ plt.show()
 {:.input}
 
 ![histogram]({{ site.baseurl }}/images/basic_python_hist.png)
+
+## Additional resources
+
+The material in this lesson is partly based on 
+[Data Carpentry: Python for Ecologists](http://www.datacarpentry.org/python-ecology-lesson/) and the 
+[Data Carpentry for Biologists](http://www.datacarpentry.org/semester-biology/) course. 
+These are good resources for a more detailed overview of data analysis and scientific computing in Python.
