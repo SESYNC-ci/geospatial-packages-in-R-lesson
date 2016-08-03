@@ -47,7 +47,7 @@ Because each polygon in the shapefile has attached data, the resulting object is
 
 Each of the *Polygons* object in a *SpatialPolygons* or *SpatialPolygonsDataFrame* contains one or more *Polygon* objects, which are simple polygons in the geometric sense; a single *Polygons* object can thus be a complex shape combining many polygons with holes in them. The `@coords` slot of a *Polygon* is a matrix with the (*x*,*y*) coordinates of each vertex, with the first and last vertices being identical to form a "closed" shape.
 
-![](bivand_fig2_4.png)
+![]({{ site.baseurl }}/images/bivand_fig2_4.png)
 
 *Source: Bivand et al. (2013), Applied Spatial Data Analysis with R, p.40* 
 
