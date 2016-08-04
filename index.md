@@ -61,6 +61,7 @@ The spatial objects defined by the sp package are compatible with the base R `pl
 ~~~r
 plot(counties, xlim = c(-125, -65), ylim = c(20, 50))
 ~~~
+{:.input}
 
 ![plot of chunk plot_counties](/geospatial-packages-in-R-lesson/images/plot_counties-1.png)
 
@@ -79,6 +80,7 @@ When two spatial layers share the same coordinate system, they can be superposed
 plot(counties, xlim = c(-125, -65), ylim = c(20, 50))
 plot(sesync, col = "green", pch = 20, add = TRUE)
 ~~~
+{:.input}
 
 ![plot of chunk plot_point](/geospatial-packages-in-R-lesson/images/plot_point-1.png)
 
@@ -91,6 +93,7 @@ A *Spatial...DataFrame* can be subset with expressions in brackets, just like a 
 counties_md <- counties[counties$STATEFP == "24", ]  # 24 is the FIPS code for Maryland
 plot(counties_md)
 ~~~
+{:.input}
 
 ![plot of chunk subset_md](/geospatial-packages-in-R-lesson/images/subset_md-1.png)
 
@@ -146,7 +149,8 @@ proj4string(counties_md)
 ~~~
 [1] "+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
 ~~~
-{:.input}
+{:.output}
+
 
 ~~~r
 proj4string(huc)
@@ -169,6 +173,7 @@ huc <- spTransform(huc, proj1)
 plot(counties_md)
 plot(huc, add = TRUE, border = "blue")
 ~~~
+{:.input}
 
 ![plot of chunk plot_over](/geospatial-packages-in-R-lesson/images/plot_over-1.png)
 
@@ -189,6 +194,7 @@ library(rgeos)
 state_md <- gUnaryUnion(counties_md)
 plot(state_md)
 ~~~
+{:.input}
 
 ![plot of chunk gUnion](/geospatial-packages-in-R-lesson/images/gUnion-1.png)
 
@@ -200,6 +206,7 @@ huc_md <- gIntersection(huc, state_md, byid = TRUE,
 plot(huc_md, border = "blue")
 text(coordinates(huc_md), labels = names(huc_md), cex = 0.6, srt = 30)
 ~~~
+{:.input}
 
 ![plot of chunk gIntersect](/geospatial-packages-in-R-lesson/images/gIntersect-1.png)
 
@@ -240,14 +247,15 @@ attributes  :
  from:   0 7854240512   0     0    0     Unclassified       1
  to  : 255          0   0     0    0                        0
 ~~~
-{:.input}
+{:.output}
+
 
 ~~~r
 plot(nlcd)
 ~~~
 {:.input}
 
-![plot of chunk load_raster](/geospatial-packages-in-R-lesson/images/load_raster-1.png)
+![plot of chunk show_raster](/geospatial-packages-in-R-lesson/images/show_raster-1.png)
 
 As shown in the code above, we can access the properties of a raster by simply typing its name in the console. By default, the whole raster is *not* loaded into working memory, as you can confirm by checking the R object size with `object.size(nlcd)`. This means that unlike most analyses in R, you can actually process raster datasets larger than the RAM available on your computer; the raster package automatically loads pieces of the data and computes on each of them in sequence.
 
@@ -258,6 +266,7 @@ nlcd <- crop(nlcd, extent(huc_md))
 plot(nlcd)
 plot(huc_md, add = TRUE)
 ~~~
+{:.input}
 
 ![plot of chunk crop_raster](/geospatial-packages-in-R-lesson/images/crop_raster-1.png)
 
@@ -321,6 +330,7 @@ The same applies for logical operations: `r1 > 5` returns a logical raster with 
 pasture <- mask(nlcd, nlcd == 81, maskvalue = FALSE)
 plot(pasture)
 ~~~
+{:.input}
 
 ![plot of chunk mask](/geospatial-packages-in-R-lesson/images/mask-1.png)
 
@@ -331,6 +341,7 @@ nlcd_agg <- aggregate(nlcd, fact = 5, fun = modal)
 nlcd_agg@legend <- nlcd@legend
 plot(nlcd_agg)
 ~~~
+{:.input}
 
 ![plot of chunk agg_raster](/geospatial-packages-in-R-lesson/images/agg_raster-1.png)
 
@@ -417,8 +428,8 @@ data.frame(names(huc_md), modal_lc)
 27                          1120 Pocomoke                Woody Wetlands
 28               1121 Blackwater-Wicomico              Cultivated Crops
 29                     1128 Lower Potomac              Deciduous Forest
-30                            1164 Severn              Cultivated Crops
-31              1190 Lower Chesapeake Bay Emergent Herbaceuous Wetlands
+30                            1164 Severn                    Open Water
+31              1190 Lower Chesapeake Bay                    Open Water
 ~~~
 {:.output}
 
@@ -454,7 +465,6 @@ plot(frederick, add = TRUE, col = "red")
 {:.input}
 
 [Return](#exercise-1)
-
 
 ### Solution 2
 
