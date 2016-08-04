@@ -1,16 +1,9 @@
 ---
-title: "Geospatial analysis in R"
-author: "Philippe Marchand"
-output: md_document
 ---
 
-# Geospatial analysis in R
+# Geospatial Analysis in R
 
 Instructor: Philippe Marchand
-
-```{r knitr_opts, include=FALSE}
-knitr::opts_chunk$set(comment = NA)
-```
 
 This lesson presents a brief overview of some of the key R packages for geospatial analysis. Specifically, we will learn how to perform the following spatial processing tasks in R:
 
@@ -47,7 +40,7 @@ Because each polygon in the shapefile has attached data, the resulting object is
 
 Each of the *Polygons* object in a *SpatialPolygons* or *SpatialPolygonsDataFrame* contains one or more *Polygon* objects, which are simple polygons in the geometric sense; a single *Polygons* object can thus be a complex shape combining many polygons with holes in them. The `@coords` slot of a *Polygon* is a matrix with the (*x*,*y*) coordinates of each vertex, with the first and last vertices being identical to form a "closed" shape.
 
-![]({{ site.baseurl }}/images/bivand_fig2_4.png)
+![](`r config$baseurl`/images/bivand_fig2_4.png)
 
 *Source: Bivand et al. (2013), Applied Spatial Data Analysis with R, p.40* 
 

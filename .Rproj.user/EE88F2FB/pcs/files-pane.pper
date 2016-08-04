@@ -1,0 +1,9 @@
+{
+    "path" : "~/sesync-ci/geospatial-packages-in-R-lesson",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}
