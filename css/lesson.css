@@ -269,7 +269,7 @@ footer {
 
 .text-document pre {
     background-color: #000000;
-    margin: 2px auto;
+    border-radius: 0px 0px 5px 5px;
 }
 
 .text-document code {
