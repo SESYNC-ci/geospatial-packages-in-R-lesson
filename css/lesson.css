@@ -296,3 +296,15 @@ div.text-document::before {
     border: 1px solid #C0C0C0;
     display: block;
 }     
+
+.ToS {
+    text-align: right;
+}
+
+p.captioned {
+    text-align: center;
+}
+
+.captioned em {
+    font-size: 0.6em;
+}
