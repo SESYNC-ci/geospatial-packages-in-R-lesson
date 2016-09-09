@@ -4,6 +4,7 @@ body {
   font: 14px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
   color:#727272;
   font-weight:400;
+  counter-reset: section;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -307,4 +308,9 @@ p.captioned {
 
 .captioned em {
     font-size: 0.6em;
+}
+
+h2.ex::after {
+    counter-increment: section;
+    content: " " counter(section);
 }
