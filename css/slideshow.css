@@ -61,3 +61,7 @@ p.on-white {
     border-radius: 15px;
 }
 
+.reveal h2.ex::after {
+    counter-increment: section;
+    content: " " counter(section);
+}
