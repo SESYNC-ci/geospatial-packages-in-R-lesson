@@ -38,7 +38,7 @@ div.text-document::before {
     content: attr(title);
     text-align: left;
     font-family: Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal, Consolas, Liberation Mono, DejaVu Sans Mono, Courier New, monospace;
-    font-size: 70%;
+    font-size: 75%;
     color: #000000;
     background: #C0C0C0;
     padding: 8px 15px;
@@ -52,7 +52,7 @@ div.text-document::before {
 }
 
 .reveal {
-    font-size: 42px;
+    font-size: 36px; /* for 1600 x 900 resolution */
 }
 
 p.on-white {
