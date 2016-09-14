@@ -69,3 +69,7 @@ p.on-white {
     counter-increment: section;
     content: " " counter(section);
 }
+
+.reveal h2, .reveal h1 {
+    text-transform: capitalize;
+}
