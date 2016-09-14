@@ -12,6 +12,10 @@ img + br + em {
     margin-left: 65vw;
 }
 
+.reveal pre code {
+    max-height: 550px;
+}
+
 .input pre {
     width: 100%;
     background-color: #EBECE4;
