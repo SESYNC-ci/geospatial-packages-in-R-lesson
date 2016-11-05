@@ -4,4 +4,7 @@
 > the [lesson] maintained in this repository. The lesson content is also available
 > as a [slideshow] for classroom instruction.
 
-[www.sesync.org]: https://www.sesync.org
+<!-------------------------------------
+-- Only modify content below or risk --
+-- a merge conflict with upstream.   --
+-------------------------------------->
