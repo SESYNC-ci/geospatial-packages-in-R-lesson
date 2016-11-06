@@ -3,22 +3,27 @@ layout: default
 style: /css/lesson.css
 ---
 
-{% for sorted in site.slide_sorter %}
-{% capture id %}/slides/{{ sorted }}{% endcapture %}
-{% assign hslide = site.slides | where: "id", id | first %}
+# {{ site.title }}
+{:style="text-transform: none;"}
 
+Lesson {{ site.lesson }} with *{{ site.instructor }}*
+
+## Contents
+
+{% for sorted in site.slide_sorter %}{% capture id %}/slides/{{ sorted }}{% endcapture %}{% assign hslide = site.slides | where: "id", id | first %}
+- [{{ hslide.id }}](#{{ id }})
+{% endfor %}
+
+---
+
+{% for sorted in site.slide_sorter %}{% capture id %}/slides/{{ sorted }}{% endcapture %}{% assign hslide = site.slides | where: "id", id | first %}
 <a name="{{ id }}"></a>
-
-{% assign vslides = hslide.content | split: "<p>===</p>" %}
+{% assign vslides = hslide.content | split: "===" %}
 {% for vslide in vslides %}
 {{ vslide }}
 {% endfor %}
-  
-{{ vslide.content }}
-
 [Top of Section](#{{ id }})
 {:.ToS}
   
 ---
-  
 {% endfor %}

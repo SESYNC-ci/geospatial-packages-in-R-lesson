@@ -4,6 +4,15 @@ reveal-theme: /css/theme/sky.css
 style: /css/slideshow.css
 ---
 
+<section markdown="1">
+
+# {{ site.title }}
+{:style="text-transform: none;"}
+
+Lesson {{ site.lesson }} with *{{ site.instructor }}*
+
+</section>
+
 {% for sorted in site.slide_sorter %}
 {% capture id %}/slides/{{ sorted }}{% endcapture %}
 {% assign hslide = site.slides | where: "id", id | first %}
