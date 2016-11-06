@@ -7,8 +7,7 @@ style: /css/lesson.css
 {:style="text-transform: none;"}
 
 {% for sorted in site.slide_sorter %}{% capture id %}/slides/{{ sorted }}{% endcapture %}{% assign hslide = site.slides | where: "id", id | first %}
-- [{{ hslide.id }}](#{{ id }})
-{% endfor %}
+- [{{ hslide.id }}](#{{ id }}){% endfor %}
 
 ---
 
