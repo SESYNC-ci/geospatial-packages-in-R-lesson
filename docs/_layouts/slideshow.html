@@ -16,15 +16,14 @@
 	    </div>
 	  </div>
     <script>
-     var collection = document.getElementsByClassName("notes")
+     var collection = document.getElementsByClassName("notes");
      for (var i = 0; i < collection.length; i++) {
-         var element = collection[i];
-         var parent = element.parentNode;
-         var child = document.createElement('aside');
-         child.className = element.className;
-         child.innerHTML = element.innerHTML;
-         parent.replaceChild(child, element);
-         }
+         var p = collection[i];
+         var aside = document.createElement("aside");
+         aside.className = p.className;
+         aside.innerHTML = p.innerHTML;
+         p.replaceWith(aside);         
+         };     
     </script>
 	  <script src="{{ site.reveal }}/lib/js/head.min.js"></script>
 	  <script src="{{ site.reveal }}/js/reveal.js"></script>
@@ -37,15 +36,15 @@
 	       // Controls
 	       controls: false,
 	       // Transition
-	       transition: 'none',
+	       transition: "none",
 	       // Plugins
 	       dependencies: [
 		         // Zoom in and out with Alt+click
-		         { src: '{{ site.reveal }}/plugin/zoom-js/zoom.js', async: true },
+		         { src: "{{ site.reveal }}/plugin/zoom-js/zoom.js", async: true },
 		         // Speaker notes
-		         { src: '{{ site.reveal }}/plugin/notes/notes.js', async: true },
+		         { src: "{{ site.reveal }}/plugin/notes/notes.js", async: true },
 		         // MathJax
-		         { src: '{{ site.reveal }}/plugin/math/math.js', async: true },
+		         { src: "{{ site.reveal }}/plugin/math/math.js", async: true },
 	       ],
 	   });
 	  </script>
