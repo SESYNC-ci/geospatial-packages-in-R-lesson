@@ -1,3 +1,25 @@
+# Site
+
+title: Quick start with Python
+worksheet: worksheet.py
+tag: v0.0
+lesson: 0
+instructor: Philippe Marchand
+authors:
+  - Philippe Marchand
+
+# Slides
+
+slide_sorter:
+  - objective
+  - types
+  - lists
+  - dict
+  - flow
+  - def
+  - packages
+  - conclude
+
 #####################################
 # Only modify content above or risk #
 # merge conflicts with upstream.    #

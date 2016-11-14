@@ -11,10 +11,16 @@ The type of a variable is automatically set when a value is assigned to it,
  using the `=` operator. It can be queried with the built-in `type()`
  function.
  
-```{python}
-i = 3
-type(i)
-```
+
+~~~python
+>>> i = 3
+>>> type(i)
+<class 'int'>
+
+~~~
+{:.term}
+
+
 
 ===
 
@@ -25,10 +31,16 @@ and comparison operators:
  
 Both `int` and `float` values can be mixed within an expression; the result is a `float`.
 
-```{python}
-r = i + 1.5
-print(r, 'is of', type(r))
-```
+
+~~~python
+>>> r = i + 1.5
+>>> print(r, 'is of', type(r))
+4.5 is of <class 'float'>
+
+~~~
+{:.term}
+
+
 
 ===
 
@@ -38,10 +50,16 @@ Note that quoted character strings (here, 'is of') are printed as is.
 
 Let's define a new string variable.
 
-```{python}
-s = 'three'
-type(s)
-```
+
+~~~python
+>>> s = 'three'
+>>> type(s)
+<class 'str'>
+
+~~~
+{:.term}
+
+
 
 ===
 
@@ -49,6 +67,12 @@ In Python, the same operator can perform different functions based on the
 data types of the operands. See what happens if you "add" two character
 strings.
 
-```{python}
-s + ' four'
-```
+
+~~~python
+>>> s + ' four'
+'three four'
+
+~~~
+{:.term}
+
+

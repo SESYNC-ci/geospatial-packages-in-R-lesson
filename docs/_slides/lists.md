@@ -7,10 +7,16 @@ Python offers different types of objects to represent collections of values,
 the most common being a *list*. It is created by listing multiple values or
 variables, separated by commas and enclosed by square brackets.
 
-```{python}
-lst = [r, s, 'another string']
-lst
-```
+
+~~~python
+>>> lst = [r, s, 'another string']
+>>> lst
+[4.5, 'three', 'another string']
+
+~~~
+{:.term}
+
+
 
 ===
 
@@ -19,27 +25,45 @@ lst
 You can retrieve individual elements of a list by their index; note that in 
 Python, the first element has an index of 0.
 
-```{python}
-lst[1]
-```
+
+~~~python
+>>> lst[1]
+'three'
+
+~~~
+{:.term}
+
+
 
 ===
 
 Negative indices are also possible: -1 is the last item in the list, 
 -2 the second-to-last item, etc.
 
-```{python}
-lst[-1]
-```
+
+~~~python
+>>> lst[-1]
+'another string'
+
+~~~
+{:.term}
+
+
 
 ===
 
 The syntax `list[i:j]` selects a sub-list starting with the element at index
 `i` and ending with the element at index `j - 1`.
 
-```{python}
-lst[0:2]
-```
+
+~~~python
+>>> lst[0:2]
+[4.5, 'three']
+
+~~~
+{:.term}
+
+
 
 ===
 
@@ -67,10 +91,16 @@ elements between `i` and `j`.
 Lists can be nested within other lists: in this case, multiple sets of brackets
 might be necessary to access individual elements.
 
-```{python}
-nested_list = [1, 2, 3, [11, 12, 13]]
-nested_list[3][1]
-```
+
+~~~python
+>>> nested_list = [1, 2, 3, [11, 12, 13]]
+>>> nested_list[3][1]
+12
+
+~~~
+{:.term}
+
+
 
 ===
 
@@ -80,29 +110,53 @@ The Python language includes multiple functions that work with lists.
 Here are a few examples. Note that code lines starting with `#` are comments,
 which serve to document the code but are ignored by the Python interpreter.
 
-```{python}
-# Returns the length of a list
-len(lst)
-```
 
-```{python}
-# Returns the position of an element in a list
-lst.index(4.5)
-```
+~~~python
+>>> # Returns the length of a list
+>>> len(lst)
+3
+
+~~~
+{:.term}
+
+
+
+
+~~~python
+>>> # Returns the position of an element in a list
+>>> lst.index(4.5)
+0
+
+~~~
+{:.term}
+
+
 
 ===
 
-```{python}
-# Appends an element to the end of a list
-lst.append(100)
-lst
-```
 
-```{python}
-# Reverse the order of a list's elements
-lst.reverse()
-lst
-```
+~~~python
+>>> # Appends an element to the end of a list
+>>> lst.append(100)
+>>> lst
+[4.5, 'three', 'another string', 100]
+
+~~~
+{:.term}
+
+
+
+
+~~~python
+>>> # Reverse the order of a list's elements
+>>> lst.reverse()
+>>> lst
+[100, 'another string', 'three', 4.5]
+
+~~~
+{:.term}
+
+
 
 ===
 

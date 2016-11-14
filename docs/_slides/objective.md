@@ -10,3 +10,14 @@
 - Used in a wide range of domains, both in academia and industry.
 - Large user community: it's easy to get help and to find free, 
   open-source packages for specialized problems.
+
+
+~~~python
+>>> import os
+>>> os.getcwd()
+'/Users/icarroll/projects/sesync-ci.github/basic-Python-lesson'
+
+~~~
+{:.term}
+
+

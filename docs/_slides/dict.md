@@ -11,20 +11,32 @@ A dictionary is defined as a list of `key:value` pairs enclosed by curly
 brackets. Individual values are accessed using square brackets, as for lists,
 except that keys are used as the indices.
 
-```{python}
-animals = {'Snowy':'dog', 'Garfield':'cat', 'Bugs':'rabbit'}
-animals['Bugs']
-```
+
+~~~python
+>>> animals = {'Snowy':'dog', 'Garfield':'cat', 'Bugs':'rabbit'}
+>>> animals['Bugs']
+'rabbit'
+
+~~~
+{:.term}
+
+
 
 ===
 
 To add an element to the dictionary, we "select" a new key and assign 
 it a value.
 
-```{python}
-animals['Lassie'] = 'dog'
-animals
-```
+
+~~~python
+>>> animals['Lassie'] = 'dog'
+>>> animals
+{'Snowy': 'dog', 'Garfield': 'cat', 'Lassie': 'dog', 'Bugs': 'rabbit'}
+
+~~~
+{:.term}
+
+
 
 ===
 

@@ -6,11 +6,21 @@
 A `for` loop takes a list and executes a block of code once for each
 element of the list.
 
-```{python}
-for i in range(1, 5):
-    j = i * 2
-    print(j)
-```
+
+~~~python
+>>> for i in range(1, 5):
+...     j = i * 2
+...     print(j)
+...
+2
+4
+6
+8
+
+~~~
+{:.term}
+
+
 
 ===
 
@@ -31,19 +41,27 @@ perform a loop over all contacts. Within the loop, we use a conditional
 statement (`if`) to check if the name is 'Ann'. If so, we print the phone 
 number; if not (`else` block), we print the name.
 
-```{python}
-contacts = [
-    {'name': 'Ann', 'phone': '555-111-2222'},
-    {'name': 'Bob', 'phone': '555-333-4444'},
-    ]
-    
 
-for c in contacts:
-    if c['name'] == 'Ann':
-        print(c['phone'])
-    else:
-        print(c['name'])
-```
+~~~python
+>>> contacts = [
+...     {'name': 'Ann', 'phone': '555-111-2222'},
+...     {'name': 'Bob', 'phone': '555-333-4444'},
+...     ]
+...
+...
+>>> for c in contacts:
+...     if c['name'] == 'Ann':
+...         print(c['phone'])
+...     else:
+...         print(c['name'])
+...
+555-111-2222
+Bob
+
+~~~
+{:.term}
+
+
 
 ===
 

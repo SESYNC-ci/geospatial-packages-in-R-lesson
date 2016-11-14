@@ -7,13 +7,19 @@ We already saw examples of a few built-in functions, such as `type()` or `len()`
 You can define your own Python functions as a block of code starting with a `def`
 statement.
 
-```{python}
-def add_2(num):
-    result = num + 2
-    return result
 
-add_2(10)
-```
+~~~python
+>>> def add_2(num):
+...     result = num + 2
+...     return result
+...
+>>> add_2(10)
+12
+
+~~~
+{:.term}
+
+
 
 ===
 
