@@ -1,3 +1,5 @@
+## see notes in basic-R-lesson makefile
+
 require(knitr)
 require(yaml)
 require(stringr)
