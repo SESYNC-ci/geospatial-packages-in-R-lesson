@@ -48,7 +48,14 @@ git fetch upstream
 get checkout -b upstream upstream/master
 ```
 
-The `upstream` branch will not have a shared history with the `master` branch--that is okay. To merge changes made within the `lesson-style` repository into a lesson, run `git merge upstream` from the master branch.
+The `upstream` branch will not have a shared history with the `master` branch--that is okay. To merge changes made within the `lesson-style` repository into a lesson, run `git merge upstream` from the master branch. Modifications to the upstream branch shall be meant for all lessons. A change to `docs/_layouts/default.html`, for example, should be pushed to the origin by:
+
+```
+git checkout upstream
+git add docs/_layouts/default.html
+git commit
+git push upstream upstream:master
+```
 
 ## Creating a **new** lesson
 
