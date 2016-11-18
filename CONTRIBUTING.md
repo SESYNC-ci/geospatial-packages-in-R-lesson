@@ -47,7 +47,7 @@ The repository `lesson-style` is intended to be upstream of all `*-lesson` repos
 ```
 git remote add upstream git@github.com:SESYNC-ci/lesson-style.git
 git fetch upstream
-git checkout -b upstream upstream/master
+git branch --track upstream upstream/master
 ```
 
 The `upstream` branch will not have a shared history with the `master` branch—that is okay. To merge changes made within the `lesson-style` repository into a lesson, run `git merge upstream` from the master branch. Modifications to the upstream branch shall be meant for all lessons. A change to `docs/_layouts/default.html`, for example, should be commited to the upstream branch and pushed to the origin:
@@ -56,7 +56,7 @@ The `upstream` branch will not have a shared history with the `master` branch—
 git checkout upstream
 git add docs/_layouts/default.html
 git commit
-git push upstream upstream:master
+git push
 ```
 
 ## Creating a **new** lesson
