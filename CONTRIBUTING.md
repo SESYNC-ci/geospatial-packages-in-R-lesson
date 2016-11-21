@@ -84,7 +84,7 @@ Configure the GitHub page by setting the following variables in the `# Site` sec
 
 - `title`: a lesson title
 - `worksheet`: the base string displayed for `code.text-document` titles
-- `handouts`: the release version associated with downloadable zips attached to releases
+- `handouts`: the release version associated with the `handouts.zip` attached to a release, if any
 - `instructor`: who will give the lesson in a workshop setting
 - `authors`: the list of contributors
 - `lesson`: the number of the lesson in a workshop setting
@@ -99,4 +99,5 @@ A file within one of these folders becomes a vertical stack of slides in a [Reve
 
 ## Archiving a delivered lesson
 
+[Reveal.js]: http://lab.hakim.se/reveal-js
 [lessons]: http://www.sesync.org/for-you/cyberinfrastructure/training/%C3%A0-la-carte-lessons
