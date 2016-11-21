@@ -73,14 +73,14 @@ git merge upstream
 git push
 ```
 
-Configure the README by commiting the following to the `README.md` file, where `<new-lesson>` should be replaced with the new repository's name.
+Go to the repository's GitHub settings and select 'master/docs' as the GitHub Pages source. Configure the README by commiting the following to the `README.md` file, where `<new-lesson>` should be replaced with the new repository's name.
 
 ```
 [lesson]: https://sesync-ci.github.io/<new-lesson>
 [slideshow]: https://sesync-ci.github.io/<new-lesson>/instructor
 ```
 
-Configure the GitHub page by setting the following variables in the `# Site` section of the `docs/_config.yml` YAML file.
+Everythin above is standard, the following is where the real work begins! Configure the GitHub page by setting the following variables in the `# Site` section of the `docs/_config.yml` YAML file.
 
 - `title`: a lesson title
 - `worksheet`: the base string displayed for `code.text-document` titles
