@@ -61,5 +61,19 @@ git push
 
 ## Creating a **new** lesson
 
+Create a new, public repository owned by the SESYNC-CI organization: use a short name, provide a description that can be exported as a human readable lesson title (e.g. on SESYNC's [lessons] tab), and do not include a README.
+
+Locally clone the new empty repository and initialize it with the content of the lesson-style repo:
+
+```
+git remote add upstream git@github.com:SESYNC-ci/lesson-style.git
+git fetch upstream
+git branch --track upstream upstream/master
+git merge upstream
+```
+
+Begin developing markdown content within the `docs/_slides` folder, or if using RMarkdown create and use a `docs/_slides_Rmd` folder.
+
 ## Archiving a delivered lesson
 
+[lessons]: http://www.sesync.org/for-you/cyberinfrastructure/training/%C3%A0-la-carte-lessons
