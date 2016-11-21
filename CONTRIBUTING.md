@@ -70,9 +70,32 @@ git remote add upstream git@github.com:SESYNC-ci/lesson-style.git
 git fetch upstream
 git branch --track upstream upstream/master
 git merge upstream
+git push
 ```
 
-Begin developing markdown content within the `docs/_slides` folder, or if using RMarkdown create and use a `docs/_slides_Rmd` folder.
+Configure the README by commiting the following to the `README.md` file, where `<new-lesson>` should be replaced with the new repository's name.
+
+```
+[lesson]: https://sesync-ci.github.io/<new-lesson>
+[slideshow]: https://sesync-ci.github.io/<new-lesson>/instructor
+```
+
+Configure the GitHub page by setting the following variables in the `# Site` section of the `docs/_config.yml` YAML file.
+
+- `title`: a lesson title
+- `worksheet`: the base string displayed for `code.text-document` titles
+- `handouts`: the release version associated with downloadable zips attached to releases
+- `instructor`: who will give the lesson in a workshop setting
+- `authors`: the list of contributors
+- `lesson`: the number of the lesson in a workshop setting
+
+Always create the `docs/_slides` folder, but develop content within one of the following folders as appropriate:
+
+- `docs/_slides` for markdown (.md)
+- `docs/_slides_Rmd` for RMarkdown (.Rmd)
+- `docs/_slides_pmd` for Pweave (.pmd)
+
+A file within one of these folders becomes a vertical stack of slides in a [Reveal.js] presentation: use "===" on it's own line to indicate a slide break. Vertical stacks on concatenated horizontally in the order supplied by the `slide_sorter` variable in `docs/_config.yml`.
 
 ## Archiving a delivered lesson
 
