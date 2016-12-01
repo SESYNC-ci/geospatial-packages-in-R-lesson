@@ -7,12 +7,15 @@ SLIDES_RMD := $(filter %.Rmd, $(SLIDES))
 # bin/build_slides.R runs over all .Rmd slides
 .NOTPARALLEL:
 
-lesson: $(SLIDES_RMD:%.Rmd=docs/_slides/%.md)
+lesson: slides
+	git commit -am 'commit by make'
 	git fetch upstream master:upstream # maybe could streamline this?
 	git merge --no-edit upstream
 	git push
 
+slides: $(SLIDES_RMD:%.Rmd=docs/_slides/%.md)
+
 docs/_slides/%.md: $(SLIDES_RMD:%=docs/_slides_Rmd/%)
 	@bin/build_slides.R
 
-.PHONY: lesson
+.PHONY: lesson slides
