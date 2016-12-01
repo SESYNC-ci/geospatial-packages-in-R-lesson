@@ -9,7 +9,7 @@ SLIDES_RMD := $(filter %.Rmd, $(SLIDES))
 
 # default target will commit and push
 lesson: slides
-	if [ -z "$(git status -s)" ]; then git commit -am 'commit by make'; fi
+	if [ -n "$(git status -s)" ]; then git commit -am 'commit by make'; fi
 	git fetch upstream master:upstream
 	git merge --no-edit upstream
 	git push
