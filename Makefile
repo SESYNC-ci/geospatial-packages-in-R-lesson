@@ -9,7 +9,7 @@ SLIDES_RMD := $(filter %.Rmd, $(SLIDES))
 
 lesson: $(SLIDES_RMD:%.Rmd=docs/_slides/%.md)
 	git fetch upstream master:upstream # maybe could streamline this?
-	git rebase upstream
+	git merge --no-edit upstream
 	git push
 
 docs/_slides/%.md: $(SLIDES_RMD:%=docs/_slides_Rmd/%)
