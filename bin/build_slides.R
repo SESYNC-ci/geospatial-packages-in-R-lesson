@@ -38,9 +38,12 @@ chunk = function(x, options) {
 }
 knit_hooks$set(chunk = chunk)
 
-idx <- grep('.Rmd$', config$slide_sorter)
-for (f.Rmd in config$slide_sorter[idx]) {
-    f.md <- sub(".Rmd$", ".md", f.Rmd)
-    knit(input = file.path("docs", "_slides_Rmd", f.Rmd),
-         output = file.path("docs", "_slides", f.md))
+files <- list.files("docs/_slides_Rmd")
+for (f in config$slide_sorter) {
+    f.Rmd <- paste0(f, ".Rmd")
+    if (f.Rmd %in% files) {
+        f.md <- paste0(f, ".md")
+        knit(input = file.path("docs/_slides_Rmd", f.Rmd),
+             output = file.path("docs/_slides", f.md))
+    }
 }

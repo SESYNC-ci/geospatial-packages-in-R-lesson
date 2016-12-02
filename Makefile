@@ -1,11 +1,14 @@
 # look up slides in Jekyll _config.yml
 SLIDES := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['slide_sorter']")
-# filter to RMarkdown slides
-SLIDES_RMD := $(filter %.Rmd, $(SLIDES))
+
+# list available RMarkdown slides
+SLIDES_RMD := $(shell ls docs/_slides_Rmd/*.Rmd)
 
 # do not run rules in parallel; because
 # bin/build_slides.R runs over all .Rmd slides
 .NOTPARALLEL:
+
+.PHONY: lesson slides $(SLIDES)
 
 # default target will commit and push
 lesson: slides
@@ -14,10 +17,8 @@ lesson: slides
 	git merge --no-edit upstream
 	git push
 
-# use slides target to preview locally
-slides: $(SLIDES_RMD:%.Rmd=docs/_slides/%.md)
+# use this .PHONY target to avoid commit and push 
+slides: $(SLIDES:%=docs/_slides/%.md)
 
-docs/_slides/%.md: $(SLIDES_RMD:%=docs/_slides_Rmd/%)
+$(subst _Rmd,,$(SLIDES_RMD:.Rmd=.md)): $(SLIDES_RMD)
 	@bin/build_slides.R
-
-.PHONY: lesson slides
