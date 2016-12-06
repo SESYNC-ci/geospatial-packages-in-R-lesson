@@ -1,17 +1,20 @@
-# look up slides, lesson and handout in Jekyll _config.yml
+# look up slides, lesson number and handouts in Jekyll _config.yml
 SLIDES := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['slide_sorter']")
-LESSON := $(ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['lesson']")
-HANDOUTS := $(ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['handouts']")
-
-# write target handouts from handouts
-HANDOUTS := $(addprefix ../, $(subst worksheet, worksheet-${LESSON}, ${HANDOUTS}))
+LESSON := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['lesson']")
+HANDOUTS := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['handouts']")
 
 # list available RMarkdown slides and data
 SLIDES_RMD := $(shell find . -path "./docs/_slides_Rmd/*.Rmd")
 DATA := $(shell find . -path "./data/*")
 
+# under make target "course", handouts are copied to ../../
+# with a lesson number substitution for "worksheets" only
+HANDOUTS := $(addprefix ../../, $(subst worksheet, worksheet-${LESSON}, ${HANDOUTS}))
+DATA := $(addprefix ../., ${DATA})
+
 # do not run rules in parallel; because
-# bin/build_slides.R runs over all .Rmd slides
+# - bin/build_slides.R runs over all .Rmd slides
+# - rsync -r only needs to run once
 .NOTPARALLEL:
 .DEFAULT_GOAL: slides
 .PHONY: course lesson slides
@@ -33,13 +36,13 @@ lesson: slides
 
 # this target inserts into handouts repo
 # with root assumed to be at ../
-course: lesson ../data ${NHANDOUTS}
+course: lesson ${DATA} ${HANDOUTS}
 
-../data: ${DATA}
-	rsync -r data/ ../data/
+../../data/%: data/%
+	rsync -r data/ ../../data/
 
-${filter-out ../worksheet%, ${HANDOUTS}}: ${%:../=./}
+../../worksheet-${LESSON}%: worksheet%
 	cp $< $@
 
-${filter ../worksheet%, ${HANDOUTS}}: ../worksheet-${LESSON}%: ./worksheet% # doesn't get all the handouts, use filter?
+${filter-out ../../worksheet%, ${HANDOUTS}}: ../../%: %
 	cp $< $@
