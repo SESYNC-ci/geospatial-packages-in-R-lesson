@@ -1,10 +1,10 @@
 # look up slides, lesson and handout in Jekyll _config.yml
 SLIDES := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['slide_sorter']")
-HANDOUTS := $(ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['handouts']")
 LESSON := $(ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['lesson']")
+HANDOUTS := $(ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['handouts']")
 
 # write target handouts from handouts
-HANDOUTS = $(addprefix ../, $(subst worksheet, worksheet-${LESSON}, ${HANDOUTS}))
+HANDOUTS := $(addprefix ../, $(subst worksheet, worksheet-${LESSON}, ${HANDOUTS}))
 
 # list available RMarkdown slides and data
 SLIDES_RMD := $(shell find . -path "./docs/_slides_Rmd/*.Rmd")
