@@ -1,24 +1,45 @@
-# look up slides in Jekyll _config.yml
+# look up slides, lesson and handout in Jekyll _config.yml
 SLIDES := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['slide_sorter']")
+HANDOUTS := $(ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['handouts']")
+LESSON := $(ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['lesson']")
 
-# list available RMarkdown slides
-SLIDES_RMD := $(shell ls docs/_slides_Rmd/*.Rmd)
+# write target handouts from handouts
+HANDOUTS = $(addprefix ../, $(subst worksheet, worksheet-${LESSON}, ${HANDOUTS}))
+
+# list available RMarkdown slides and data
+SLIDES_RMD := $(shell find . -path "./docs/_slides_Rmd/*.Rmd")
+DATA := $(shell find . -path "./data/*")
 
 # do not run rules in parallel; because
 # bin/build_slides.R runs over all .Rmd slides
 .NOTPARALLEL:
+.DEFAULT_GOAL: slides
+.PHONY: course lesson slides
 
-.PHONY: lesson slides $(SLIDES)
+# this target exists for building .md slides
+# without commit and push 
+slides: $(SLIDES:%=docs/_slides/%.md)
 
-# default target will commit and push
+$(subst _Rmd,,$(SLIDES_RMD:.Rmd=.md)): $(SLIDES_RMD)
+	@bin/build_slides.R
+
+# this target updates the lesson repo
+# on GitHub following a slide build
 lesson: slides
 	if [ -n "$(git status -s)" ]; then git commit -am 'commit by make'; fi
 	git fetch upstream master:upstream
 	git merge --no-edit upstream
 	git push
 
-# use this .PHONY target to avoid commit and push 
-slides: $(SLIDES:%=docs/_slides/%.md)
+# this target inserts into handouts repo
+# with root assumed to be at ../
+course: lesson ../data ${NHANDOUTS}
 
-$(subst _Rmd,,$(SLIDES_RMD:.Rmd=.md)): $(SLIDES_RMD)
-	@bin/build_slides.R
+../data: ${DATA}
+	rsync -r data/ ../data/
+
+${filter-out ../worksheet%, ${HANDOUTS}}: ${%:../=./}
+	cp $< $@
+
+${filter ../worksheet%, ${HANDOUTS}}: ../worksheet-${LESSON}%: ./worksheet% # doesn't get all the handouts, use filter?
+	cp $< $@
