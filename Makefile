@@ -7,10 +7,10 @@ HANDOUTS := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.ym
 SLIDES_RMD := $(shell find . -path "./docs/_slides_Rmd/*.Rmd")
 DATA := $(shell find . -path "./data/*")
 
-# under make target "course", handouts are copied to ../../
-# with a lesson number substitution for "worksheets" only
-HANDOUTS := $(addprefix ../../, $(subst worksheet, worksheet-${LESSON}, ${HANDOUTS}))
-DATA := $(addprefix ../., ${DATA})
+# make target "course" copies handouts to ../../
+# adding a lesson number to any "worksheet"
+HANDOUTS := $(addprefix ../../, $(HANDOUTS:worksheet%=worksheet-$(LESSON)%))
+DATA := $(addprefix ../., $(DATA))
 
 # do not run rules in parallel; because
 # - bin/build_slides.R runs over all .Rmd slides
@@ -36,13 +36,13 @@ lesson: slides
 
 # this target inserts into handouts repo
 # with root assumed to be at ../
-course: lesson ${DATA} ${HANDOUTS}
+course: lesson $(DATA) $(HANDOUTS)
 
 ../../data/%: data/%
 	rsync -r data/ ../../data/
 
-../../worksheet-${LESSON}%: worksheet%
+../../worksheet-$(LESSON)%: worksheet%
 	cp $< $@
 
-${filter-out ../../worksheet%, ${HANDOUTS}}: ../../%: %
+$(filter-out ../../worksheet%, $(HANDOUTS)): ../../%: %
 	cp $< $@
