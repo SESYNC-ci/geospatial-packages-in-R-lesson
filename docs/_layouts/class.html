@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	  {% include head.html %}
+	  <link rel="stylesheet" href="{{ site.styleurl }}{{ page.style }}">
+  </head>
+  <body>
+	  <div class="page-content">
+	    <div class="wrapper">
+        {% assign new_content = content %}
+        {% for handout in site.handouts %}
+          {% if handout contains 'worksheet' %}
+            {% assign worksheet = handout | remove: 'worksheet' | prepend: site.lesson | prepend: 'worksheet-' %}
+            {% assign new_content = new_content | replace: handout, worksheet %}
+          {% endif %}
+        {% endfor %}        
+		    {{ new_content }}
+	    </div>
+	  </div>
+  </body>
+</html>

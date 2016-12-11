@@ -1,5 +1,5 @@
 ---
-layout: slideshow
+layout: instructor
 reveal-theme: /css/theme/sky.css
 style: /css/slideshow.css
 ---
