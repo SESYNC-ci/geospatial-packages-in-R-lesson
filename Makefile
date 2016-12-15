@@ -9,6 +9,7 @@ DATA := $(shell find . -path "./data/*")
 
 # make target "course" copies handouts to ../../
 # adding a lesson number to any "worksheet"
+# it is intended to be called by the handouts Makefile
 HANDOUTS := $(addprefix ../../, $(HANDOUTS:worksheet%=worksheet-$(LESSON)%))
 DATA := $(addprefix ../., $(DATA))
 
@@ -23,6 +24,8 @@ DATA := $(addprefix ../., $(DATA))
 # without commit and push 
 slides: $(SLIDES:%=docs/_slides/%.md)
 
+# cannot use a pattern as the target, because
+# this list is only a subset of docs/_slides/%.md
 $(subst _Rmd,,$(SLIDES_RMD:.Rmd=.md)): $(SLIDES_RMD)
 	@bin/build_slides.R
 
