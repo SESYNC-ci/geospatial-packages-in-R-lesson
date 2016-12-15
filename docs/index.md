@@ -1,6 +1,6 @@
 ---
 layout: default
-style: /css/lesson.css
+style: /css/static.css
 ---
 
 # {{ site.title }}

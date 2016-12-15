@@ -1,5 +1,5 @@
 ---
-layout: class
+layout: archive
 style: /css/static.css
 ---
 

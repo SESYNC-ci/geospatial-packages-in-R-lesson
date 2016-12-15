@@ -1,7 +1,7 @@
 ---
-layout: instructor
-reveal-theme: /css/theme/sky.css
+layout: slideshow
 style: /css/slideshow.css
+reveal-theme: /css/theme/sky.css
 ---
 
 <section markdown="1">
