@@ -18,7 +18,7 @@ DATA := $(addprefix ../., $(DATA))
 # - rsync -r only needs to run once
 .NOTPARALLEL:
 .DEFAULT_GOAL: slides
-.PHONY: course lesson slides
+.PHONY: course lesson slides archive
 
 # this target exists for building .md slides
 # without commit and push 
@@ -49,3 +49,8 @@ course: lesson $(DATA) $(HANDOUTS)
 
 $(filter-out ../../worksheet%, $(HANDOUTS)): ../../%: %
 	cp $< $@
+
+# must call the archive target with a command
+# line parameter for DATE
+archive:
+	@curl "https://sesync-ci.github.io/$${PWD##*/}/class/archive.html" -o docs/_posts/$(DATE)-index.html
