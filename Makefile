@@ -9,9 +9,10 @@ DATA := $(shell find . -path "./data/*")
 
 # make target "course" copies handouts to ../../
 # adding a lesson number to any "worksheet"
-# it is intended to be called by the handouts Makefile
+# and rsyncs data/ to ../data/
+# it is intended to be called in the handouts Makefile
 HANDOUTS := $(addprefix ../../, $(HANDOUTS:worksheet%=worksheet-$(LESSON)%))
-DATA := $(addprefix ../., $(DATA))
+DATA := $(addprefix ../, $(DATA))
 
 # do not run rules in parallel; because
 # - bin/build_slides.R runs over all .Rmd slides
@@ -41,8 +42,8 @@ lesson: slides
 # with root assumed to be at ../
 course: lesson $(DATA) $(HANDOUTS)
 
-../../data/%: data/%
-	rsync -r data/ ../../data/
+../data/%: data/%
+	rsync -r data/ ../data/
 
 ../../worksheet-$(LESSON)%: worksheet%
 	cp $< $@
@@ -50,7 +51,7 @@ course: lesson $(DATA) $(HANDOUTS)
 $(filter-out ../../worksheet%, $(HANDOUTS)): ../../%: %
 	cp $< $@
 
-# must call the archive target with a command
-# line parameter for DATE
+# must call the archive target with a
+# command line parameter for DATE
 archive:
 	@curl "https://sesync-ci.github.io/$${PWD##*/}/class/archive.html" -o docs/_posts/$(DATE)-index.html
