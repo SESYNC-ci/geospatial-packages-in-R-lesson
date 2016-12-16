@@ -9,10 +9,8 @@ DATA := $(shell find . -path "./data/*")
 
 # make target "course" copies handouts to ../../
 # adding a lesson number to any "worksheet"
-# and rsyncs data/ to ../data/
 # it is intended to be called in the handouts Makefile
 HANDOUTS := $(addprefix ../../, $(HANDOUTS:worksheet%=worksheet-$(LESSON)%))
-DATA := $(addprefix ., $(DATA))
 
 # do not run rules in parallel; because
 # - bin/build_slides.R runs over all .Rmd slides
@@ -41,10 +39,8 @@ lesson: slides
 
 # this target inserts into handouts repo
 # with root assumed to be at ../
-course: lesson $(DATA) $(HANDOUTS)
-
-../data/%: data/%
-	rsync -r data/ ../data/
+course: lesson $(HANDOUTS)
+	if [ -d "data" ]; then rsync -au data/ ../data/; fi
 
 ../../worksheet-$(LESSON)%: worksheet%
 	cp $< $@
