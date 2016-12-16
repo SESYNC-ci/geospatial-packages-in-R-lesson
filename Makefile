@@ -12,7 +12,7 @@ DATA := $(shell find . -path "./data/*")
 # and rsyncs data/ to ../data/
 # it is intended to be called in the handouts Makefile
 HANDOUTS := $(addprefix ../../, $(HANDOUTS:worksheet%=worksheet-$(LESSON)%))
-DATA := $(addprefix ../, $(DATA))
+DATA := $(addprefix ., $(DATA))
 
 # do not run rules in parallel; because
 # - bin/build_slides.R runs over all .Rmd slides
