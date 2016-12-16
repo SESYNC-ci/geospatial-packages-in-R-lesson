@@ -33,6 +33,7 @@ $(subst _Rmd,,$(SLIDES_RMD:.Rmd=.md)): $(SLIDES_RMD)
 # this target updates the lesson repo
 # on GitHub following a slide build
 lesson: slides
+	git pull
 	if [ -n "$$(git status -s)" ]; then git commit -am 'commit by make'; fi
 	git fetch upstream master:upstream
 	git merge --no-edit upstream
