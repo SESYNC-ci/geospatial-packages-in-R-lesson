@@ -1,0 +1,28 @@
+# Lesson
+
+title:
+handouts:
+tag:
+lesson:
+instructor:
+authors:
+
+# Slides
+
+slide_sorter:
+
+#####################################
+# Only modify content above or risk #
+# merge conflicts with upstream.    #
+#####################################
+
+# Style
+
+styleurl: https://cdn.rawgit.com/sesync-ci/lesson-style/1.1/docs
+reveal: https://cdn.rawgit.com/hakimel/reveal.js/3.3.0
+
+# Jekyll
+
+markdown: kramdown
+collections:
+  - slides
