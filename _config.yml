@@ -1,7 +1,0 @@
-baseurl: '/geospatial-packages-in-R-lesson'
-defaults:
-  -
-    scope:
-      path: ''
-    values:
-      layout: 'default'
