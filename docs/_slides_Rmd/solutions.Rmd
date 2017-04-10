@@ -1,0 +1,41 @@
+---
+---
+
+## Exercise solutions
+
+===
+
+### Solution 1
+
+```{r sol1, eval=FALSE}
+plot(counties_md)
+frederick <- counties_md[counties_md$NAME == "Frederick", ]
+plot(frederick, add = TRUE, col = "red")
+```
+
+[Return](#exercise-1)
+{:.notes}
+
+===
+
+### Solution 2
+
+```{r sol2, eval=FALSE}
+buffer <- gBuffer(state_md, width = 5000)
+plot(state_md)
+plot(buffer, lty = "dotted", add = TRUE)
+```
+
+[Return](#exercise-2)
+{:.notes}
+
+===
+
+### Solution 3
+
+```{r sol3, eval=FALSE}
+cellStats(nlcd == 41, "mean")
+```
+
+[Return](#exercise-3)
+{:.notes}

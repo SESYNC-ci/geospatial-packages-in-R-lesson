@@ -1,0 +1,47 @@
+---
+---
+
+## Mixing rasters and vectors
+
+The `extract` function allows subsetting and aggregation of raster values based on a vector spatial object. When extracting by point locations (i.e. a *SpatialPoints* object), the result is a vector of values corresponding to each point.
+
+```{r extract_pt, fig.keep='last', title="{{ site.handouts }}"}
+sesync <- spTransform(sesync, proj1)
+plot(nlcd)
+plot(sesync, col = 'green', pch = 16, cex = 2, add = TRUE)
+```
+
+===
+
+```{r}
+sesync_lc <- extract(nlcd, sesync)
+```
+
+```{r}
+lc_types[sesync_lc + 1]
+```
+
+===
+
+When extracting with a polygon, the output is a vector of all raster values for pixels falling within that polygon.
+
+```{r extract_poly1, title="{{ site.handouts }}"}
+county_nlcd <- extract(nlcd_agg, counties_md[1,])
+```
+
+```{r}
+table(county_nlcd)
+```
+
+===
+
+To get a summary of raster values for **each** polygon in a `SpatialPolygons` object, add an aggregation function to `extract` via the `fun` argument. For example, `fun = modal` gives the most common land cover type for each polygon in `huc_md`.
+
+```{r extract_poly_agg, title="{{ site.handouts }}"}
+modal_lc <- extract(nlcd_agg, counties_md, fun = modal)
+counties_md$modal_lc <- lc_types[modal_lc + 1]
+```
+
+```{r}
+head(counties_md)
+```

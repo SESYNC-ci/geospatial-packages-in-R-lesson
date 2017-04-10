@@ -1,15 +1,23 @@
 # Lesson
 
-title:
-handouts:
-tag:
+title: Geospatial Analysis in R
+handouts: worksheet.R
+tag: v0.0
 lesson:
 instructor:
 authors:
+  - Philippe Marchand
+  - Ian Carroll
 
 # Slides
 
 slide_sorter:
+  - intro
+  - vector
+  - raster
+  - extract
+  - refs
+  - solutions
 
 #####################################
 # Only modify content above or risk #
