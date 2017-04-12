@@ -292,7 +292,7 @@ Keep in mind that all these functions use **planar** geometry equations and thus
 
 ## Exercise 2
 
-Create a 5km buffer around the `state_md` borders and plot it as a dotted line (`plot(..., lty = "dotted")`) on the same map. **Hint**: check the layer's units with `proj4string()` and express any distance in those units.
+Use `gBuffer` to Create a 5km buffer around the `state_md` borders and plot it as a dotted line (`plot(..., lty = "dotted")`) over the true state border. **Hint**: check the layer's units with `proj4string()` and express any distance in those units.
 
 [View solution](#solution-2)
 {:.notes}
