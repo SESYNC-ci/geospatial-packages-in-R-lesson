@@ -1,14 +1,12 @@
 ---
-layout: default
+layout: archive
 style: /css/static.css
 ---
 
 # {{ site.title }}
 {:style="text-transform: none;"}
 
-{% if site.handouts %}
-> Handouts for this lesson need to be saved on your computer. [Download]({{ site.github.releases_url }}/download/{{ site.tag }}/handouts.zip) and unzip this material into the directory (a.k.a. folder) where you plan to work.
-{% endif %}
+Lesson {{ site.lesson }} with *{{ site.instructor }}*
 
 ## Contents
 

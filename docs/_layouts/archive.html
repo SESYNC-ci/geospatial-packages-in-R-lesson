@@ -2,12 +2,12 @@
 <html>
   <head>
 	  {% include head.html %}
-	  <link rel="stylesheet" href="{{ site.baseurl }}{{ page.style }}">
+	  <link rel="stylesheet" href="{{ site.styleurl }}{{ page.style }}">
   </head>
   <body>
 	  <div class="page-content">
 	    <div class="wrapper">
-		    {{ content }}
+        {% include subst_content.html %}
 	    </div>
 	  </div>
   </body>

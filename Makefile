@@ -1,63 +1,54 @@
-## What the *-lesson makefiles need to accomplish
+# look up slides, lesson number and handouts in Jekyll _config.yml
+SLIDES := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['slide_sorter']")
+LESSON := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['lesson']")
+HANDOUTS := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['handouts']")
 
-1. git fetch upstream  # upstream is github.com/sesync-ci/lesson-style
-1. git merge --no-edit upstream/master - abort if merge conflict
-1. knit or pweave into docs/_slides # do i need to jekyll ignore _slides_Rmd?
-1. git push  # origin is github.com/sesync-ci/*-lesson
+# list available RMarkdown slides and data
+SLIDES_RMD := $(shell find . -path "./docs/_slides_Rmd/*.Rmd")
+DATA := $(shell find . -path "./data/*")
 
-## What the handouts makefile needs to accomplish
+# make target "course" copies handouts to ../../
+# adding a lesson number to any "worksheet"
+# it is intended to be called in the handouts Makefile
+HANDOUTS := $(addprefix ../../, $(HANDOUTS:worksheet%=worksheet-$(LESSON)%))
 
-1. run all the *-lesson makefiles?
-  1. clone/pull them all into a build/ area (so content must be from remote, not local)
-  1. gitignore the build area
-  1. then run their makefiles (maybe with push optional push while testing)
-1. copy *-lesson/data into handouts/data
-1. copy *-lesson/worksheet[-x].* into handouts as lesson-#-x.*
+# do not run rules in parallel; because
+# - bin/build_slides.R runs over all .Rmd slides
+# - rsync -r only needs to run once
+.NOTPARALLEL:
+.DEFAULT_GOAL: slides
+.PHONY: course lesson slides archive
 
-## Here is a working script to build Rmd
+# this target exists for building .md slides
+# without commit and push 
+slides: $(SLIDES:%=docs/_slides/%.md)
 
-require(knitr)
-require(yaml)
-require(stringr)
+# cannot use a pattern as the target, because
+# this list is only a subset of docs/_slides/%.md
+$(subst _Rmd,,$(SLIDES_RMD:.Rmd=.md)): $(SLIDES_RMD)
+	@bin/build_slides.R
 
-config = yaml.load_file("docs/_config.yml")
-render_markdown(fence_char = "~")
-opts_knit$set(
-    root.dir = '.',
-    base.dir = 'docs/',
-    base.url = '{{ site.baseurl }}/')
-opts_chunk$set(
-    comment = NA,
-    fig.path = "images/",
-    block_ial = c("{:.input}", "{:.output}"))
+# this target updates the lesson repo
+# on GitHub following a slide build
+lesson: slides
+	git pull
+	if [ -n "$$(git status -s)" ]; then git commit -am 'commit by make'; fi
+	git fetch upstream master:upstream
+	git merge --no-edit upstream
+	git push
 
-current_chunk = knit_hooks$get("chunk")
-chunk = function(x, options) {
-    x <- current_chunk(x, options)
-    if (!is.null(options$title)) {
-        x <- gsub("~~~(\n*(!\\[.+)?$)",
-                  paste0("~~~\n{:.text-document title=\"", options$title, "\"}\\1"),
-                  x)
-        return(x)
-    }
-    x <- gsub("~~~\n(\n+~~~)",
-              paste0("~~~\n", options$block_ial[1], "\\1"),
-              x)
-    if (str_count(x, "~~~") > 2) {
-        idx <- 2
-    } else {
-        idx <- 1
-    }
-    x <- gsub("~~~(\n*$)",
-              paste0("~~~\n", options$block_ial[idx], "\\1"),
-              x)
-    return(x)
-}
-knit_hooks$set(chunk = chunk)
+# this target inserts into handouts repo
+# with root assumed to be at ../
+course: lesson $(HANDOUTS)
+	if [ -d "data" ]; then rsync -au data/ ../data/; fi
 
-for (f in config$slide_sorter) {
-    knit(input=paste0("docs/_slides_Rmd/", f, ".Rmd"),
-         output=paste0("docs/_slides/", f, ".md"))
-}
+../../worksheet-$(LESSON)%: worksheet%
+	cp $< $@
 
-## See basic-Python-lesson for dealing with pmd files
+$(filter-out ../../worksheet%, $(HANDOUTS)): ../../%: %
+	cp $< $@
+
+# must call the archive target with a
+# command line parameter for DATE
+archive:
+	@curl "https://sesync-ci.github.io/$${PWD##*/}/class/archive.html" -o docs/_posts/$(DATE)-index.html

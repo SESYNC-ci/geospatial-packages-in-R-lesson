@@ -4,9 +4,10 @@ title: Quick start with Python
 worksheet: worksheet.py
 tag: v0.0
 lesson: 0
-instructor: Philippe Marchand
+instructor: Ian Carroll
 authors:
   - Philippe Marchand
+  - Ian Carroll
 
 # Slides
 
@@ -27,7 +28,7 @@ slide_sorter:
 
 # Style
 
-styleurl: https://cdn.rawgit.com/sesync-ci/lesson-stylesheets/1.0.1
+styleurl: https://cdn.rawgit.com/sesync-ci/lesson-style/1.1/docs
 reveal: https://cdn.rawgit.com/hakimel/reveal.js/3.3.0
 
 # Jekyll
