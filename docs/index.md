@@ -6,7 +6,9 @@ style: /css/lesson.css
 # {{ site.title }}
 {:style="text-transform: none;"}
 
+{% if site.worksheet %}
 > Handouts for this lesson need to be saved on your computer. [Download]({{ site.github.releases_url }}/download/{{ site.tag }}/handouts.zip) and unzip this material into the directory (a.k.a. folder) where you plan to work.
+{% endif %}
 
 ## Contents
 
