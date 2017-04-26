@@ -4,15 +4,15 @@ i = 3
 
 r = i + 1.5
 
-s = 'three'
+s = ...
 
 # Lists
 
-lst = [r, s, 'another string']
+lst = ...
 
 ## List subsetting
 
-nlst = [1, 2, 3, [11, 12, 13]]
+... = [1, ...]
 
 
 ## Exercise 1
@@ -23,9 +23,9 @@ nlst = [1, 2, 3, [11, 12, 13]]
 
 ## List methods
 
-i = lst.index('three')
+i = ...
 
-lst.append(100)
+...append(100)
 
 ## Exercise 2
 # 
@@ -36,19 +36,16 @@ lst.append(100)
 
 x = lst.append(200)
 
-same_lst = lst
-same_lst.append(300)
+... = lst
+...
 
 ## Dictionaries
 
-animals = {'Snowy':'dog', 'Garfield':'cat', 'Bugs':'rabbit'}
+animals = {..., 'Garfield':'cat', 'Bugs':'rabbit'}
 
-animals['Lassie'] = 'dog'
+animals[...] = 'dog'
 
-animals.update(
-  Tweety='bird',
-  Bob='sponge',
-  )
+animals.update(...)
 
 animals.update({
   3.14:'pie',
@@ -65,19 +62,19 @@ animals.update({
 ## Loops and conditionals
 
 squares = []
-for i in range(1, 5):
-    j = i ** 2
-    squares.append(j)
+...
+    ...
+    squares...
     
 contacts = [
     {'name':'Alice', 'phone':'555-111-2222'},
     {'name':'Bob', 'phone':'555-333-4444'},
     ]
 
-for c in contacts:
-    if c['name'] == 'Alice':
+for ...
+    if ...
         print(c['phone'])
-    else:
+    ...
         print(c['name'])
 
 ## Exercise 5
@@ -90,10 +87,10 @@ for c in contacts:
 ## Function definition
 
 def add_two(num):
-    result = num + 2
-    return result
+    ...
+    ...
 
-def add_any(num, x=0):
+...
     result = num + x
     return result
 
@@ -102,24 +99,24 @@ def add_any(num, x=0):
 ## NumPy
 
 import numpy as np
-vect = np.array([5, 20, 12])
+...
 
-mat = np.array([[1, 2, 3], [4, 5, 6]])
+...
 
 ## Pandas
 
-import pandas as pd
+...
 surveys = pd.read_csv("data/surveys.csv")
 
-surveys_dm = surveys.loc[surveys['species_id'] == 'DM', ]
+surveys_dm = ...[surveys['species_id'] == 'DM', ]
 
-surveys_dm = surveys.query('species_id == "DM"')
+surveys_dm = ...
 
 dm_stats = (
-  surveys_dm
-  .groupby('sex')
+  ...
+  ...
   ['hindfoot_length', 'weight']
-  .mean()
+  ...
   )
 
 ## Exercise 6
@@ -130,8 +127,8 @@ dm_stats = (
 
 ## Matplotlib
 
-import matplotlib.pyplot as plt
-ax = surveys_dm.plot('hindfoot_length', 'weight', kind = 'scatter')
+...
+ax = surveys_dm.plot(...)
 
 surveys_dm.hist('weight')
-plt.savefig('hist_weight.pdf')
+...
