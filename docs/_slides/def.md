@@ -1,7 +1,7 @@
 ---
 ---
 
-## Defining a function
+## Function definition
 
 We already saw examples of a few built-in functions, such as `type()` or `len()`.
 You can define your own Python functions as a block of code starting with a `def`
@@ -9,15 +9,20 @@ statement.
 
 
 ~~~python
->>> def add_2(num):
-...     result = num + 2
-...     return result
-...
->>> add_2(10)
+def add_two(num):
+    result = num + 2
+    return result
+~~~
+{:.text-document title="worksheet.py"}
+
+
+
+~~~python
+>>> add_two(10)
 12
 
 ~~~
-{:.term}
+{:.output}
 
 
 
@@ -33,5 +38,28 @@ arguments in parentheses, in the same order as in its definition.
 
 ===
 
-**Exercise**: Create a function that takes a list as an argument and returns
+
+~~~python
+def add_any(num, x=0):
+    result = num + x
+    return result
+~~~
+{:.text-document title="worksheet.py"}
+
+
+
+~~~python
+>>> add_any(10, 5)
+15
+
+~~~
+{:.output}
+
+
+
+===
+
+## Exercise 5
+
+Create a function that takes a list as an argument and returns
 its first and last elements as a new list.

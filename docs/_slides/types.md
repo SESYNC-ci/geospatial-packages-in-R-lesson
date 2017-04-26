@@ -13,32 +13,65 @@ The type of a variable is automatically set when a value is assigned to it,
  
 
 ~~~python
->>> i = 3
+i = 3
+~~~
+{:.text-document title="worksheet.py"}
+
+
+
+~~~python
 >>> type(i)
-<class 'int'>
+<type 'int'>
 
 ~~~
-{:.term}
+{:.output}
 
 
 
 ===
 
 Python supports the usual arithmetic operators:
- `+`, `-`, `*`, `/`, `**` (exponent)  
-and comparison operators: 
- `==` (equal), `!=` (non-equal), `<`, `>`, `<=`, `>=` .
- 
+
+
+| `+`  | addition       |
+| `-`  | subtraction    |
+| `*`  | multiplication |
+| `/`  | division       |
+| `**` | exponent       |
+| `%`  | modulus        |
+| `//` | floor division |
+
+===
+
+The comparison operators are symbols, while logicals are plain english:
+
+| `==`       | equal                             |
+| `!=`       | non-equal                         |
+| `>`, `<`   | greater, lesser                   |
+| `>=`, `<=` | greater or equal, lesser or equal |
+| `and`      | logical and                       |
+| `or`       | logical or                        |
+| `not`      | logical negation                  |
+| `in`       | logical membership                |
+
+===
+
 Both `int` and `float` values can be mixed within an expression; the result is a `float`.
 
 
 ~~~python
->>> r = i + 1.5
->>> print(r, 'is of', type(r))
-4.5 is of <class 'float'>
+r = i + 1.5
+~~~
+{:.text-document title="worksheet.py"}
+
+
+
+~~~python
+>>> print r, 'is of', type(r)
+4.5 is of <type 'float'>
 
 ~~~
-{:.term}
+{:.output}
 
 
 
@@ -52,12 +85,18 @@ Let's define a new string variable.
 
 
 ~~~python
->>> s = 'three'
+s = 'three'
+~~~
+{:.text-document title="worksheet.py"}
+
+
+
+~~~python
 >>> type(s)
-<class 'str'>
+<type 'str'>
 
 ~~~
-{:.term}
+{:.output}
 
 
 
@@ -73,6 +112,6 @@ strings.
 'three four'
 
 ~~~
-{:.term}
+{:.output}
 
 

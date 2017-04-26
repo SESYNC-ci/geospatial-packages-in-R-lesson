@@ -11,23 +11,48 @@ The type of a variable is automatically set when a value is assigned to it,
  using the `=` operator. It can be queried with the built-in `type()`
  function.
  
-```{python}
+```{python, term=False}
 i = 3
+```
+```{python}
 type(i)
 ```
 
 ===
 
 Python supports the usual arithmetic operators:
- `+`, `-`, `*`, `/`, `**` (exponent)  
-and comparison operators: 
- `==` (equal), `!=` (non-equal), `<`, `>`, `<=`, `>=` .
- 
+
+
+| `+`  | addition       |
+| `-`  | subtraction    |
+| `*`  | multiplication |
+| `/`  | division       |
+| `**` | exponent       |
+| `%`  | modulus        |
+| `//` | floor division |
+
+===
+
+The comparison operators are symbols, while logicals are plain english:
+
+| `==`       | equal                             |
+| `!=`       | non-equal                         |
+| `>`, `<`   | greater, lesser                   |
+| `>=`, `<=` | greater or equal, lesser or equal |
+| `and`      | logical and                       |
+| `or`       | logical or                        |
+| `not`      | logical negation                  |
+| `in`       | logical membership                |
+
+===
+
 Both `int` and `float` values can be mixed within an expression; the result is a `float`.
 
-```{python}
+```{python, term=False}
 r = i + 1.5
-print(r, 'is of', type(r))
+```
+```{python}
+print r, 'is of', type(r)
 ```
 
 ===
@@ -38,8 +63,10 @@ Note that quoted character strings (here, 'is of') are printed as is.
 
 Let's define a new string variable.
 
-```{python}
+```{python, term=False}
 s = 'three'
+```
+```{python}
 type(s)
 ```
 

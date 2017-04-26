@@ -9,43 +9,23 @@ identifiers called *keys*.
 
 A dictionary is constructed by surrounding a comma-separated sequence of `key:value` pairs in curly brackets. Individual values are accessed using square brackets, as for indexing into lists. In a `dict`, however the keys are the indices and the values cannot be accessed by their integer position.
 
-
-~~~python
+```{python, term=False}
 animals = {'Snowy':'dog', 'Garfield':'cat', 'Bugs':'rabbit'}
-~~~
-{:.text-document title="worksheet.py"}
-
-
-
-~~~python
->>> animals['Bugs']
-'rabbit'
-
-~~~
-{:.output}
-
-
+```
+```{python}
+animals['Bugs']
+```
 
 ===
 
 To add a single new element to the dictionary, define a new `key:value` pair by assigning a value to a novel key in the dictionary.
 
-
-~~~python
+```{python, term=False}
 animals['Lassie'] = 'dog'
-~~~
-{:.text-document title="worksheet.py"}
-
-
-
-~~~python
->>> animals
-{'Garfield': 'cat', 'Lassie': 'dog', 'Bugs': 'rabbit', 'Snowy': 'dog'}
-
-~~~
-{:.output}
-
-
+```
+```{python}
+animals
+```
 
 ===
 
@@ -65,16 +45,12 @@ Based on what we have learned so far about lists and dictionaries, think up a da
 
 The `update()` method allows you to extend a dictionary with multiple new `key:value` pairs, or simultaneously overwrite existing ones.
 
-
-~~~python
+```{python, term=False}
 animals.update(
   Tweety='bird',
   Bob='sponge',
   )
-~~~
-{:.text-document title="worksheet.py"}
-
-
+```
 
 ===
 
@@ -90,13 +66,9 @@ An alternative method of calling the `update()` method reveals the full
 flexibility of dictionaries. The keys can be any object, and different types of keys
 can coexist in a single dictionary.
 
-
-~~~python
+```{python, term=False}
 animals.update({
   3.14:'pie',
   u'\U0001F98A':'Mr. Fox',
   })
-~~~
-{:.text-document title="worksheet.py"}
-
-
+```
