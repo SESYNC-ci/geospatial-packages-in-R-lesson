@@ -5,7 +5,7 @@ HANDOUTS := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.ym
 
 # list available RMarkdown and Pweave slides and data
 SLIDES_RMD := $(shell find . -path "./docs/_slides_Rmd/*.Rmd")
-SLIDES_PYMD := $(shell find . -path "./docs/_slides_pymd/*.pymd")
+SLIDES_PMD := $(shell find . -path "./docs/_slides_pmd/*.pmd")
 DATA := $(shell find . -path "./data/*")
 
 # make target "course" copies handouts to ../../
@@ -29,7 +29,7 @@ slides: $(SLIDES:%=docs/_slides/%.md)
 $(subst _Rmd,,$(SLIDES_RMD:.Rmd=.md)): $(SLIDES_RMD)
 	@bin/build_slides.R
 
-$(subst _Rmd,,$(SLIDES_PYMD:.pymd=.md)): $(SLIDES_PYMD)
+$(subst _pmd,,$(SLIDES_PMD:.pmd=.md)): $(SLIDES_PMD)
 	@bin/build_slides.py
 
 # this target updates the lesson repo
