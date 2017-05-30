@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	  {% include head.html %}
+	  <link rel="stylesheet" href="{{ site.reveal }}/css/reveal.css">
+	  <link rel="stylesheet" href="{{ site.reveal }}{{ page.reveal-theme }}" id="theme">
+	  <!--[if lt IE 9]>
+      <script src="{{ site.reveal }}/lib/js/html5shiv.js"></script>
+	  <![endif]-->
+	  <link rel="stylesheet" href="{{ site.baseurl }}{{ page.style }}">
+  </head>
+  <body>
+	  <div class="reveal">
+	    <div class="slides">
+        {{ content }}
+	    </div>
+	  </div>
+    <script>
+     var collection = document.getElementsByClassName("notes");
+     for (var i = 0; i < collection.length; i++) {
+         var p = collection[i];
+         var aside = document.createElement("aside");
+         aside.className = p.className;
+         aside.innerHTML = p.innerHTML;
+         p.replaceWith(aside);         
+         };     
+    </script>
+	  <script src="{{ site.reveal }}/lib/js/head.min.js"></script>
+	  <script src="{{ site.reveal }}/js/reveal.js"></script>
+	  <script>
+	   Reveal.initialize({
+	       // Size
+	       width: 1600,
+	       height: 900,
+	       margin: 0.1,
+	       // Controls
+	       controls: false,
+	       // Transition
+	       transition: "none",
+	       // Plugins
+	       dependencies: [
+		         // Zoom in and out with Alt+click
+		         { src: "{{ site.reveal }}/plugin/zoom-js/zoom.js", async: true },
+		         // Speaker notes
+		         { src: "{{ site.reveal }}/plugin/notes/notes.js", async: true },
+		         // MathJax
+		         { src: "{{ site.reveal }}/plugin/math/math.js", async: true },
+	       ],
+	   });
+	  </script>
+  </body>
+</html>
