@@ -10,6 +10,7 @@ reveal-theme: /css/theme/sky.css
 {:style="text-transform: none;"}
 
 Lesson {{ site.lesson }} with *{{ site.instructor }}*
+{:style="text-align: center;"}
 
 </section>
 

@@ -1,5 +1,5 @@
 ---
-layout: class
+layout: course
 style: /css/static.css
 ---
 
