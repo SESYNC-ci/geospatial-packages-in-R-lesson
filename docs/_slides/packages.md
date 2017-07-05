@@ -280,7 +280,7 @@ To select a subset of rows and/or columns by name, use the `loc` attribute and `
 ~~~
 {:.output}
 
-
+===
 
 As with lists, `:` by itself indicates all the rows (or columns). Unlike lists, the `loc` attribute returns both endpoints of a slice.
 
