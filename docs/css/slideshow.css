@@ -73,6 +73,10 @@ p.on-white {
     text-align: left;
 }
 
+.reveal p.captioned {
+    text-align: center;
+}
+
 .reveal ol, .reveal ul {
     display: block;
     margin-left: 5%;
