@@ -20,22 +20,26 @@ current_chunk = knit_hooks$get('chunk')
 chunk = function(x, options) {
     x <- current_chunk(x, options)
     if (!is.null(options$title)) {
+        # add title to kramdown block IAL
         x <- gsub('~~~(\n*(!\\[.+)?$)',
                   paste0('~~~\n{:.text-document title="', options$title, '"}\\1'),
                   x)
-        return(x)
-    }
-    x <- gsub('~~~\n(\n+~~~)',
-              paste0('~~~\n', options$block_ial[1], '\\1'),
-              x)
-    if (str_count(x, '~~~') > 2) {
-        idx <- 2
+        # move figures to <div> on next slide
+        x <- gsub('(!\\[.+$)', '===\n\n\\1\n{:.captioned}', x)
     } else {
-        idx <- 1
+        # add default kramdown block IAL to kramdown block IAL to input
+        x <- gsub('~~~\n(\n+~~~)',
+                  paste0('~~~\n', options$block_ial[1], '\\1'),
+                  x)
+        if (str_count(x, '~~~') > 2) {
+            idx <- 2
+        } else {
+            idx <- 1
+        }
+        x <- gsub('~~~(\n*$)',
+                  paste0('~~~\n', options$block_ial[idx], '\\1'),
+                  x)
     }
-    x <- gsub('~~~(\n*$)',
-              paste0('~~~\n', options$block_ial[idx], '\\1'),
-              x)
     return(x)
 }
 knit_hooks$set(chunk = chunk)
