@@ -1,11 +1,7 @@
 # R
-.Rproj.user
 .Rhistory
-.RData
-.Ruserdata
+.Rproj.user
+docs/_slides_Rmd/cache
 
 # Jekyll
 docs/_site
-
-# Symlinks
-docs/_slides_Rmd/data

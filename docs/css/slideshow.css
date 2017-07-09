@@ -65,11 +65,19 @@ p.on-white {
     border-radius: 15px;
 }
 
-.reveal h2.ex::after {
-    counter-increment: section;
-    content: " " counter(section);
-}
-
 .reveal h2, .reveal h1 {
     text-transform: capitalize;
+}
+
+.reveal p {
+    text-align: left;
+}
+
+.reveal p.captioned {
+    text-align: center;
+}
+
+.reveal ol, .reveal ul {
+    display: block;
+    margin-left: 5%;
 }

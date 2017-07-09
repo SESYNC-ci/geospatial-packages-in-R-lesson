@@ -3,8 +3,10 @@ SLIDES := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml'
 LESSON := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['lesson']")
 HANDOUTS := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['handouts']")
 
-# list available RMarkdown slides and data
+# list available Markdown, RMarkdown and Pweave slides and data
+SLIDES_MD := $(shell find . -path "./docs/_slides_md/*.md")
 SLIDES_RMD := $(shell find . -path "./docs/_slides_Rmd/*.Rmd")
+SLIDES_PMD := $(shell find . -path "./docs/_slides_pmd/*.pmd")
 DATA := $(shell find . -path "./data/*")
 
 # make target "course" copies handouts to ../../
@@ -23,10 +25,17 @@ HANDOUTS := $(addprefix ../../, $(HANDOUTS:worksheet%=worksheet-$(LESSON)%))
 # without commit and push 
 slides: $(SLIDES:%=docs/_slides/%.md)
 
-# cannot use a pattern as the target, because
-# this list is only a subset of docs/_slides/%.md
+# cannot use a pattern as the target for next three blocks, because
+# the targets are only a subset of docs/_slides/%.md
+
+$(subst _md,,$(SLIDES_MD)): docs/_slides/%: docs/_slides_md/%
+	cp $< $@
+
 $(subst _Rmd,,$(SLIDES_RMD:.Rmd=.md)): $(SLIDES_RMD)
 	@bin/build_slides.R
+
+$(subst _pmd,,$(SLIDES_PMD:.pmd=.md)): $(SLIDES_PMD)
+	@bin/build_slides.py
 
 # this target updates the lesson repo
 # on GitHub following a slide build
@@ -51,4 +60,4 @@ $(filter-out ../../worksheet%, $(HANDOUTS)): ../../%: %
 # must call the archive target with a
 # command line parameter for DATE
 archive:
-	@curl "https://sesync-ci.github.io/$${PWD##*/}/class/archive.html" -o docs/_posts/$(DATE)-index.html
+	@curl "https://sesync-ci.github.io/$${PWD##*/}/course/archive.html" -o docs/_posts/$(DATE)-index.html

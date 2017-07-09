@@ -309,8 +309,3 @@ p.captioned {
 .captioned em {
     font-size: 0.6em;
 }
-
-h2.ex::after {
-    counter-increment: section;
-    content: " " counter(section);
-}
