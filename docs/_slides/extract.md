@@ -10,26 +10,8 @@ Presently, to mix raster and vectors, we must convert the desired `sfc` objects 
 
 ~~~r
 sesync <- as(sesync, "Spatial")
-~~~
-
-~~~
-Error in as(sesync, "Spatial"): no method or default for coercing "sfc_POINT" to "Spatial"
-~~~
-
-~~~r
 huc_md <- as(huc_md, "Spatial")
-~~~
-
-~~~
-Error in as(huc_md, "Spatial"): no method or default for coercing "sf" to "Spatial"
-~~~
-
-~~~r
 counties_md <- as(counties_md, "Spatial")
-~~~
-
-~~~
-Error in as(counties_md, "Spatial"): no method or default for coercing "sf" to "Spatial"
 ~~~
 {:.text-document title="{{ site.handouts }}"}
 
@@ -56,10 +38,6 @@ plot(sesync, col = 'green', pch = 16, cex = 2, add = TRUE)
 sesync_lc <- extract(nlcd, sesync)
 ~~~
 {:.input}
-~~~
-Error in (function (classes, fdef, mtable) : unable to find an inherited method for function 'extract' for signature '"RasterLayer", "sfc_POINT"'
-~~~
-{:.output}
 
 
 ~~~r
@@ -67,7 +45,8 @@ lc_types[sesync_lc + 1]
 ~~~
 {:.input}
 ~~~
-Error in NextMethod("["): object 'sesync_lc' not found
+[1] Developed, Medium Intensity
+18 Levels:  Barren Land Cultivated Crops ... Woody Wetlands
 ~~~
 {:.output}
 
@@ -79,10 +58,6 @@ When extracting with a polygon, the output is a vector of all raster values for 
 ~~~r
 county_nlcd <- extract(nlcd_agg, counties_md[1,])
 ~~~
-
-~~~
-Error in (function (classes, fdef, mtable) : unable to find an inherited method for function 'extract' for signature '"RasterLayer", "sf"'
-~~~
 {:.text-document title="{{ site.handouts }}"}
 
 
@@ -91,7 +66,9 @@ table(county_nlcd)
 ~~~
 {:.input}
 ~~~
-Error in table(county_nlcd): object 'county_nlcd' not found
+county_nlcd
+11 21 22 23 24 41 
+ 3  1  4  5  2  1 
 ~~~
 {:.output}
 
@@ -102,18 +79,7 @@ To get a summary of raster values for **each** polygon in a `SpatialPolygons` ob
 
 ~~~r
 modal_lc <- extract(nlcd_agg, huc_md, fun = modal)
-~~~
-
-~~~
-Error in (function (classes, fdef, mtable) : unable to find an inherited method for function 'extract' for signature '"RasterLayer", "sf"'
-~~~
-
-~~~r
 huc_md$modal_lc <- lc_types[modal_lc + 1]
-~~~
-
-~~~
-Error in NextMethod("["): object 'modal_lc' not found
 ~~~
 {:.text-document title="{{ site.handouts }}"}
 
@@ -123,12 +89,6 @@ head(huc_md)
 ~~~
 {:.input}
 ~~~
-Simple feature collection with 6 features and 10 fields
-geometry type:  GEOMETRY
-dimension:      XY
-bbox:           xmin: 1396621 ymin: 1921148 xmax: 1720630 ymax: 2037741
-epsg (SRID):    NA
-proj4string:    +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs
           AREA PERIMETER HUC250K_ HUC250K_ID HUC_CODE
 903 6413577966  454290.2      904        916 02050306
 915 1982478663  292729.7      916        927 02040205
@@ -136,19 +96,12 @@ proj4string:    +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y
 956 3159193443  506765.4      957        968 02060002
 966 4580816836  433034.1      967        978 05020006
 975 2502118608  252945.8      976        987 02070009
-                 HUC_NAME REG  SUB    ACC      CAT
-903     Lower Susquehanna  02 0205 020503 02050306
-915  Brandywine-Christina  02 0204 020402 02040205
-937 Conococheague-Opequon  02 0207 020700 02070004
-956     Chester-Sassafras  02 0206 020600 02060002
-966          Youghiogheny  05 0502 050200 05020006
-975              Monocacy  02 0207 020700 02070009
-                          geometry
-903 MULTIPOLYGON(((1683574.7794...
-915 MULTIPOLYGON(((1707075.2893...
-937 POLYGON((1563403.42000023 2...
-956 POLYGON((1701439.3800023 20...
-966 POLYGON((1441528.27771155 1...
-975 POLYGON((1610556.9351812 20...
+                 HUC_NAME REG  SUB    ACC      CAT         modal_lc
+903     Lower Susquehanna  02 0205 020503 02050306 Deciduous Forest
+915  Brandywine-Christina  02 0204 020402 02040205      Hay/Pasture
+937 Conococheague-Opequon  02 0207 020700 02070004      Hay/Pasture
+956     Chester-Sassafras  02 0206 020600 02060002 Cultivated Crops
+966          Youghiogheny  05 0502 050200 05020006 Deciduous Forest
+975              Monocacy  02 0207 020700 02070009 Cultivated Crops
 ~~~
 {:.output}

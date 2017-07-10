@@ -177,13 +177,13 @@ attr(,"class")
 
 ===
 
-## Plots
+## Plot Layers
 
-Spatial objects defined by [sf](){:.rlib} are provide compatibility with the `plot` function.
+Spatial objects defined by [sf](){:.rlib} are compatible with the `plot` function. Setting the `plot` parameter `add = TRUE` allows an existing plot to serve as a layer underneath the new one, so long as the CRS lines up.
 
 
 ~~~r
-plot(grid_md)
+plot(counties_md, add = TRUE)
 ~~~
 {:.text-document title="{{ site.handouts }}"}
 
@@ -191,22 +191,6 @@ plot(grid_md)
 
 ![plot of chunk plot_counties]({{ site.baseurl }}/images/plot_counties-1.png)
 {:.captioned}
-
-===
-
-## Plot Layers
-
-Setting the `plot` parameter `add = TRUE` allows the existing plot to serve as a layer underneath the new one, so long as the CRS lines up.
-
-
-~~~r
-plot(counties_md, add = TRUE)
-~~~
-
-~~~
-Error in polypath(p_bind(L), border = border[i], lty = lty[i], lwd = lwd[i], : plot.new has not been called yet
-~~~
-{:.text-document title="{{ site.handouts }}"}
 
 ===
 
@@ -397,11 +381,12 @@ throughout all geometries
 ~~~r
 plot(huc_md, border = 'blue', col = NA, add = TRUE)
 ~~~
-
-~~~
-Error in polypath(p_bind(L), border = border[i], lty = lty[i], lwd = lwd[i], : plot.new has not been called yet
-~~~
 {:.text-document title="{{ site.handouts }}"}
+
+===
+
+![plot of chunk st_ntersect]({{ site.baseurl }}/images/st_ntersect-1.png)
+{:.captioned}
 
 The individual hydrological units are preserved but any part of them (or any whole polygon) lying outside the `state_md` polygon is cut from the output. The attribute data remains in the corresponding records of the `data.frame`, but (as warned) has not been updated. For example, the "AREA" attribute of the clipped HUCs does not reflect the new polygon.
 
