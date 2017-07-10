@@ -29,7 +29,7 @@ nlcd
 
 The plot method interprets the pixel values of the raster matrix according to a pre-defined color scheme.
 
-```{r show_raster}
+```{r show_raster, fig.keep = 'last'}
 plot(nlcd)
 ```
 

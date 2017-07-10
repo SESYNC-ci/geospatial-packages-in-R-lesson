@@ -155,6 +155,8 @@ attr(,"class")
 ~~~
 {:.output}
 
+===
+
 A rectangular grid made over a `sf` object is itself an `sfc` object.
 
 
@@ -239,14 +241,17 @@ st_within(sesync, counties_md)
 ~~~
 although coordinates are longitude/latitude, it is assumed that they are planar
 ~~~
-{:.input}
-~~~
-[[1]]
-[1] 5
-~~~
 {:.output}
 
 The output implies that the 1st (and only) point in `sesync` is within the 5th element of `counties_md`.
+
+===
+
+Question
+: What was the message issued by the last command all about?
+
+Answer
+: It is a reminder that all geometric calculations are performed as if the coordinates (in this case longitutde and latitude) are Cartesian x,y coordinates.
 
 ===
 

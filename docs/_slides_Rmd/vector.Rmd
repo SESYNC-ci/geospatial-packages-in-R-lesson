@@ -88,6 +88,8 @@ counties_md <- filter(counties, STATEFP == '24')
 st_crs(st_bbox(counties_md))
 ```
 
+===
+
 A rectangular grid made over a `sf` object is itself an `sfc` object.
 
 ```{r}
@@ -135,11 +137,19 @@ The arguments `col` and `pch` are graphical parameters used in base R, see `?par
 
 An object created with `st_read` is a `data.frame`, which is why the `dplyr` function `filter` used above on the **non**-geospatial column named "STATEFP" worked normally. The equivalent of a "filter" operation on the "geometry" column is called a spatial "overlay". It can be seen as a type of subsetting based on spatial (rather than numeric or string) matching. Matching is implemented with functions like `st_within(x, y)`
 
-```{r pt_poly_overlay}
+```{r pt_poly_overlay, results = 'hide'}
 st_within(sesync, counties_md)
 ```
 
 The output implies that the 1st (and only) point in `sesync` is within the 5th element of `counties_md`.
+
+===
+
+Question
+: What was the message issued by the last command all about?
+
+Answer
+: It is a reminder that all geometric calculations are performed as if the coordinates (in this case longitutde and latitude) are Cartesian x,y coordinates.
 
 ===
 

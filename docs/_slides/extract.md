@@ -15,6 +15,8 @@ counties_md <- as(counties_md, "Spatial")
 ~~~
 {:.text-document title="{{ site.handouts }}"}
 
+===
+
 ## Mixing rasters and vectors
 
 The `extract` function allows subsetting and aggregation of raster values based on a vector spatial object.

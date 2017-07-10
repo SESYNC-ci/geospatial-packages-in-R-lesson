@@ -53,7 +53,7 @@ The plot method interprets the pixel values of the raster matrix according to a 
 plot(nlcd)
 ~~~
 
-![plot of chunk show_raster]({{ site.baseurl }}/images/show_raster-1.png)![plot of chunk show_raster]({{ site.baseurl }}/images/show_raster-2.png)
+![plot of chunk show_raster]({{ site.baseurl }}/images/show_raster-1.png)
 
 ===
 
