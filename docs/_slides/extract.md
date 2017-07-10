@@ -17,7 +17,7 @@ counties_md <- as(counties_md, "Spatial")
 
 ## Mixing rasters and vectors
 
-The `extract` function allows subsetting and aggregation of raster values based on a vector spatial object. When extracting by point locations (i.e. a *SpatialPoints* object), the result is a vector of values corresponding to each point.
+The `extract` function allows subsetting and aggregation of raster values based on a vector spatial object.
 
 
 ~~~r
@@ -33,11 +33,13 @@ plot(sesync, col = 'green', pch = 16, cex = 2, add = TRUE)
 
 ===
 
+When extracting by point locations (i.e. a *SpatialPoints* object), the result is a vector of values corresponding to each point.
+
 
 ~~~r
 sesync_lc <- extract(nlcd, sesync)
 ~~~
-{:.input}
+{:.text-document title="{{ site.handouts }}"}
 
 
 ~~~r

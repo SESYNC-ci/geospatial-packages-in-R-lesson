@@ -183,6 +183,7 @@ Spatial objects defined by [sf](){:.rlib} are compatible with the `plot` functio
 
 
 ~~~r
+plot(grid_md)
 plot(counties_md, add = TRUE)
 ~~~
 {:.text-document title="{{ site.handouts }}"}
@@ -319,7 +320,7 @@ prj <- '+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +el
 
 ===
 
-Use `sp_transform()` to assign the two layers to a common projection string (`prj`). This is a lot of work: it has to re-calculate new coordinates for every polygon in the `sfc`.
+Use `st_transform()` to assign the two layers to a common projection string (`prj`). This is a lot of work: it has to re-calculate new coordinates for every polygon in the `sfc`.
 
 
 ~~~r
@@ -371,14 +372,6 @@ The second step is a spatial **intersection**, since we want to limit the polygo
 
 ~~~r
 huc_md <- st_intersection(huc, state_md)
-~~~
-
-~~~
-Warning: attribute variables are assumed to be spatially constant
-throughout all geometries
-~~~
-
-~~~r
 plot(huc_md, border = 'blue', col = NA, add = TRUE)
 ~~~
 {:.text-document title="{{ site.handouts }}"}
@@ -388,7 +381,7 @@ plot(huc_md, border = 'blue', col = NA, add = TRUE)
 ![plot of chunk st_ntersect]({{ site.baseurl }}/images/st_ntersect-1.png)
 {:.captioned}
 
-The individual hydrological units are preserved but any part of them (or any whole polygon) lying outside the `state_md` polygon is cut from the output. The attribute data remains in the corresponding records of the `data.frame`, but (as warned) has not been updated. For example, the "AREA" attribute of the clipped HUCs does not reflect the new polygon.
+The individual hydrological units are preserved but any part of them (or any whole polygon) lying outside the `state_md` polygon is cut from the output. The attribute data remains in the corresponding records of the `data.frame`, but (as warned) has not been updated. For example, the "AREA" attribute of any clipped HUC does not reflect the new polygon.
 
 ===
 

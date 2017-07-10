@@ -101,7 +101,7 @@ st_crs(grid_md)
 
 Spatial objects defined by [sf](){:.rlib} are compatible with the `plot` function. Setting the `plot` parameter `add = TRUE` allows an existing plot to serve as a layer underneath the new one, so long as the CRS lines up.
 
-```{r plot_counties, echo = -1, title="{{ site.handouts }}"}
+```{r plot_counties, fig.keep="last", title="{{ site.handouts }}"}
 plot(grid_md)
 plot(counties_md, add = TRUE)
 ```
@@ -197,7 +197,7 @@ prj <- '+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +el
 
 ===
 
-Use `sp_transform()` to assign the two layers to a common projection string (`prj`). This is a lot of work: it has to re-calculate new coordinates for every polygon in the `sfc`.
+Use `st_transform()` to assign the two layers to a common projection string (`prj`). This is a lot of work: it has to re-calculate new coordinates for every polygon in the `sfc`.
 
 ```{r plot_over, fig.keep="last", title="{{ site.handouts }}"}
 counties_md <- st_transform(counties_md, crs = prj)
@@ -232,13 +232,13 @@ The output, `state_md`, is a new `sfc` that is no longer a column of a data fram
 
 The second step is a spatial **intersection**, since we want to limit the polygons to areas covered by both `huc` and `state_md`. The `st_intersection()` function intersects its first argument with the second.
 
-```{r st_ntersect, echo = -1, title="{{ site.handouts }}"}
+```{r st_ntersect, echo = -1, warning = FALSE, title="{{ site.handouts }}"}
 plot(state_md)
 huc_md <- st_intersection(huc, state_md)
 plot(huc_md, border = 'blue', col = NA, add = TRUE)
 ```
 
-The individual hydrological units are preserved but any part of them (or any whole polygon) lying outside the `state_md` polygon is cut from the output. The attribute data remains in the corresponding records of the `data.frame`, but (as warned) has not been updated. For example, the "AREA" attribute of the clipped HUCs does not reflect the new polygon.
+The individual hydrological units are preserved but any part of them (or any whole polygon) lying outside the `state_md` polygon is cut from the output. The attribute data remains in the corresponding records of the `data.frame`, but (as warned) has not been updated. For example, the "AREA" attribute of any clipped HUC does not reflect the new polygon.
 
 ===
 

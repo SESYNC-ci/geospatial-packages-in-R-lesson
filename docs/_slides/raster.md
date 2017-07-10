@@ -12,20 +12,6 @@ The [National Land Cover Database](http://www.mrlc.gov/nlcd2011.php) is '.GRD' f
 
 ~~~r
 library(raster)
-~~~
-
-~~~
-
-Attaching package: 'raster'
-~~~
-
-~~~
-The following object is masked from 'package:dplyr':
-
-    select
-~~~
-
-~~~r
 nlcd <- raster("data/nlcd_agg.grd")
 ~~~
 {:.text-document title="{{ site.handouts }}"}
@@ -66,12 +52,8 @@ The plot method interprets the pixel values of the raster matrix according to a 
 ~~~r
 plot(nlcd)
 ~~~
-{:.text-document title="{{ site.handouts }}"}
 
-===
-
-![plot of chunk show_raster]({{ site.baseurl }}/images/show_raster-1.png)
-{:.captioned}
+![plot of chunk show_raster]({{ site.baseurl }}/images/show_raster-1.png)![plot of chunk show_raster]({{ site.baseurl }}/images/show_raster-2.png)
 
 ===
 
