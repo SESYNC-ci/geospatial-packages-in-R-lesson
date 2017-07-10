@@ -1,10 +1,10 @@
 # Site
 
-title: Quick start with Python
+title: Data Tools in Python
 handouts: worksheet.py
 tag: v0.0
-lesson: 0
-instructor: Ian Carroll
+lesson: 9
+instructor: Kelly Hondula
 authors:
   - Philippe Marchand
   - Ian Carroll
@@ -13,12 +13,18 @@ authors:
 
 slide_sorter:
   - objective
-  - types
-  - lists
-  - dict
-  - flow
+  - assignment # key difference is "=" for assignment
+  - flow # key difference from R is that white space matters
   - def
+  - types
+  - list
+  - dict
+  - comps
   - packages
+#  - numpy
+  - pandas
+#  - matplotlib
+  - sqlalchemy
   - conclude
 
 #####################################

@@ -251,7 +251,7 @@ The `id()` function can help you keep track of your objects, and help you unders
 
 ~~~python
 >>> id(None)
-4359311256
+4544982936
 
 ~~~
 {:.output}
@@ -262,7 +262,7 @@ The `id()` function can help you keep track of your objects, and help you unders
 ~~~python
 >>> x = lst.append(200)
 >>> id(x)
-4359311256
+4544982936
 
 ~~~
 {:.output}

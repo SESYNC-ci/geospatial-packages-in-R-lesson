@@ -1,5 +1,4 @@
-record_id,month,day,year,plot_id,species_id,sex,hindfoot_length,weight
-1,7,16,1977,2,NL,M,32,
+id,month,day,year,plot_id,species_id,sex,hindfoot_length,weight
 2,7,16,1977,3,NL,M,33,
 3,7,16,1977,2,DM,F,37,
 4,7,16,1977,7,DM,M,36,
@@ -35548,3 +35547,4 @@ record_id,month,day,year,plot_id,species_id,sex,hindfoot_length,weight
 35547,12,31,2002,10,RM,F,15,14
 35548,12,31,2002,7,DO,M,36,51
 35549,12,31,2002,5,,,,
+1,7,16,1977,2,NL,M,32,

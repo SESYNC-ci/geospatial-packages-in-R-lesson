@@ -3,11 +3,16 @@
 
 ## Why learn Python?
 
-- High-level, interpreted language - simple programs can be written and
-  tested quickly.
-- Extensions like NumPy and SciPy support high-performance scientific 
-  computing.
-- Used in a wide range of domains, both in academia and industry.
-- Large user community: it's easy to get help and to find free, 
-  open-source packages for specialized problems.
-- Ability to script ArcGIS and QGIS pipelines.
+- write and test programs clearly and quickly
+- community created extensions that support high-performance scientific computing (e.g. NumPy and SciKits)
+- common in- and out-side of academia
+- large, helpful user community on stackoverflow.com
+- the language for scripting ArcGIS and QGIS pipelines
+- straightforward object-oriented design that facilitates database operations
+
+===
+
+## Lesson Goals
+
+
+## Specific Objectives
