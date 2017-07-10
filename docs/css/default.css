@@ -1,0 +1,47 @@
+.text-document pre {
+    background-color: #000000;
+    border-radius: 0px 0px 5px 5px;
+}
+
+.text-document code {
+    color: #FFFFFF;
+}
+
+div.text-document::before {
+    content: attr(title);
+    text-align: left;
+    font-family: Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal, Consolas, Liberation Mono, DejaVu Sans Mono, Courier New, monospace;
+    font-size: 75%;
+    color: #000000;
+    background: #C0C0C0;
+    padding: 8px 15px;
+    border-radius: 5px 5px 0px 0px;
+    border: 1px solid #C0C0C0;
+    display: block;
+}     
+
+.input pre {
+    width: 100%;
+    background-color: #EBECE4;
+}
+
+.output pre {
+    width: 100%;
+    background-color: #FFFFFF;
+}
+
+p {
+    text-align: left;
+}
+
+p.captioned {
+    text-align: center;
+}
+
+.captioned em {
+    font-size: 0.6em;
+}
+
+.ToS {
+    text-align: right;
+}
