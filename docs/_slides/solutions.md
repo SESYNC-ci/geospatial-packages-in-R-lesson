@@ -1,17 +1,20 @@
 ---
 ---
 
-## Exercise solutions
+## Solutions
 
 ===
 
-### Solution 1
+## Solution 1
+
 
 
 ~~~r
-plot(counties_md)
-frederick <- counties_md[counties_md$NAME == "Frederick", ]
-plot(frederick, add = TRUE, col = "red")
+plot(counties_md$geometry)
+overlay	<- st_within(sesync, counties_md)
+counties_sesync <- counties_md[overlay[[1]], 'geometry']
+plot(counties_sesync, col = "red", add = TRUE)
+plot(sesync, col = 'green', pch = 20, add = TRUE)
 ~~~
 {:.input}
 
@@ -20,13 +23,13 @@ plot(frederick, add = TRUE, col = "red")
 
 ===
 
-### Solution 2
+## Solution 2
 
 
 ~~~r
-buffer <- gBuffer(state_md, width = 5000)
+bubble_md <- st_buffer(state_md, 5000)
 plot(state_md)
-plot(buffer, lty = "dotted", add = TRUE)
+plot(bubble_md, lty = 'dotted', add = TRUE)
 ~~~
 {:.input}
 
@@ -35,7 +38,7 @@ plot(buffer, lty = "dotted", add = TRUE)
 
 ===
 
-### Solution 3
+## Solution 3
 
 
 ~~~r

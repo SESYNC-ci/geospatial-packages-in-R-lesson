@@ -1,167 +1,283 @@
 ---
 ---
 
-## Importing vector data
+## A note on software
 
-We start by importing a layer of polygons corresponding to US counties. The data is available from the [US Census website](http://www2.census.gov/geo/tiger/GENZ2014/shp/cb_2014_us_county_500k.zip), but we will load a local copy.
+The key R packages for this lesson are
 
-- Necessary R packages:
-  - **sp**: defines spatial data classes in R and is thus a prerequisite for most other spatial analyses packages
-  - **rgdal**: an interface to the Geospatial Data Abstraction Library and OGR (collectively GDAL), enabling R to import spatial data stored in different file formats.
+- [sf](){:.rlib}
+- [rgdal](){:.rlib}
 
-Note that in order to use rgdal in a Linux/UNIX environment, you need to first [install GDAL](http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries).
-{:.notes}
+In addition to the common case of depending on other R packages, these have dependencies on system libraries. System libraries cannot be installed by R's `install.packages()` and must be aquired separately. The good people at the [Open Source Geospatial Foundation](https://github.com/OSGeo) make it free and easy to add the critical system libraries:
+
+- [GDAL](https://www.gdal.org) for read/write in geospatial data formats
+- [GEOS](https://trac.osgeo.org/geos) for geometry operations
+- [PROJ.4](http://proj4.org/) for cartographic projections
 
 ===
 
-To import a .shp shapefile, we call the `readOGR` function from rgdal. This function takes at minimum two arguments, corresponding to the file location (`dsn`) and layer name (`layer`); in general, the layer name should match the filename without its extension.
+## Importing vector data
+
+The [US Census website](http://www2.census.gov/geo/tiger/GENZ2014/shp/cb_2014_us_county_5m.zip) distributes county polygons (and much more) that are provided with the handouts. The [sf](){:.rlib} package reads shapefiles (".shp") and most other vector data:
 
 
 ~~~r
-library(sp)
+library(sf)
 library(rgdal)
 
 shp <- 'data/cb_2016_us_county_5m'
-counties <- readOGR(dsn = shp,
-                    layer = "cb_2016_us_county_5m",
-                    stringsAsFactors = FALSE)
+counties <- st_read(shp, stringsAsFactors = FALSE)
 ~~~
 {:.text-document title="{{ site.handouts }}"}
 
 ===
 
-Because each polygon in the shapefile has attached data, the resulting object is a *SpatialPolygonsDataFrame*.
-
-By exploring its structure in the RStudio Environment tab, we see that it contains a data frame (`counties@data`) and a list of polygons (`counties@polygons`). A *SpatialPolygons* object is a polygon layer with the same components, but no attached `@data`. Analogous classes exist for point (*SpatialPoints*, *SpatialPointsDataFrame*) and line (*SpatialLines*, *SpatialLinesDataFrame*) layers. Note that the `stringsAsFactors` argument we specified works the same as for regular data frames. 
-{:.notes}
-
-We can print the bounding box for the entire set of polgygons:
+The `counties` object is a `data.frame` that includes a `sfc`, which stands for "simple feature column". This special column is usually called "geometry" or "geom".
 
 
 ~~~r
-counties@bbox
+head(counties)
 ~~~
 {:.input}
 ~~~
-         min       max
-x -179.14734 179.77847
-y  -14.55255  71.35256
+Simple feature collection with 6 features and 9 fields
+geometry type:  MULTIPOLYGON
+dimension:      XY
+bbox:           xmin: -114.7556 ymin: 29.26116 xmax: -81.10192 ymax: 38.77443
+epsg (SRID):    4269
+proj4string:    +proj=longlat +datum=NAD83 +no_defs
+  STATEFP COUNTYFP COUNTYNS       AFFGEOID GEOID      NAME LSAD
+1      04      015 00025445 0500000US04015 04015    Mohave   06
+2      12      035 00308547 0500000US12035 12035   Flagler   06
+3      20      129 00485135 0500000US20129 20129    Morton   06
+4      28      093 00695770 0500000US28093 28093  Marshall   06
+5      29      510 00767557 0500000US29510 29510 St. Louis   25
+6      35      031 00929107 0500000US35031 35031  McKinley   06
+        ALAND    AWATER                       geometry
+1 34475567011 387344307 MULTIPOLYGON(((-114.755618 ...
+2  1257365642 221047161 MULTIPOLYGON(((-81.52366 29...
+3  1889993251    507796 MULTIPOLYGON(((-102.041952 ...
+4  1828989833   9195190 MULTIPOLYGON(((-89.72432442...
+5   160458044  10670040 MULTIPOLYGON(((-90.318212 3...
+6 14116799068  14078537 MULTIPOLYGON(((-109.046481 ...
 ~~~
 {:.output}
 
-Or the proj4 string:
+===
 
+## Geometry types
 
-~~~r
-counties@proj4string
-~~~
-{:.input}
-~~~
-CRS arguments:
- +proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0 
-~~~
-{:.output}
+Like any `data.frame` column, the `geometry` column is comprised of a single data type. The "MULTIPOLYGON" is just one of several standard geometric data types.
 
-Note the use of "@" rather than "$" to access parts of this object.
+| Common Types | Description                                                                                                                  |
+|--------------+------------------------------------------------------------------------------------------------------------------------------|
+| POINT        | zero-dimensional geometry containing a single point                                                                          |
+| LINESTRING   | sequence of points connected by straight, non-self intersecting line pieces; one-dimensional geometry                        |
+| POLYGON      | sequence of points in closed, non-intersecting rings; the first denotes the exterior ring, any subsequent rings denote holes |
+| MULTI*       | set of * (POINT, LINESTRING, or POLYGON)                                                                                     |
 
-The use of "@" has to do with object-oriented programming systems in R and is beyond the scope of this lesson. However, you can always look at the structure of an object, either with the `str()` function or in the RStudio Environment tab, to know which of the two characters applies.
+The spatial data types are built upon eachother in a logical way: lines are built from points, polygons are built from lines, and so on.
 {:.notes}
 
 ===
 
-A *SpatialPolygons* object, or *SpatialPolygonsDataFrame*, contains one or more *Polygons* objects, which are simple polygons in the geometric sense. A *Polygons* object can combine many polygons that represent both "islands" and "holes".
+## Coordinate Reference System (CRS)
 
-![]({{ site.baseurl }}/images/bivand_fig2_4.png)  
-*Credit: Bivand et al. (2013)*
-{:.captioned}
-
-The diagram above summarizes the hierarchical structure of *SpatialPolygons* (and *SpatialLines*) objects. Although we will only deal with the full spatial objects in this lesson, understanding this structure is useful for more complex operations, e.g. when you need to apply a custom function on each individual polygon. The `@coords` slot of a *Polygon* is a matrix with the (*x*,*y*) coordinates of each vertex, with the first and last vertices being identical to form a "closed" shape.
-{:.notes}
-
-===
-
-Spatial objects defined by the sp package are compatible with the base R `plot` function. Specify `xlim` and `ylim` arguments display only the continental US.
+A key feature of a **geo**spatial data type is its associated CRS, stored as both an EPSG ID and a PROJ.4 string.
 
 
 ~~~r
-plot(counties, xlim = c(-125, -65), ylim = c(24, 50))
+st_crs(counties)
+~~~
+{:.input}
+~~~
+$epsg
+[1] 4269
+
+$proj4string
+[1] "+proj=longlat +datum=NAD83 +no_defs"
+
+attr(,"class")
+[1] "crs"
+~~~
+{:.output}
+
+===
+
+## Bounding Box
+
+A bounding box for all or any subset of records is generated by `st_bbox()`
+
+
+~~~r
+st_bbox(counties)
+~~~
+{:.input}
+~~~
+      xmin       ymin       xmax       ymax 
+-179.14734  -14.55255  179.77847   71.35256 
+~~~
+{:.output}
+
+
+~~~r
+library(dplyr)
+st_bbox(filter(counties, STATEFP == '24'))
+~~~
+{:.input}
+~~~
+     xmin      ymin      xmax      ymax 
+-79.48765  37.91172 -75.04894  39.72312 
+~~~
+{:.output}
+
+===
+
+## Grid
+
+A bounding box is not geospatial data in this library: it's two points could make up a LINESTRING but it lacks a CRS.
+
+
+~~~r
+counties_md <- filter(counties, STATEFP == '24')
+st_crs(st_bbox(counties_md))
+~~~
+{:.input}
+~~~
+$epsg
+[1] 4269
+
+$proj4string
+[1] "+proj=longlat +datum=NAD83 +no_defs"
+
+attr(,"class")
+[1] "crs"
+~~~
+{:.output}
+
+A rectangular grid made over a `sf` object is itself an `sfc` object.
+
+
+~~~r
+grid_md <- st_make_grid(counties_md, n = 4)
+st_crs(grid_md)
+~~~
+{:.input}
+~~~
+$epsg
+[1] 4269
+
+$proj4string
+[1] "+proj=longlat +datum=NAD83 +no_defs"
+
+attr(,"class")
+[1] "crs"
+~~~
+{:.output}
+
+===
+
+## Plots
+
+Spatial objects defined by [sf](){:.rlib} are provide compatibility with the `plot` function.
+
+
+~~~r
+plot(grid_md)
 ~~~
 {:.text-document title="{{ site.handouts }}"}
+
+===
 
 ![plot of chunk plot_counties]({{ site.baseurl }}/images/plot_counties-1.png)
+{:.captioned}
 
 ===
 
-Instead of importing a shapefile, we can build spatial objects from coordinate matrices in R. Here's a *SpatialPoints* object with a single point, corresponding to SESYNC's coordinates in decimal degrees. Note that coordinates must be in a two-column matrix. 
+## Plot Layers
+
+Setting the `plot` parameter `add = TRUE` allows the existing plot to serve as a layer underneath the new one, so long as the CRS lines up.
 
 
 ~~~r
-sesync <- SpatialPoints(matrix(c(-76.505206, 38.9767231), ncol=2), 
-                        proj4string = CRS(proj4string(counties)))
+plot(counties_md, add = TRUE)
+~~~
+
+~~~
+Error in polypath(p_bind(L), border = border[i], lty = lty[i], lwd = lwd[i], : plot.new has not been called yet
 ~~~
 {:.text-document title="{{ site.handouts }}"}
 
-We set the new object's coordinate system to match that of *counties*. Note that the `CRS()` function (for Coordinate Reference System) is required to assign the proj4string of one object to another object.
-{:.notes}
-
 ===
 
-When two spatial layers share the same coordinate system, they can be superposed on the same plot. The spatial version of `plot` accepts an `add` parameter to add a layer to the last plot.
+Instead of reading a shapefile, we can build spatial objects from coordinates. Here's a `sfc` object with a single "POINT", corresponding to SESYNC's postition in WGS84 degrees lat, lon.
 
 
 ~~~r
-plot(counties, xlim = c(-125, -65), ylim = c(20, 50))
+sesync <- st_sfc(
+    st_point(c(-76.503394, 38.976546)),
+    crs = 4326)
+~~~
+{:.input}
+
+===
+
+The CRS for SESYNC is not identical to the CRS for `counties`, but they are imperceptably different at the scale shown. Note that `plot` won't prevent you from layering up geometries with different coordinate systems: you must safegaurd your own plots from this mistake.
+
+
+~~~r
+counties_md <- st_transform(counties_md, crs = st_crs(sesync))
+plot(counties_md$geometry)
 plot(sesync, col = "green", pch = 20, add = TRUE)
 ~~~
 {:.text-document title="{{ site.handouts }}"}
 
-![plot of chunk plot_point]({{ site.baseurl }}/images/plot_point-1.png)
-
-The arguments `col` and `pch` are graphical parameters used in base R, see `?par`.
-
 ===
 
-## Subsetting vector layers
+![plot of chunk plot_point]({{ site.baseurl }}/images/plot_point-1.png)
+{:.captioned}
 
-A *Spatial\*DataFrame* can be **subset** with expressions in brackets, just like a regular R data frame.
-
-
-~~~r
-counties_md <- counties[counties$STATEFP == "24", ]
-plot(counties_md)
-~~~
-{:.text-document title="{{ site.handouts }}"}
-
-![plot of chunk subset_md]({{ site.baseurl }}/images/subset_md-1.png)
-
-The code above selects specific rows (corresponding to counties in Maryland, a.k.a. FIPS code 24) along with the polygons corresponding to those rows. Subsetting by columns would only affect the data frame component.
+The arguments `col` and `pch` are graphical parameters used in base R, see `?par`.
 {:.notes}
 
 ===
 
-A spatial **overlay** operation can be seen as a type of subset based on spatial (rather than data) matching. It is implemented with the `over()` function in `sp`.
+## Subsetting vector data
+
+An object created with `st_read` is a `data.frame`, which is why the `dplyr` function `filter` used above on the **non**-geospatial column named "STATEFP" worked normally. The equivalent of a "filter" operation on the "geometry" column is called a spatial "overlay". It can be seen as a type of subsetting based on spatial (rather than numeric or string) matching. Matching is implemented with functions like `st_within(x, y)`
 
 
 ~~~r
-over(sesync, counties_md)
+st_within(sesync, counties_md)
 ~~~
 {:.input}
 ~~~
-  STATEFP COUNTYFP COUNTYNS       AFFGEOID GEOID         NAME LSAD
-1      24      003 01710958 0500000US24003 24003 Anne Arundel   06
-       ALAND    AWATER
-1 1074553083 447833714
+although coordinates are longitude/latitude, it is assumed that they are planar
+~~~
+{:.input}
+~~~
+[[1]]
+[1] 5
 ~~~
 {:.output}
 
-The exact output depends on the type of layers being matched by `over(sp1, sp2)`. In this case with *sp1* a *SpatialPoints* layer and *sp2* a *SpatialPolygonsDataFrame*, the function finds the polygon(s) containing each point in *sp1* and returns the corresponding rows of *sp2*.
-{:.notes}
+The output implies that the 1st (and only) point in `sesync` is within the 5th element of `counties_md`.
+
+===
+
+The overlay functions in the [sf](){:.rlib} package follow the pattern `st_predicate(x, y)` and perform the test "x [is] predicate y". Some key examples are:
+
+| st_intersects | boundary or interior of x intersects boundary or interior of y |
+| st_within     | interior and boundary of x do not intersect exterior of y      |
+| st_contains   | y is within x                                                  |
+| st_overlaps   | interior of x intersects interior of y                         |
+| st_equals     | x has the same interior and boundary as y                      |
 
 ===
 
 ## Exercise 1
 
-Produce a map of Maryland counties with the county named "Frederick" colored in red.
+Produce a map of Maryland counties with the county that contains SESYNC colored in red.
 
 [View solution](#solution-1)
 {:.notes}
@@ -170,14 +286,12 @@ Produce a map of Maryland counties with the county named "Frederick" colored in 
 
 ## Coordinate transformations
 
-For the next part of this lesson, we import a new polygon layer corresponding to the 1:250k map of US hydrological units (HUC) [downloaded](http://water.usgs.gov/GIS/dsdl/huc250k_shp.zip) from the United States Geological Survey .
+For the next part of this lesson, we import a new polygon layer corresponding to the 1:250k map of US hydrological units (HUC) [downloaded](http://water.usgs.gov/GIS/dsdl/huc250k_shp.zip) from the United States Geological Survey.
 
 
 ~~~r
-shp <- "data/huc250k"
-huc <- readOGR(dsn = shp,
-               layer = "huc250k",
-               stringsAsFactors = FALSE)
+shp <- 'data/huc250k'
+huc <- st_read(shp, stringsAsFactors = FALSE)
 ~~~
 {:.text-document title="{{ site.handouts }}"}
 
@@ -187,112 +301,125 @@ Compare the coordinate reference systems of `counties` and `huc`, as given by th
 
 
 ~~~r
-proj4string(counties_md)
+st_crs(counties_md)$proj4string
 ~~~
 {:.input}
 ~~~
-[1] "+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
+[1] "+proj=longlat +datum=WGS84 +no_defs"
 ~~~
 {:.output}
 
 
 ~~~r
-proj4string(huc)
+st_crs(huc)$proj4string
 ~~~
 {:.input}
 ~~~
-[1] "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +datum=NAD27 +units=m +no_defs +ellps=clrk66 +nadgrids=@conus,@alaska,@ntv2_0.gsb,@ntv1_can.dat"
+[1] "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +datum=NAD27 +units=m +no_defs"
 ~~~
 {:.output}
 
-The counties data uses unprojected (longitude, latitude) coordinates, but `huc` is in an Albers equal-area projection (indicated as "+proj=aea").
+The Census data uses unprojected (longitude, latitude) coordinates, but `huc` is in an Albers equal-area projection (indicated as "+proj=aea").
 
 ===
 
-Other parameters differ between the two projections, such as the "datum", which indicates the standard by which the irregular surface of the Earth is approximated by an ellipsoid. The rgdal function `spTransform()` converts spatial objects between coordinate reference systems, so long as you know the input and output Proj4 strings.
+Other parameters differ between the two coordinate systems, such as the "datum", which indicates the standard by which the irregular surface of the Earth is approximated by an ellipsoid. The function `st_transform()` converts a `sfc` between coordinate reference systems, specified with the parameter `crs = x`. A numeric `x` must be a valid EPSG code; a character `x` is interpretted as a PROJ.4 string.
 
-Here is another Albers equal-area projection:
+Here is a slightly different Albers equal-area projection:
 
 
 ~~~r
-proj1 <- "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
+prj <- '+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'
 ~~~
 {:.text-document title="{{ site.handouts }}"}
 
 ===
 
-To plot two vector layers on one map, the projections must match. So we use `spTransform()` to assign each a common projection string (`proj1`), which re-calculates new coordinates for every polygon.
+Use `sp_transform()` to assign the two layers to a common projection string (`prj`). This is a lot of work: it has to re-calculate new coordinates for every polygon in the `sfc`.
 
 
 ~~~r
-counties_md <- spTransform(counties_md, proj1)
-huc <- spTransform(huc, proj1)
-plot(counties_md)
-plot(huc, add = TRUE, border = "blue")
+counties_md <- st_transform(counties_md, crs = prj)
+huc <- st_transform(huc, crs = prj)
+sesync <- st_transform(sesync, crs = prj)
+plot(counties_md$geometry)
+plot(huc, border = 'blue', add = TRUE)
+plot(sesync, col = 'green', pch = 20, add = TRUE)
 ~~~
 {:.text-document title="{{ site.handouts }}"}
+
+===
 
 ![plot of chunk plot_over]({{ site.baseurl }}/images/plot_over-1.png)
+{:.captioned}
 
 ===
 
 ## Geometric operations on vector layers
 
-Like `sp`, the `rgeos` package provides functions to process geometric objects in one or more vector layers. In this case, by interfacing with the open source geometry engine [GEOS](http://trac.osgeo.org/geos/). The `rgeos` package brings capabilities like intersecting, buffering and dissolving polygons.
+The data for a map of waterhsed boundaries within the state of MD is all here; in the country-wide `huc` and in the state boundary "surrounding" all of `counties_md`. To get just the huc in a MD outline:
+
+- remove the internal county boundaries within the state
+- clip the hydrological areas to their intersection with the state
 
 ===
 
-The map of MD counties and hydrological units has the data we need to draw a much simpler map: watershed boundaries within the state of MD.
-
-- remove the county boundaries within the state
-- crop the `huc` layer at the edge of the state boundary
-
-===
-
-The first step is a spatial **union** operation: we want the resulting object to combine the area covered by all the *Polygons* in `counties_md`. To perform a union of all sub-geometries in a single spatial object, we use the rgeos `gUnaryUnion()` function. This differs from the `gUnion()` function which returns the union of two spatial objects.
+The first step is a spatial **union** operation: we want the resulting object to combine the area covered by all the multipolygons in `counties_md`. To perform a union of all sub-geometries in a single `sfc`, we use the `st_union()` function with a single argument.
 
 
 ~~~r
-library(rgeos)
-
-state_md <- gUnaryUnion(counties_md)
+state_md <- st_union(counties_md)
 plot(state_md)
 ~~~
 {:.text-document title="{{ site.handouts }}"}
 
-![plot of chunk gUnion]({{ site.baseurl }}/images/gUnion-1.png)
+===
+
+![plot of chunk st_union]({{ site.baseurl }}/images/st_union-1.png)
+{:.captioned}
+
+The output, `state_md`, is a new `sfc` that is no longer a column of a data frame. Tabular data can't safely survive a spatial union and is discarded.
 
 ===
 
-The second step is a spatial **intersection**, since we want to limit the polygons to areas covered by both `huc` and `state_md`. The `gIntersection()` function will intersect its first argument with its second, producing a new **SpatialPolygons** object (tabular data can't safely survive a spatial intersection, and is discarded).
+The second step is a spatial **intersection**, since we want to limit the polygons to areas covered by both `huc` and `state_md`. The `st_intersection()` function intersects its first argument with the second.
 
 
 ~~~r
-huc_md <- gIntersection(huc, state_md, byid = TRUE)
-plot(huc_md, border = "blue")
+huc_md <- st_intersection(huc, state_md)
+~~~
+
+~~~
+Warning: attribute variables are assumed to be spatially constant
+throughout all geometries
+~~~
+
+~~~r
+plot(huc_md, border = 'blue', col = NA, add = TRUE)
+~~~
+
+~~~
+Error in polypath(p_bind(L), border = border[i], lty = lty[i], lwd = lwd[i], : plot.new has not been called yet
 ~~~
 {:.text-document title="{{ site.handouts }}"}
 
-![plot of chunk gIntersect]({{ site.baseurl }}/images/gIntersect-1.png)
-
-The `byid = TRUE` argument indicates that the intersection should be performed separately for each polygon within `huc`. The individual hydrological units are preserved but any part of them (or any whole polygon) lying outside the `state_md` polygon is cut from the output. The `id` argument could be used to specify meaningful labels for each resulting polygon, by pasting a unique number to the name of each hydrological unit from the original `huc` data.
-{:.notes}
+The individual hydrological units are preserved but any part of them (or any whole polygon) lying outside the `state_md` polygon is cut from the output. The attribute data remains in the corresponding records of the `data.frame`, but (as warned) has not been updated. For example, the "AREA" attribute of the clipped HUCs does not reflect the new polygon.
 
 ===
 
-The `rgeos` package has many functions dealing with distances and areas, such as:
+The GEOS library provides many functions dealing with distances and areas. Many of these are accessible through the [sf](){:.rlib} package, including:
 
-- `gBuffer`: to create a buffer of specific width around a geometry
-- `gDistance`: to calculate the shortest distance between geometries
-- `gArea`: to calculate the area of polygons
+- `st_buffer`: to create a buffer of specific width around a geometry
+- `st_distance`: to calculate the shortest distance between geometries
+- `st_area`: to calculate the area of polygons
 
-Keep in mind that all these functions use **planar** geometry equations and thus become less precise over larger distances, as the effect of the Earth's curvature become non-negligible. To calculate geodesic distances that account for that curvature, checkout the **geosphere** package.
+Keep in mind that all these functions use **planar** geometry equations and thus become less precise over larger distances, where the Earth's curvature is noticeable. To calculate geodesic distances that account for that curvature, checkout the [geosphere](){:.rlib} package.
 
 ===
 
 ## Exercise 2
 
-Use `gBuffer` to Create a 5km buffer around the `state_md` borders and plot it as a dotted line (`plot(..., lty = "dotted")`) over the true state border. **Hint**: check the layer's units with `proj4string()` and express any distance in those units.
+Use `st_buffer` to create a 5km buffer around the `state_md` border and plot it as a dotted line (`plot(..., lty = 'dotted')`) over the true state border. **Hint**: check the layer's units with `st_crs()` and express any distance in those units.
 
 [View solution](#solution-2)
 {:.notes}
