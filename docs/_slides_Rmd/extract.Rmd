@@ -1,12 +1,23 @@
 ---
 ---
 
+## Mixing raster and vectors: prelude
+
+The creation of geospatial tools in R has been a community effort, but not necessarilly a well-organized one. One current stumbling block is that the [raster](){:.rlib} package, which is tightly integrated with the [sp](){:.rlib} package, has not caught up to the [sf](){:.rlib} package.
+
+Presently, to mix raster and vectors, we must convert the desired `sfc` objects to their counterpart `Spatial*` objects:
+
+```{r, results = 'hide', title = '{{ site.handouts }}'}
+sesync <- as(sesync, "Spatial")
+huc_md <- as(huc_md, "Spatial")
+counties_md <- as(countis_md, "Spatial")
+```
+
 ## Mixing rasters and vectors
 
 The `extract` function allows subsetting and aggregation of raster values based on a vector spatial object. When extracting by point locations (i.e. a *SpatialPoints* object), the result is a vector of values corresponding to each point.
 
 ```{r extract_pt, fig.keep='last', title="{{ site.handouts }}"}
-sesync <- spTransform(sesync, proj1)
 plot(nlcd)
 plot(sesync, col = 'green', pch = 16, cex = 2, add = TRUE)
 ```
@@ -38,10 +49,10 @@ table(county_nlcd)
 To get a summary of raster values for **each** polygon in a `SpatialPolygons` object, add an aggregation function to `extract` via the `fun` argument. For example, `fun = modal` gives the most common land cover type for each polygon in `huc_md`.
 
 ```{r extract_poly_agg, title="{{ site.handouts }}"}
-modal_lc <- extract(nlcd_agg, counties_md, fun = modal)
-counties_md$modal_lc <- lc_types[modal_lc + 1]
+modal_lc <- extract(nlcd_agg, huc_md, fun = modal)
+huc_md$modal_lc <- lc_types[modal_lc + 1]
 ```
 
 ```{r}
-head(counties_md)
+head(huc_md)
 ```

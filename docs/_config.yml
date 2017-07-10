@@ -3,8 +3,8 @@
 title: Geospatial Analysis in R
 handouts: worksheet.R
 tag: v0.1
-lesson:
-instructor:
+lesson: 9
+instructor: Benoît Parmentier
 authors:
   - Philippe Marchand
   - Ian Carroll
