@@ -16,16 +16,6 @@ img + br + em {
     max-height: 550px;
 }
 
-.input pre {
-    width: 100%;
-    background-color: #EBECE4;
-}
-
-.output pre {
-    width: 100%;
-    background-color: #FFFFFF;
-}
-
 .text-document.highlighter-rouge pre {
     background-color: #000000;
     margin: 2px auto;
@@ -37,19 +27,6 @@ img + br + em {
     background-color: transparent;
     color: #FFFFFF;
 }
-
-div.text-document::before {
-    content: attr(title);
-    text-align: left;
-    font-family: Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal, Consolas, Liberation Mono, DejaVu Sans Mono, Courier New, monospace;
-    font-size: 75%;
-    color: #000000;
-    background: #C0C0C0;
-    padding: 8px 15px;
-    border-radius: 5px 5px 0px 0px;
-    border: 1px solid #C0C0C0;
-    display: block;
-}     
 
 .reveal pre {
     font-size: 100%;
@@ -67,14 +44,6 @@ p.on-white {
 
 .reveal h2, .reveal h1 {
     text-transform: capitalize;
-}
-
-.reveal p {
-    text-align: left;
-}
-
-.reveal p.captioned {
-    text-align: center;
 }
 
 .reveal ol, .reveal ul {
