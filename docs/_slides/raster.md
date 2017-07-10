@@ -52,8 +52,12 @@ The plot method interprets the pixel values of the raster matrix according to a 
 ~~~r
 plot(nlcd)
 ~~~
+{:.text-document title="{{ site.handouts }}"}
+
+===
 
 ![plot of chunk show_raster]({{ site.baseurl }}/images/show_raster-1.png)
+{:.captioned}
 
 ===
 
