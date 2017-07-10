@@ -1,4 +1,5 @@
 #!/usr/bin/env Rscript
+require(methods)
 require(knitr)
 require(yaml)
 require(stringr)
