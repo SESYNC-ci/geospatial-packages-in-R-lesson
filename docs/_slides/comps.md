@@ -36,7 +36,7 @@ To declare a dictionary in this way, specify a `key:value` pair.
 ~~~python
 >>> CAPS = {x:x.upper() for x in 'abcde'}
 >>> CAPS
-{'a': 'A', 'b': 'B', 'c': 'C', 'd': 'D', 'e': 'E'}
+{'d': 'D', 'a': 'A', 'b': 'B', 'e': 'E', 'c': 'C'}
 
 ~~~
 {:.output}

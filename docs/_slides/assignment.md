@@ -22,7 +22,7 @@ The "in-memory" location of `a` returned by `id()` ...
 
 ~~~python
 >>> id(a)
-4314051448
+139730616193464
 
 ~~~
 {:.output}
@@ -34,7 +34,7 @@ The "in-memory" location of `a` returned by `id()` ...
 
 ~~~python
 >>> id('xyz')
-4314051448
+139730616193464
 
 ~~~
 {:.output}
@@ -63,7 +63,7 @@ The `id()` function helps demonstrate that "equal" is not the "same".
 ~~~python
 >>> b = [1, 2, 3]
 >>> id(b)
-4343473160
+139730449437064
 
 ~~~
 {:.output}
@@ -75,7 +75,7 @@ The "in-memory" location of the list labeled `b` isn't the same as a list genera
 
 ~~~python
 >>> id([1, 2, 3])
-4343473992
+139730449437384
 
 ~~~
 {:.output}

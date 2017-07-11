@@ -133,7 +133,7 @@ The third and last "sequence" data structure is a set, used mainly for quick acc
 
 ~~~python
 >>> s.difference({3.14})
-{'xyz', ('cat',)}
+{('cat',), 'xyz'}
 
 ~~~
 {:.output}
@@ -190,7 +190,7 @@ To add a single new element to the dictionary, define a new `key:value` pair by 
 ~~~python
 >>> toons['Goofy'] = 'dog'
 >>> toons
-{'Snowy': 'dog', 'Garfield': 'cat', 'Bugs': 'bunny', 'Goofy': 'dog'}
+{'Bugs': 'bunny', 'Garfield': 'cat', 'Snowy': 'dog', 'Goofy': 'dog'}
 
 ~~~
 {:.output}

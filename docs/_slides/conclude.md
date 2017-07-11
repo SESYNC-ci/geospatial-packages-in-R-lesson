@@ -1,9 +1,21 @@
 ---
 ---
 
-## Additional resources
+## Summary
 
-The material in this lesson is partly based on 
-[Data Carpentry: Python for Ecologists](http://www.datacarpentry.org/python-ecology-lesson/) and the 
-[Data Carpentry for Biologists](http://www.datacarpentry.org/semester-biology/) course. 
-These are good resources for a more detailed overview of data analysis and scientific computing in Python.
+Python is said to have a gentle learning curve, but all new languages take practice.
+
+Key concepts covered in this lesson include:
+
+- Variable assignment
+- Data structures
+- Functions and methods
+- Python packages
+  - [pandas](){:.pylib}
+  - [SQLAlchemy](){:.pylib}
+
+Additional critical packages for data science:
+  - [matplotlib](){:.pylib}, [plotly](){:.pylib}, [seaborn](){:.pylib} for vizualization
+  - [StatsModels](){:.pylib}, [scikit-learn](){:.pylib}, and [pystan](){:.pylib} for model fitting
+  - [PyQGIS](){:.pylib}, [Shapely](){:.pylib}, and [Cartopy](){:.pylib} for GIS
+
