@@ -112,8 +112,8 @@ plot_a = session.query(Plots).filter_by(id=2).one()
 plot_b = session.query(Plots).filter_by(id=12).one()
 
 query = session.query(Animals).filter_by(year=2002, month=1, day=12)
-animals_a = query.filter(Animals.plot == plot_a).all()
-animals_b = query.filter(Animals.plot == plot_b).all()
+animals_a = query.filter(Animals.plots == plot_a).all()
+animals_b = query.filter(Animals.plots == plot_b).all()
 ```
 
 ```{python}
