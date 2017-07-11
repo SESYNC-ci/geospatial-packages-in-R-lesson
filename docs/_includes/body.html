@@ -4,4 +4,9 @@
      var a = collection[i];
      a.href = 'https://cran.r-project.org/package=' + a.innerText;
  };
+ var collection = document.getElementsByClassName('pylib');
+ for (var i = 0; i < collection.length; i++) {
+     var a = collection[i];
+     a.href = 'https://pypi.python.org/pypi/' + a.innerText;
+ };
 </script>
