@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 from pweave import Pweb, PwebPandocFormatter, rcParams
 import yaml
 
@@ -37,4 +37,5 @@ for fname in config['slide_sorter']:
         )
     doc.setreader('markdown')
     doc.setformat(Formatter=Formatter)
+#    doc.weave(shell='ipython') ## See https://github.com/mpastell/Pweave/issues/59
     doc.weave()
