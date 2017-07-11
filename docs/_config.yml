@@ -13,18 +13,17 @@ authors:
 
 slide_sorter:
   - objective
-  - assignment # key difference is "=" for assignment
-  - flow # key difference from R is that white space matters
-  - def
+  - assignment
   - types
-  - list
-  - dict
+  - structs
   - comps
+  - flow
+  - def
   - packages
 #  - numpy
   - pandas
 #  - matplotlib
-  - sqlalchemy
+#  - sqlalchemy
   - conclude
 
 #####################################

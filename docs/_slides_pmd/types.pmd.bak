@@ -5,11 +5,11 @@
 
 The immutable data types are
 
-| `'int'`   | Integer            |
-| `'float'` | Real number        |
-| `'str'`   | Character string   |
-| `'bool'`  | `True`/`False`     |
-| `'tuple'` | Immutable sequence |
+| `'int'`   | Integer          |
+| `'float'` | Real number      |
+| `'str'`   | Character string |
+| `'bool'`  | `True`/`False`   |
+| `'tuple'` | Sequence         |
 
 Any object can be queried with `type()` 
 
@@ -41,7 +41,7 @@ a * 2
 ```
 
 ```{python}
-t + (3.14, 'y')
+t + tuple(3.14)
 ```
 
 ===

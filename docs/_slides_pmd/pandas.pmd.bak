@@ -4,35 +4,35 @@
 ## Pandas
 
 If you have used the statistical programming language R, you are familiar with
-"data frames", two-dimensional data structures where each column can hold a 
+*data frames*, two-dimensional data structures where each column can hold a 
 different type of data, as in a spreadsheet.
 
-The data analysis library [pandas](){:.pylib} provides a data frame object type for
+The data analysis library **pandas** provides a data frame object type for
 Python, along with functions to subset, filter reshape and aggregate data
 stored in data frames.
 
 ===
 
-After importing [pandas](){:.pylib}, we call its `read_csv` function to load the Portal 
-animals data from the file `animals.csv`.
+After importing pandas, we call its `read_csv` function to load the Portal 
+surveys data from the file `surveys.csv`.
 
 ```{python, term=False}
 import pandas as pd
-animals = pd.read_csv("data/animals.csv")
+surveys = pd.read_csv("data/surveys.csv")
 ```
 ```{python}
-animals.head()
+surveys.head()
 ```
 
 The `head(n=5)` method of a data frame returns its first `n` rows.
 
 ===
 
-There are many ways to slice a `DataFrame`.
+There are many ways to slice a Pandas DataFrame.
 To select a subset of rows and/or columns by name, use the `loc` attribute and `[` for indexing.
 
 ```{python}
-animals.loc[:, ['plot_id', 'species_id']]
+surveys.loc[:, ['plot_id', 'species_id']]
 ```
 
 ===
@@ -40,7 +40,7 @@ animals.loc[:, ['plot_id', 'species_id']]
 As with lists, `:` by itself indicates all the rows (or columns). Unlike lists, the `loc` attribute returns both endpoints of a slice.
 
 ```{python}
-animals.loc[2:4, 'plot_id':'sex']
+surveys.loc[2:4, 'plot_id':'sex']
 ```
 
 ===
@@ -48,7 +48,7 @@ animals.loc[2:4, 'plot_id':'sex']
 Use the `iloc` attribute of a DataFrame to get rows and/or columns by position, which behaves identically to list indexing.
 
 ```{python}
-animals.iloc[2:4, 4:6]
+surveys.iloc[2:4, 4:6]
 ```
 
 ===
@@ -56,20 +56,20 @@ animals.iloc[2:4, 4:6]
 The default indexing for a DataFrame, without using the `loc` or `iloc` attributes, is by column name.
 
 ```{python}
-animals[['hindfoot_length', 'weight']].describe()
+surveys[['hindfoot_length', 'weight']].describe()
 ```
 
 ===
 
 The `loc` attribute also allows logical indexing, i.e. the use of a boolean array of appropriate length for the selected dimension.
 
-The subset of `animals` where the species is "DM" is extracted into a new data frame.
+The subset of `surveys` where the species is "DM" is extracted into a new data frame.
 
 ```{python, term=False}
-animals_dm = animals.loc[animals['species_id'] == 'DM', ]
+surveys_dm = surveys.loc[surveys['species_id'] == 'DM', ]
 ```
 ```{python}
-animals_dm.head()
+surveys_dm.head()
 ```
 
 ===
@@ -77,10 +77,10 @@ animals_dm.head()
 The `query()` method accepts an expression that may reference columns, increasing the readability of the same operation
 
 ```{python, term=False}
-animals_dm = animals.query('species_id == "DM"')
+surveys_dm = surveys.query('species_id == "DM"')
 ```
 ```{python}
-animals_dm.head()
+surveys_dm.head()
 ```
 
 ===
@@ -89,7 +89,7 @@ Aggregation of records in a DataFrame by value of a given variable is performed 
 
 ```{python, term=False}
 dm_stats = (
-  animals_dm
+  surveys_dm
   .groupby('sex')
   ['hindfoot_length', 'weight']
   .mean()
@@ -103,6 +103,6 @@ dm_stats
 
 ## Exercise 6
 
-The `count` method for DataFrames (e.g. `animals.count()`) returns the number of rows
+The `count` method for DataFrames (e.g. `surveys.count()`) returns the number of rows
 in a data frame. Find out which month had the most observations recorded
-in `animals`.
+in `surveys`.

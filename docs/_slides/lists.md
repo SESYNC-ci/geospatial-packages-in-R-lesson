@@ -271,7 +271,7 @@ The `id()` function can help you keep track of your objects, and help you unders
 
 ===
 
-One thing about mutabl objects that may trip you up, is that the same object can have multiple references.
+One thing about mutable objects that may trip you up, is that the same object can have multiple references.
 
 
 ~~~python

@@ -1,27 +1,30 @@
 ---
 ---
 
-## Data types and variables
+## Data types
 
-As most programming languages, Python supports basic data types for integers
-(`int`), real numbers (`float`), character strings (`str`) and logical 
-True/False values (`bool`).
+The immutable data types are
 
-The type of a variable is automatically set when a value is assigned to it,
- using the `=` operator. It can be queried with the built-in `type()`
- function.
- 
+| `'int'`   | Integer            |
+| `'float'` | Real number        |
+| `'str'`   | Character string   |
+| `'bool'`  | `True`/`False`     |
+| `'tuple'` | Immutable sequence |
+
+Any object can be queried with `type()` 
+
 
 ~~~python
-i = 3
+>>> t = ('x', 3, True)
+
 ~~~
-{:.text-document title="worksheet.py"}
+{:.output}
 
 
 
 ~~~python
->>> type(i)
-<type 'int'>
+>>> type(t)
+<type 'tuple'>
 
 ~~~
 {:.output}
@@ -30,20 +33,43 @@ i = 3
 
 ===
 
-Python supports the usual arithmetic operators:
+Python supports the usual arithmetic operators for numeric types:
 
-
-| `+`  | addition       |
-| `-`  | subtraction    |
-| `*`  | multiplication |
-| `/`  | division       |
-| `**` | exponent       |
-| `%`  | modulus        |
-| `//` | floor division |
+| `+`  | addition                |
+| `-`  | subtraction             |
+| `*`  | multiplication          |
+| `/`  | floating-point division |
+| `**` | exponent                |
+| `%`  | modulus                 |
+| `//` | floor division          |
 
 ===
 
-The comparison operators are symbols, while logicals are plain english:
+Some operators have natural extensions to non-numeric types:
+
+
+~~~python
+>>> a * 2
+'xyzxyz'
+
+~~~
+{:.output}
+
+
+
+
+~~~python
+>>> t + (3.14, 'y')
+('x', 3, True, 3.14, 'y')
+
+~~~
+{:.output}
+
+
+
+===
+
+Comparison operators are symbols or plain english:
 
 | `==`       | equal                             |
 | `!=`       | non-equal                         |
@@ -56,62 +82,6 @@ The comparison operators are symbols, while logicals are plain english:
 
 ===
 
-Both `int` and `float` values can be mixed within an expression; the result is a `float`.
+## Exercise 1
 
-
-~~~python
-r = i + 1.5
-~~~
-{:.text-document title="worksheet.py"}
-
-
-
-~~~python
->>> print r, 'is of', type(r)
-4.5 is of <type 'float'>
-
-~~~
-{:.output}
-
-
-
-===
-
-In the code above, we introduced the `print` statement, which prints the output
-of multiple Python expressions on the same line, separated by spaces. 
-Note that quoted character strings (here, 'is of') are printed as is. 
-
-Let's define a new string variable.
-
-
-~~~python
-s = 'three'
-~~~
-{:.text-document title="worksheet.py"}
-
-
-
-~~~python
->>> type(s)
-<type 'str'>
-
-~~~
-{:.output}
-
-
-
-===
-
-In Python, the same operator can perform different functions based on the
-data types of the operands. See what happens if you "add" two character
-strings.
-
-
-~~~python
->>> s + ' four'
-'three four'
-
-~~~
-{:.output}
-
-
+Explore the use of `in` to test membership. What can an object of type `'int'` be a member of? Is it the same for an object of type `'str'`?

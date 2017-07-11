@@ -3,45 +3,39 @@
 
 ## Flow control
 
-The list and dictionary comprehensions embed a short form of the expression used to initiate a looping control statement.
+The list and dictionary comprehensions embed a short form of the expression used to initiate a for loop.
 
 ===
 
-## For loops
+## Loops and conditionals
 
-A `for` loop takes any iterable object and executes a block of code once for each
-element `in` the iterable..
+A `for` loop takes any "iterable" object and executes a block of code once for each
+element of the list.
 
 ```{python, term=False}
 squares = []
 for i in range(1, 5):
     j = i ** 2
     squares.append(j)
-n_squares = len(squares)
 ```
 ```{python}
-n_squares
+squares
 ```
 
 The `range(i, j)` function creates a list of integers from `i` up through `j - 1`; just
-like in the case of list slices, the range is not inclusive of the upper bound.
+like in the case of list slices, the upper bound is excluded. 
 
 ===
 
-## Indentation
-
-Note the pattern of the block above:
-
-- the `for x in y` expression is followed by a colon
-- the following lines are indented **equally**
-- no special character indicates the end of the loop, just the lack of indentation
+Note the pattern of the block above: the `for` statement is followed by a colon,
+each line in the following block is indented at the same level, and there is no
+delimiter or statement indicating the end of the block.
 
 Compared with other programming languages where code indentation only serves to
-enhance readability, Python uses indentation (and **only** indentation) to define "code blocks", a.k.a. statements.
+enhance readability, code blocks in Python are defined **only** by changes in
+indentation.
 
 ===
-
-## Nesting indentation
 
 A `for` loop can be used to iterate over the elements of any list. In the
 following example, we create a contact list (as a list of dictionaries), then
@@ -66,6 +60,6 @@ for c in contacts:
 
 ## Exercise 4
 
-Write a for loop that prints all even numbers between 1 and 9. Use the modulo
-operator (`%`) to check for evenness: if `i` is even, then `i % 2`
+Write a loop that prints all even numbers between 1 and 9 using the modulo
+operator (`%`) to check for evenness. If `i` is even, then `i % 2`
 returns `0`, because `%` gives the remainder after division of the first number by the second.

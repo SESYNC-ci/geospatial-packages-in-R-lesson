@@ -14,38 +14,31 @@ stored in data frames.
 ===
 
 After importing pandas, we call its `read_csv` function to load the Portal 
-surveys data from the file `surveys.csv`.
+animals data from the file `animals.csv`.
 
 
 ~~~python
 import pandas as pd
-surveys = pd.read_csv("data/surveys.csv")
+animals = pd.read_csv("data/animals.csv")
 ~~~
 {:.text-document title="worksheet.py"}
 
 
 
 ~~~python
->>> surveys.head()
-   record_id  month  day  year  plot_id species_id sex
-hindfoot_length  \
-0          1      7   16  1977        2         NL   M
-32.0
-1          2      7   16  1977        3         NL   M
-33.0
-2          3      7   16  1977        2         DM   F
-37.0
-3          4      7   16  1977        7         DM   M
-36.0
-4          5      7   16  1977        3         DM   M
-35.0
-
-   weight
-0     NaN
-1     NaN
-2     NaN
-3     NaN
-4     NaN
+>>> animals.head()
+   id  month  day  year  plot_id species_id sex  hindfoot_length
+weight
+0   2      7   16  1977        3         NL   M             33.0
+NaN
+1   3      7   16  1977        2         DM   F             37.0
+NaN
+2   4      7   16  1977        7         DM   M             36.0
+NaN
+3   5      7   16  1977        3         DM   M             35.0
+NaN
+4   6      7   16  1977        1         PF   M             14.0
+NaN
 
 ~~~
 {:.output}
@@ -61,69 +54,69 @@ To select a subset of rows and/or columns by name, use the `loc` attribute and `
 
 
 ~~~python
->>> surveys.loc[:, ['plot_id', 'species_id']]
+>>> animals.loc[:, ['plot_id', 'species_id']]
        plot_id species_id
-0            2         NL
-1            3         NL
-2            2         DM
-3            7         DM
-4            3         DM
-5            1         PF
-6            2         PE
+0            3         NL
+1            2         DM
+2            7         DM
+3            3         DM
+4            1         PF
+5            2         PE
+6            1         DM
 7            1         DM
-8            1         DM
-9            6         PF
-10           5         DS
-11           7         DM
-12           3         DM
-13           8         DM
-14           6         DM
-15           4         DM
-16           3         DS
-17           2         PP
-18           4         PF
-19          11         DS
-20          14         DM
-21          15         NL
-22          13         DM
-23          13         SH
-24           9         DM
+8            6         PF
+9            5         DS
+10           7         DM
+11           3         DM
+12           8         DM
+13           6         DM
+14           4         DM
+15           3         DS
+16           2         PP
+17           4         PF
+18          11         DS
+19          14         DM
+20          15         NL
+21          13         DM
+22          13         SH
+23           9         DM
+24          15         DM
 25          15         DM
-26          15         DM
-27          11         DM
-28          11         PP
-29          10         DS
+26          11         DM
+27          11         PP
+28          10         DS
+29          15         DM
 ...        ...        ...
-35519        9         SF
+35519        9         DM
 35520        9         DM
 35521        9         DM
-35522        9         DM
-35523        9         PB
-35524        9         OL
-35525        8         OT
-35526       13         DO
-35527       13         US
-35528       13         PB
-35529       13         OT
-35530       13         PB
+35522        9         PB
+35523        9         OL
+35524        8         OT
+35525       13         DO
+35526       13         US
+35527       13         PB
+35528       13         OT
+35529       13         PB
+35530       14         DM
 35531       14         DM
 35532       14         DM
 35533       14         DM
 35534       14         DM
 35535       14         DM
-35536       14         DM
-35537       15         PB
-35538       15         SF
+35536       15         PB
+35537       15         SF
+35538       15         PB
 35539       15         PB
 35540       15         PB
 35541       15         PB
-35542       15         PB
-35543       15         US
+35542       15         US
+35543       15         AH
 35544       15         AH
-35545       15         AH
-35546       10         RM
-35547        7         DO
-35548        5        NaN
+35545       10         RM
+35546        7         DO
+35547        5        NaN
+35548        2         NL
 
 [35549 rows x 2 columns]
 
@@ -132,15 +125,17 @@ To select a subset of rows and/or columns by name, use the `loc` attribute and `
 
 
 
+===
+
 As with lists, `:` by itself indicates all the rows (or columns). Unlike lists, the `loc` attribute returns both endpoints of a slice.
 
 
 ~~~python
->>> surveys.loc[2:4, 'plot_id':'sex']
+>>> animals.loc[2:4, 'plot_id':'sex']
    plot_id species_id sex
-2        2         DM   F
-3        7         DM   M
-4        3         DM   M
+2        7         DM   M
+3        3         DM   M
+4        1         PF   M
 
 ~~~
 {:.output}
@@ -153,10 +148,10 @@ Use the `iloc` attribute of a DataFrame to get rows and/or columns by position, 
 
 
 ~~~python
->>> surveys.iloc[2:4, 4:6]
+>>> animals.iloc[2:4, 4:6]
    plot_id species_id
-2        2         DM
-3        7         DM
+2        7         DM
+3        3         DM
 
 ~~~
 {:.output}
@@ -169,7 +164,7 @@ The default indexing for a DataFrame, without using the `loc` or `iloc` attribut
 
 
 ~~~python
->>> surveys[['hindfoot_length', 'weight']].describe()
+>>> animals[['hindfoot_length', 'weight']].describe()
        hindfoot_length        weight
 count     31438.000000  32283.000000
 mean         29.287932     42.672428
@@ -189,37 +184,30 @@ max          70.000000    280.000000
 
 The `loc` attribute also allows logical indexing, i.e. the use of a boolean array of appropriate length for the selected dimension.
 
-The subset of `surveys` where the species is "DM" is extracted into a new data frame.
+The subset of `animals` where the species is "DM" is extracted into a new data frame.
 
 
 ~~~python
-surveys_dm = surveys.loc[surveys['species_id'] == 'DM', ]
+animals_dm = animals.loc[animals['species_id'] == 'DM', ]
 ~~~
 {:.text-document title="worksheet.py"}
 
 
 
 ~~~python
->>> surveys_dm.head()
-   record_id  month  day  year  plot_id species_id sex
-hindfoot_length  \
-2          3      7   16  1977        2         DM   F
-37.0
-3          4      7   16  1977        7         DM   M
-36.0
-4          5      7   16  1977        3         DM   M
-35.0
-7          8      7   16  1977        1         DM   M
-37.0
-8          9      7   16  1977        1         DM   F
-34.0
-
-   weight
-2     NaN
-3     NaN
-4     NaN
-7     NaN
-8     NaN
+>>> animals_dm.head()
+   id  month  day  year  plot_id species_id sex  hindfoot_length
+weight
+1   3      7   16  1977        2         DM   F             37.0
+NaN
+2   4      7   16  1977        7         DM   M             36.0
+NaN
+3   5      7   16  1977        3         DM   M             35.0
+NaN
+6   8      7   16  1977        1         DM   M             37.0
+NaN
+7   9      7   16  1977        1         DM   F             34.0
+NaN
 
 ~~~
 {:.output}
@@ -232,33 +220,26 @@ The `query()` method accepts an expression that may reference columns, increasin
 
 
 ~~~python
-surveys_dm = surveys.query('species_id == "DM"')
+animals_dm = animals.query('species_id == "DM"')
 ~~~
 {:.text-document title="worksheet.py"}
 
 
 
 ~~~python
->>> surveys_dm.head()
-   record_id  month  day  year  plot_id species_id sex
-hindfoot_length  \
-2          3      7   16  1977        2         DM   F
-37.0
-3          4      7   16  1977        7         DM   M
-36.0
-4          5      7   16  1977        3         DM   M
-35.0
-7          8      7   16  1977        1         DM   M
-37.0
-8          9      7   16  1977        1         DM   F
-34.0
-
-   weight
-2     NaN
-3     NaN
-4     NaN
-7     NaN
-8     NaN
+>>> animals_dm.head()
+   id  month  day  year  plot_id species_id sex  hindfoot_length
+weight
+1   3      7   16  1977        2         DM   F             37.0
+NaN
+2   4      7   16  1977        7         DM   M             36.0
+NaN
+3   5      7   16  1977        3         DM   M             35.0
+NaN
+6   8      7   16  1977        1         DM   M             37.0
+NaN
+7   9      7   16  1977        1         DM   F             34.0
+NaN
 
 ~~~
 {:.output}
@@ -272,7 +253,7 @@ Aggregation of records in a DataFrame by value of a given variable is performed 
 
 ~~~python
 dm_stats = (
-  surveys_dm
+  animals_dm
   .groupby('sex')
   ['hindfoot_length', 'weight']
   .mean()
@@ -298,6 +279,6 @@ M          36.188229  44.353134
 
 ## Exercise 6
 
-The `count` method for DataFrames (e.g. `surveys.count()`) returns the number of rows
+The `count` method for DataFrames (e.g. `animals.count()`) returns the number of rows
 in a data frame. Find out which month had the most observations recorded
-in `surveys`.
+in `animals`.

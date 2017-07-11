@@ -12,11 +12,11 @@ by other objects or by direct calls to the family of `pyplot.plot()` functions.
 
 ===
 
-The DataFrame `plot()` method creates a scatterplot, here for the `weight` versus the `hindfoot_length` for records in the `animals_dm` data.
+The DataFrame `plot()` method creates a scatterplot, here for the `weight` versus the `hindfoot_length` for records in the `surveys_dm` data.
 
 ```{python scatter, term=False}
 import matplotlib.pyplot as plt
-ax = animals_dm.plot('hindfoot_length', 'weight', kind = 'scatter')
+ax = surveys_dm.plot('hindfoot_length', 'weight', kind = 'scatter')
 ```
 
 The `ax` object holds the plot description, and depending on the IDE and operating system the plot may or may not appear. If it does not,  the `plt.show()` function displays the active figure on screen.
@@ -29,6 +29,6 @@ as bar and line graphs. To create the histogram of one variable from the data
 frame, you may use a different method, `hist`.
 
 ```{python hist, term=False}
-ax = animals_dm.hist('weight')
+ax = surveys_dm.hist('weight')
 plt.savefig('hist_weight.pdf')
 ```
