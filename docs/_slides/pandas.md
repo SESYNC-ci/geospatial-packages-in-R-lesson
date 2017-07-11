@@ -4,16 +4,16 @@
 ## Pandas
 
 If you have used the statistical programming language R, you are familiar with
-*data frames*, two-dimensional data structures where each column can hold a 
+"data frames", two-dimensional data structures where each column can hold a 
 different type of data, as in a spreadsheet.
 
-The data analysis library **pandas** provides a data frame object type for
+The data analysis library [pandas](){:.pylib} provides a data frame object type for
 Python, along with functions to subset, filter reshape and aggregate data
 stored in data frames.
 
 ===
 
-After importing pandas, we call its `read_csv` function to load the Portal 
+After importing [pandas](){:.pylib}, we call its `read_csv` function to load the Portal 
 animals data from the file `animals.csv`.
 
 
@@ -26,31 +26,26 @@ animals = pd.read_csv("data/animals.csv")
 
 
 ~~~python
->>> animals.head()
-   id  month  day  year  plot_id species_id sex  hindfoot_length
-weight
-0   2      7   16  1977        3         NL   M             33.0
-NaN
-1   3      7   16  1977        2         DM   F             37.0
-NaN
-2   4      7   16  1977        7         DM   M             36.0
-NaN
-3   5      7   16  1977        3         DM   M             35.0
-NaN
-4   6      7   16  1977        1         PF   M             14.0
-NaN
+>>> animals.dtypes
+id                   int64
+month                int64
+day                  int64
+year                 int64
+plot_id              int64
+species_id          object
+sex                 object
+hindfoot_length    float64
+weight             float64
+dtype: object
 
 ~~~
 {:.output}
 
 
 
-The `head(n=5)` method of a data frame returns its first `n` rows.
-
 ===
 
-There are many ways to slice a Pandas DataFrame.
-To select a subset of rows and/or columns by name, use the `loc` attribute and `[` for indexing.
+There are many ways to slice a `DataFrame`. To select a subset of rows and/or columns by name, use the `loc` attribute and `[` for indexing.
 
 
 ~~~python
@@ -188,7 +183,8 @@ The subset of `animals` where the species is "DM" is extracted into a new data f
 
 
 ~~~python
-animals_dm = animals.loc[animals['species_id'] == 'DM', ]
+animals_dm = animals.loc[animals['species_id'] == 'DM',
+'month':'weight']
 ~~~
 {:.text-document title="worksheet.py"}
 
@@ -196,24 +192,19 @@ animals_dm = animals.loc[animals['species_id'] == 'DM', ]
 
 ~~~python
 >>> animals_dm.head()
-   id  month  day  year  plot_id species_id sex  hindfoot_length
-weight
-1   3      7   16  1977        2         DM   F             37.0
-NaN
-2   4      7   16  1977        7         DM   M             36.0
-NaN
-3   5      7   16  1977        3         DM   M             35.0
-NaN
-6   8      7   16  1977        1         DM   M             37.0
-NaN
-7   9      7   16  1977        1         DM   F             34.0
-NaN
+   month  day  year  plot_id species_id sex  hindfoot_length  weight
+1      7   16  1977        2         DM   F             37.0     NaN
+2      7   16  1977        7         DM   M             36.0     NaN
+3      7   16  1977        3         DM   M             35.0     NaN
+6      7   16  1977        1         DM   M             37.0     NaN
+7      7   16  1977        1         DM   F             34.0     NaN
 
 ~~~
 {:.output}
 
 
 
+<!--
 ===
 
 The `query()` method accepts an expression that may reference columns, increasing the readability of the same operation
@@ -245,6 +236,7 @@ NaN
 {:.output}
 
 
+-->
 
 ===
 
@@ -281,4 +273,4 @@ M          36.188229  44.353134
 
 The `count` method for DataFrames (e.g. `animals.count()`) returns the number of rows
 in a data frame. Find out which month had the most observations recorded
-in `animals`.
+in `animals` using `groupby()` and `count()`.

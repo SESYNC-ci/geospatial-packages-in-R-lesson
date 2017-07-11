@@ -21,15 +21,12 @@ import pandas as pd
 animals = pd.read_csv("data/animals.csv")
 ```
 ```{python}
-animals.head()
+animals.dtypes
 ```
-
-The `head(n=5)` method of a data frame returns its first `n` rows.
 
 ===
 
-There are many ways to slice a `DataFrame`.
-To select a subset of rows and/or columns by name, use the `loc` attribute and `[` for indexing.
+There are many ways to slice a `DataFrame`. To select a subset of rows and/or columns by name, use the `loc` attribute and `[` for indexing.
 
 ```{python}
 animals.loc[:, ['plot_id', 'species_id']]
@@ -66,12 +63,13 @@ The `loc` attribute also allows logical indexing, i.e. the use of a boolean arra
 The subset of `animals` where the species is "DM" is extracted into a new data frame.
 
 ```{python, term=False}
-animals_dm = animals.loc[animals['species_id'] == 'DM', ]
+animals_dm = animals.loc[animals['species_id'] == 'DM', 'month':'weight']
 ```
 ```{python}
 animals_dm.head()
 ```
 
+<!--
 ===
 
 The `query()` method accepts an expression that may reference columns, increasing the readability of the same operation
@@ -82,6 +80,7 @@ animals_dm = animals.query('species_id == "DM"')
 ```{python}
 animals_dm.head()
 ```
+-->
 
 ===
 
@@ -105,4 +104,4 @@ dm_stats
 
 The `count` method for DataFrames (e.g. `animals.count()`) returns the number of rows
 in a data frame. Find out which month had the most observations recorded
-in `animals`.
+in `animals` using `groupby()` and `count()`.

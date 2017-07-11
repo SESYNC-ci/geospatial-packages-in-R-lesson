@@ -30,8 +30,8 @@ def add_two(x):
 The `def` keyword is followed by the function name, its arguments enclosed in
 parentheses (separated by commas if there are more than one), and a colon.
 
-The `return` statement passes the specified result as the output of the function. 
-The lack of a `return` and a `return` followed by nothing both cause the function to return the value `None`.
+The `return` statement is needed to make the function provide output.
+The lack of a `return`, or `return` followed by nothing, causes the function to return the value `None`.
 
 After it is defined, the function is invoked using its name and specifying the
 arguments in parentheses, in the same order as in its definition.
@@ -91,10 +91,8 @@ The period is a special character in Python that accesses an object's attributes
 
 
 ~~~python
->>> squares.index(2)
-Traceback (most recent call last):
-  File "< chunk 6 named None >", line 1, in <module>
-ValueError: 2 is not in list
+>>> squares.index(4)
+1
 
 ~~~
 {:.output}
@@ -108,7 +106,7 @@ We call this `index()` function a method of lists (recall that `squares` is of t
 >>> help(squares.index)
 Help on built-in function index:
 
-index(...)
+index(...) method of builtins.list instance
     L.index(value, [start, [stop]]) -> integer -- return first index
 of value.
     Raises ValueError if the value is not present.
@@ -119,11 +117,12 @@ of value.
 
 
 
-{:.notes} A major differnce between Python and R has to do with the process for making functions behave differently for different objects. In Python, a function is attached to an object as a "method", while in R a "dispatcher" examines the attributes of a function call's arguments and chooses a the particular function to use.
+A major differnce between Python and R has to do with the process for making functions behave differently for different objects. In Python, a function is attached to an object as a "method", while in R a "dispatcher" examines the attributes of a function call's arguments and chooses a the particular function to use.
+{:.notes}
 
 ===
 
-## A dictionary methods
+## A dictionary method
 
 The `update()` method allows you to extend a dictionary with another dictionary of `key:value` pairs, while simultaneously overwriting values for existing keys.
 

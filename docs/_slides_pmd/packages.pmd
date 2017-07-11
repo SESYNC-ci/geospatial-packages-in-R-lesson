@@ -29,6 +29,7 @@ To access the tools provided by a package, once it has been installed, use the `
 preciesly control the tools made available.
 
 | Syntax                             | Result                                      |
+|------------------------------------+---------------------------------------------|
 | import pandas                      | all modules are available following pandas. |
 | import pandas as pd                | all modules are available following pd.     |
 | from pandas import DataFrame       | the DataFrame module is available           |

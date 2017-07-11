@@ -23,7 +23,7 @@ slide_sorter:
 #  - numpy
   - pandas
 #  - matplotlib
-#  - sqlalchemy
+  - sqlalchemy
   - conclude
 
 #####################################

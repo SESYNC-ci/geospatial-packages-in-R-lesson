@@ -24,7 +24,7 @@ Any object can be queried with `type()`
 
 ~~~python
 >>> type(t)
-<type 'tuple'>
+<class 'tuple'>
 
 ~~~
 {:.output}
