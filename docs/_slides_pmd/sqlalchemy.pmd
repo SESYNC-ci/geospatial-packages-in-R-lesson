@@ -41,6 +41,7 @@ Pull class definitions directly from the `Base` after it has been prepared.
 ```{python, term=False}
 Plots = Base.classes['plots']
 Animals = Base.classes['animals']
+Species = Base.classes['species']
 ```
 
 ===
