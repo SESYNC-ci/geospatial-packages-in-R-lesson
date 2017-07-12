@@ -1,9 +1,9 @@
 # Site
 
-title: Data Tools in Python
+title: Introduction to Python, Pandas and SQLAlchemy
 handouts: worksheet.ipynb
 tag: v0.0
-lesson: 9
+lesson: 10
 instructor: Kelly Hondula
 authors:
   - Philippe Marchand
