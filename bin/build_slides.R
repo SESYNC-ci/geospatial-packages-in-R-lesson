@@ -25,7 +25,7 @@ chunk = function(x, options) {
         x <- gsub('~~~(\n*(!\\[.+)?$)',
                   paste0('~~~\n{:.text-document title="', options$title, '"}\\1'),
                   x)
-        # move figures to <div> on next slide
+        # add 'captioned' class to figures
         x <- gsub('(!\\[.+$)', '===\n\n\\1\n{:.captioned}', x)
     } else {
         # add default kramdown block IAL to kramdown block IAL to input
