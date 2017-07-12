@@ -34,9 +34,9 @@ Note the pattern of the block above:
 
 - the `for x in y` expression is followed by a colon
 - the following lines are indented **equally**
-- no special character indicates the end of the loop, just the lack of indentation
+- un-indenting indicates the end of the loop (rather than any special character)
 
-Compared with other programming languages where code indentation only serves to
+Compared with other programming languages in which code indentation only serves to
 enhance readability, Python uses indentation (and **only** indentation) to define "code blocks", a.k.a. statements.
 
 ===
@@ -49,12 +49,11 @@ perform a loop over all contacts. Within the loop, we use a conditional
 statement (`if`) to check if the name is 'Alice'. If so, print the phone 
 number; otherwise print the name (`else` block).
 
-```{python, eval=False, term=False}
+```{python, term=False}
 contacts = [
     {'name':'Alice', 'phone':'555-111-2222'},
     {'name':'Bob', 'phone':'555-333-4444'},
-    ]    
-
+    ]
 for c in contacts:
     if c['name'] == 'Alice':
         print(c['phone'])

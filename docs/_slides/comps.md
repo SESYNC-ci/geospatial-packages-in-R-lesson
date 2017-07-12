@@ -15,10 +15,15 @@ Packing the `for x in y` expression inside a sequence declaration is one way to 
 
 
 ~~~python
->>> letters = [x for x in 'abcde']
+letters = [x for x in 'abcde']
+~~~
+{:.text-document title="worksheet.py"}
+
+
+
+~~~python
 >>> letters
 ['a', 'b', 'c', 'd', 'e']
-
 ~~~
 {:.output}
 
@@ -35,13 +40,15 @@ To declare a dictionary in this way, specify a `key:value` pair.
 
 ~~~python
 >>> CAPS = {x:x.upper() for x in 'abcde'}
->>> CAPS
-{'d': 'D', 'a': 'A', 'b': 'B', 'e': 'E', 'c': 'C'}
-
 ~~~
 {:.output}
 
 
 
-===
+~~~python
+>>> CAPS
+{'b': 'B', 'a': 'A', 'd': 'D', 'c': 'C', 'e': 'E'}
+~~~
+{:.output}
+
 

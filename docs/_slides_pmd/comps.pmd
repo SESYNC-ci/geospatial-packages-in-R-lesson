@@ -13,8 +13,10 @@ Python formally declares a thing "iterable" if it can be used in an expression `
 
 Packing the `for x in y` expression inside a sequence declaration is one way to build a sequence.
 
-```{python}
+```{python, term=False}
 letters = [x for x in 'abcde']
+```
+```{python}
 letters
 ```
 
@@ -28,8 +30,7 @@ To declare a dictionary in this way, specify a `key:value` pair.
 
 ```{python}
 CAPS = {x:x.upper() for x in 'abcde'}
+```
+```{python}
 CAPS
 ```
-
-===
-

@@ -37,7 +37,6 @@ sex                 object
 hindfoot_length    float64
 weight             float64
 dtype: object
-
 ~~~
 {:.output}
 
@@ -49,74 +48,9 @@ There are many ways to slice a `DataFrame`. To select a subset of rows and/or co
 
 
 ~~~python
->>> animals.loc[:, ['plot_id', 'species_id']]
-       plot_id species_id
-0            3         NL
-1            2         DM
-2            7         DM
-3            3         DM
-4            1         PF
-5            2         PE
-6            1         DM
-7            1         DM
-8            6         PF
-9            5         DS
-10           7         DM
-11           3         DM
-12           8         DM
-13           6         DM
-14           4         DM
-15           3         DS
-16           2         PP
-17           4         PF
-18          11         DS
-19          14         DM
-20          15         NL
-21          13         DM
-22          13         SH
-23           9         DM
-24          15         DM
-25          15         DM
-26          11         DM
-27          11         PP
-28          10         DS
-29          15         DM
-...        ...        ...
-35519        9         DM
-35520        9         DM
-35521        9         DM
-35522        9         PB
-35523        9         OL
-35524        8         OT
-35525       13         DO
-35526       13         US
-35527       13         PB
-35528       13         OT
-35529       13         PB
-35530       14         DM
-35531       14         DM
-35532       14         DM
-35533       14         DM
-35534       14         DM
-35535       14         DM
-35536       15         PB
-35537       15         SF
-35538       15         PB
-35539       15         PB
-35540       15         PB
-35541       15         PB
-35542       15         US
-35543       15         AH
-35544       15         AH
-35545       10         RM
-35546        7         DO
-35547        5        NaN
-35548        2         NL
-
-[35549 rows x 2 columns]
-
+animals.loc[:, ['plot_id', 'species_id']]
 ~~~
-{:.output}
+{:.text-document title="worksheet.py"}
 
 
 
@@ -131,7 +65,6 @@ As with lists, `:` by itself indicates all the rows (or columns). Unlike lists, 
 2        7         DM   M
 3        3         DM   M
 4        1         PF   M
-
 ~~~
 {:.output}
 
@@ -147,7 +80,6 @@ Use the `iloc` attribute of a DataFrame to get rows and/or columns by position, 
    plot_id species_id
 2        7         DM
 3        3         DM
-
 ~~~
 {:.output}
 
@@ -159,19 +91,9 @@ The default indexing for a DataFrame, without using the `loc` or `iloc` attribut
 
 
 ~~~python
->>> animals[['hindfoot_length', 'weight']].describe()
-       hindfoot_length        weight
-count     31438.000000  32283.000000
-mean         29.287932     42.672428
-std           9.564759     36.631259
-min           2.000000      4.000000
-25%          21.000000     20.000000
-50%          32.000000     37.000000
-75%          36.000000     48.000000
-max          70.000000    280.000000
-
+animals[['hindfoot_length', 'weight']].describe()
 ~~~
-{:.output}
+{:.text-document title="worksheet.py"}
 
 
 
@@ -183,8 +105,7 @@ The subset of `animals` where the species is "DM" is extracted into a new data f
 
 
 ~~~python
-animals_dm = animals.loc[animals['species_id'] == 'DM',
-'month':'weight']
+animals_dm = animals.loc[animals['species_id'] == 'DM', ]
 ~~~
 {:.text-document title="worksheet.py"}
 
@@ -192,13 +113,12 @@ animals_dm = animals.loc[animals['species_id'] == 'DM',
 
 ~~~python
 >>> animals_dm.head()
-   month  day  year  plot_id species_id sex  hindfoot_length  weight
-1      7   16  1977        2         DM   F             37.0     NaN
-2      7   16  1977        7         DM   M             36.0     NaN
-3      7   16  1977        3         DM   M             35.0     NaN
-6      7   16  1977        1         DM   M             37.0     NaN
-7      7   16  1977        1         DM   F             34.0     NaN
-
+   id  month  day  year  plot_id species_id sex  hindfoot_length  weight
+1   3      7   16  1977        2         DM   F             37.0     NaN
+2   4      7   16  1977        7         DM   M             36.0     NaN
+3   5      7   16  1977        3         DM   M             35.0     NaN
+6   8      7   16  1977        1         DM   M             37.0     NaN
+7   9      7   16  1977        1         DM   F             34.0     NaN
 ~~~
 {:.output}
 
@@ -219,19 +139,12 @@ animals_dm = animals.query('species_id == "DM"')
 
 ~~~python
 >>> animals_dm.head()
-   id  month  day  year  plot_id species_id sex  hindfoot_length
-weight
-1   3      7   16  1977        2         DM   F             37.0
-NaN
-2   4      7   16  1977        7         DM   M             36.0
-NaN
-3   5      7   16  1977        3         DM   M             35.0
-NaN
-6   8      7   16  1977        1         DM   M             37.0
-NaN
-7   9      7   16  1977        1         DM   F             34.0
-NaN
-
+   id  month  day  year  plot_id species_id sex  hindfoot_length  weight
+1   3      7   16  1977        2         DM   F             37.0     NaN
+2   4      7   16  1977        7         DM   M             36.0     NaN
+3   5      7   16  1977        3         DM   M             35.0     NaN
+6   8      7   16  1977        1         DM   M             37.0     NaN
+7   9      7   16  1977        1         DM   F             34.0     NaN
 ~~~
 {:.output}
 
@@ -258,10 +171,9 @@ dm_stats = (
 ~~~python
 >>> dm_stats
      hindfoot_length     weight
-sex
+sex                            
 F          35.712692  41.609685
 M          36.188229  44.353134
-
 ~~~
 {:.output}
 

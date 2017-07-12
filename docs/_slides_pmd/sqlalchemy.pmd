@@ -71,7 +71,7 @@ session.commit()
 plot.id
 ```
 
-The RDBMS inserted a new record, incrementing the `id` value as designed, and this is reflected back into the object `plot`.
+The RDBMS inserted a new record, incrementing the `id` value as designed, and reflected it back into the object `plot`.
 
 ===
 
@@ -79,39 +79,44 @@ The RDBMS inserted a new record, incrementing the `id` value as designed, and th
 
 The full reach of the ORM extends into relationships between tables.
 
-Let's pull a different `plot` record using the `session.query()` method.
+Let's pull a `species` record using the `session.query()` method.
 
 ```{python, term=False}
-query = session.query(Plots)
-plot = query.first()
+query = session.query(Species).filter_by(id='RO')
+species = query.one()
 ```
 
-Not only do we have the plot attributes
+Not only do we have the species' attributes
 
 ```{python}
-plot.id
-plot.treatment
+species.id
+species.genus
 ```
 
-... we have the list of every `animal` linked to this `plot` by the many-to-one relationship dictated by the use of foreign keys.
+... we have the list of every `animal` linked to this `species` by the many-to-one relationship dictated by the use of foreign keys.
 
 ```{python}
-plot.animals_collection
+species.animals_collection
 ```
 
 ===
 
 ## Update
 
-Programatically make complex updates to the data in Python, then commit everything to the database
-in one transaction.
+With SQLAlchemy, you can programatically make complex updates to the data in Python, and then commit the state to the database in one transaction.
 
-Suppose a surveyor mistakenly reversed the labels of two plots during a particul survey, and the database needs to be corrected.
+Suppose a surveyor mistakenly reversed the labels of two plots during a particular survey, and your job is to correct the database. Here are the two problematic plots.
 
 ```{python, term=False}
 plot_a = session.query(Plots).filter_by(id=2).one()
 plot_b = session.query(Plots).filter_by(id=12).one()
+```
 
+===
+
+Here are the animals *incorrectly* associated with each plot.
+
+```{python, term=False}
 query = session.query(Animals).filter_by(year=2002, month=1, day=12)
 animals_a = query.filter(Animals.plots == plot_a).all()
 animals_b = query.filter(Animals.plots == plot_b).all()
@@ -120,6 +125,8 @@ animals_b = query.filter(Animals.plots == plot_b).all()
 ```{python}
 animals_a[0].plots is plot_a
 ```
+
+===
 
 To swap the plots associated with all these animal records, assign the opposite plot to each `animal.plot` attribute.
 
@@ -130,16 +137,19 @@ for animal in animals_b:
     animal.plot = plot_a
 ```
 
+===
+
+Check your work ...
+
 ```{python}
-animals_a[0].plot is plot_b
+animals_a[0].plots is plot_b
 ```
+
+and commit the result to the database.
 
 ```{python, term = False}
 session.commit()
-```
-
-```{python}
-animals_a[0].plot is plot_b
+animals_a[0].plots is plot_b
 ```
 
 ===

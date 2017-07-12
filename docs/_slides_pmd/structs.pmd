@@ -16,8 +16,10 @@ The built-in structures for holding multiple values are:
 
 The simplest kind of sequence, a tuple is declared with comma-separated values inside `()` as we have already seen, or inside nothing at all. Note that to declare a one-tuple, a trailing "," is required.
 
-```{python}
+```{python, term=False}
 t = 'cat',
+```
+```{python}
 type(t)
 ```
 
@@ -27,8 +29,10 @@ type(t)
 
 The more common kind of sequence in Python is the list, which is declared with comma-separated values inside `[]`. Unlike a tuple, a list is mutable.
 
-```{python}
+```{python, term=False}
 l = [3.14, 'xyz', t]
+```
+```{python}
 type(l)
 ```
 
@@ -91,10 +95,9 @@ Create a Python list containing zero as a float, the integer 2, and a tuple of t
 
 The third and last "sequence" data structure is a set, used mainly for quick access to set operations like "union" and "difference". Declare a set with comma-separated values inside `{}` or by casting another sequence with `set()`.
 
-```{python}
+```{python, term=False}
 s = set(l)
 ```
-
 ```{python}
 s.difference({3.14})
 ```
@@ -129,8 +132,10 @@ toons['Bugs']
 
 To add a single new element to the dictionary, define a new `key:value` pair by assigning a value to a novel key in the dictionary.
 
-```{python}
+```{python, term=False}
 toons['Goofy'] = 'dog'
+```
+```{python}
 toons
 ```
 

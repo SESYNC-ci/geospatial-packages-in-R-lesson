@@ -18,10 +18,15 @@ The simplest kind of sequence, a tuple is declared with comma-separated values i
 
 
 ~~~python
->>> t = 'cat',
+t = 'cat',
+~~~
+{:.text-document title="worksheet.py"}
+
+
+
+~~~python
 >>> type(t)
 <class 'tuple'>
-
 ~~~
 {:.output}
 
@@ -35,10 +40,15 @@ The more common kind of sequence in Python is the list, which is declared with c
 
 
 ~~~python
->>> l = [3.14, 'xyz', t]
+l = [3.14, 'xyz', t]
+~~~
+{:.text-document title="worksheet.py"}
+
+
+
+~~~python
 >>> type(l)
 <class 'list'>
-
 ~~~
 {:.output}
 
@@ -54,7 +64,6 @@ Subsetting elements from a tuple or list is performed with square brackets in bo
 ~~~python
 >>> l[0]
 3.14
-
 ~~~
 {:.output}
 
@@ -68,7 +77,6 @@ Negative indices are allowed, and refer to the reverse ordering: -1 is the last 
 ~~~python
 >>> l[-1]
 ('cat',)
-
 ~~~
 {:.output}
 
@@ -83,7 +91,6 @@ The syntax `l[i:j]` selects a sub-list starting with the element at index
 ~~~python
 >>> l[0:2]
 [3.14, 'xyz']
-
 ~~~
 {:.output}
 
@@ -123,18 +130,15 @@ The third and last "sequence" data structure is a set, used mainly for quick acc
 
 
 ~~~python
->>> s = set(l)
-
+s = set(l)
 ~~~
-{:.output}
-
+{:.text-document title="worksheet.py"}
 
 
 
 ~~~python
 >>> s.difference({3.14})
 {('cat',), 'xyz'}
-
 ~~~
 {:.output}
 
@@ -162,7 +166,6 @@ toons = {'Snowy':'dog', 'Garfield':'cat', 'Bugs':'bunny'}
 ~~~python
 >>> type(toons)
 <class 'dict'>
-
 ~~~
 {:.output}
 
@@ -176,7 +179,6 @@ Individual values are accessed using square brackets, as for lists, but the key 
 ~~~python
 >>> toons['Bugs']
 'bunny'
-
 ~~~
 {:.output}
 
@@ -188,10 +190,15 @@ To add a single new element to the dictionary, define a new `key:value` pair by 
 
 
 ~~~python
->>> toons['Goofy'] = 'dog'
->>> toons
-{'Bugs': 'bunny', 'Garfield': 'cat', 'Snowy': 'dog', 'Goofy': 'dog'}
+toons['Goofy'] = 'dog'
+~~~
+{:.text-document title="worksheet.py"}
 
+
+
+~~~python
+>>> toons
+{'Bugs': 'bunny', 'Snowy': 'dog', 'Goofy': 'dog', 'Garfield': 'cat'}
 ~~~
 {:.output}
 

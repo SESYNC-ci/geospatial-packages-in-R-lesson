@@ -13,7 +13,7 @@ The immutable data types are
 
 Any object can be queried with `type()` 
 
-```{python}
+```{python, term=False}
 t = ('x', 3, True)
 ```
 ```{python}

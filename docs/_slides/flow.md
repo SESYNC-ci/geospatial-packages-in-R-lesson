@@ -27,7 +27,6 @@ n_squares = len(squares)
 ~~~python
 >>> n_squares
 4
-
 ~~~
 {:.output}
 
@@ -44,9 +43,9 @@ Note the pattern of the block above:
 
 - the `for x in y` expression is followed by a colon
 - the following lines are indented **equally**
-- no special character indicates the end of the loop, just the lack of indentation
+- un-indenting indicates the end of the loop (rather than any special character)
 
-Compared with other programming languages where code indentation only serves to
+Compared with other programming languages in which code indentation only serves to
 enhance readability, Python uses indentation (and **only** indentation) to define "code blocks", a.k.a. statements.
 
 ===
@@ -65,7 +64,6 @@ contacts = [
     {'name':'Alice', 'phone':'555-111-2222'},
     {'name':'Bob', 'phone':'555-333-4444'},
     ]
-
 for c in contacts:
     if c['name'] == 'Alice':
         print(c['phone'])
@@ -77,7 +75,6 @@ for c in contacts:
 ~~~~{.python}
 555-111-2222
 Bob
-
 ~~~~~~~~~~~~~
 
 

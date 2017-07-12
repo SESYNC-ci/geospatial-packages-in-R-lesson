@@ -37,8 +37,10 @@ a is 'xyz'
 
 The `id()` function helps demonstrate that "equal" is not the "same".
 
-```{python}
+```{python, term=False}
 b = [1, 2, 3]
+```
+```{python}
 id(b)
 ```
 
@@ -74,22 +76,23 @@ Question
 : Re-check the "in-memory" location---is it the same `b`?
 
 Answer
-: Yes! The list got shorter but it is the same list.
-{:.fragment}
+: {:.fragment} Yes! The list got shorter but it is the same list.
 
 ===
 
 Side-effects trip up Python programmers when an object has multiple labels, which is not so unusual:
 
-```{python}
+```{python, term=False}
 c = b
 b.pop()
+```
+```{python}
 c
 ```
 
 The assignment to `c` does not create a new list, so the side-effect of popping off the tail of `b` ripples into `c`.
 
-A common mistake for those coming to Python from R, is to write `b = b.append(4)`, which overwrites `b` with the value `None` that happens to be returned by the `list.append()` function.
+A common mistake for those coming to Python from R, is to write `b = b.append(4)`, which overwrites `b` with the value `None` that happens to be returned by the `append()` method.
 {:.notes}
 
 ===

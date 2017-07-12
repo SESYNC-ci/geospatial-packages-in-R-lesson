@@ -28,9 +28,9 @@ The packages for this lesson are already installed in SESYNC's "teaching-lab" Do
 To access the tools provided by a package, once it has been installed, use the `import` command. Their are several variations that
 preciesly control the tools made available.
 
-| Syntax                             | Result                                      |
-|------------------------------------+---------------------------------------------|
-| import pandas                      | all modules are available following pandas. |
-| import pandas as pd                | all modules are available following pd.     |
-| from pandas import DataFrame       | the DataFrame module is available           |
-| from pandas import DataFrame as DF | the label DF points to pandas.DataFrame     |
+| Syntax                               | Result                                      |
+|--------------------------------------+---------------------------------------------|
+| `import pandas`                      | all modules are available following pandas. |
+| `import pandas as pd`                | all modules are available following pd.     |
+| `from pandas import DataFrame`       | the DataFrame module is available           |
+| `from pandas import DataFrame as DF` | the label DF points to pandas.DataFrame     |

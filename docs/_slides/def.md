@@ -19,7 +19,6 @@ def add_two(x):
 ~~~python
 >>> add_two(10)
 12
-
 ~~~
 {:.output}
 
@@ -58,7 +57,6 @@ Then the function can be called without that argument:
 ~~~python
 >>> add_any(10)
 10
-
 ~~~
 {:.output}
 
@@ -70,7 +68,6 @@ Then the function can be called without that argument:
 ~~~python
 >>> add_any(10, 5)
 15
-
 ~~~
 {:.output}
 
@@ -87,13 +84,12 @@ its first and last elements as a new list.
 
 ## Methods
 
-The period is a special character in Python that accesses an object's attributes and methods. In the Jupyter Notebook, typing an object's name followed by `.` and then pressing the `TAB` key brings up suggestions.
+The period is a special character in Python that accesses an object's attributes and methods. In either the Jupyter Notebook or Console, typing an object's name followed by `.` and then pressing the `TAB` key brings up suggestions.
 
 
 ~~~python
 >>> squares.index(4)
 1
-
 ~~~
 {:.output}
 
@@ -107,10 +103,8 @@ We call this `index()` function a method of lists (recall that `squares` is of t
 Help on built-in function index:
 
 index(...) method of builtins.list instance
-    L.index(value, [start, [stop]]) -> integer -- return first index
-of value.
+    L.index(value, [start, [stop]]) -> integer -- return first index of value.
     Raises ValueError if the value is not present.
-
 
 ~~~
 {:.output}
@@ -137,6 +131,13 @@ toons.update({
 {:.text-document title="worksheet.py"}
 
 
+===
+
+Question
+: How many `key:value` pairs are there now in toons?
+
+Answer
+: {:.fragment} Five. The key `'Bugs'` is only inserted once.
 
 ===
 
@@ -145,7 +146,3 @@ Note a couple "Pythonic" style choices of the above:
 1. Leave no space around the `:` when declaring `key:value` pairs
 1. Trailing null arguments are syntactically correct, even advantageous
 1. White space can be used to improve readiability; indentation within `()` is meaningless
-
-## Exercise 2
-
-Find and use the method for the list `l` that arranges its elements in the opposite order.

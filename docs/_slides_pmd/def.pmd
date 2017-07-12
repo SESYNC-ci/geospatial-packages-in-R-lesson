@@ -61,7 +61,7 @@ its first and last elements as a new list.
 
 ## Methods
 
-The period is a special character in Python that accesses an object's attributes and methods. In the Jupyter Notebook, typing an object's name followed by `.` and then pressing the `TAB` key brings up suggestions.
+The period is a special character in Python that accesses an object's attributes and methods. In either the Jupyter Notebook or Console, typing an object's name followed by `.` and then pressing the `TAB` key brings up suggestions.
 
 ```{python}
 squares.index(4)
@@ -89,6 +89,13 @@ toons.update({
   'Bugs':'rabbit',
   })
 ```
+===
+
+Question
+: How many `key:value` pairs are there now in toons?
+
+Answer
+: {:.fragment} Five. The key `'Bugs'` is only inserted once.
 
 ===
 
@@ -97,7 +104,3 @@ Note a couple "Pythonic" style choices of the above:
 1. Leave no space around the `:` when declaring `key:value` pairs
 1. Trailing null arguments are syntactically correct, even advantageous
 1. White space can be used to improve readiability; indentation within `()` is meaningless
-
-## Exercise 2
-
-Find and use the method for the list `l` that arranges its elements in the opposite order.

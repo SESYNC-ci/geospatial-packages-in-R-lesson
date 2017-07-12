@@ -22,8 +22,7 @@ The "in-memory" location of `a` returned by `id()` ...
 
 ~~~python
 >>> id(a)
-139730616193464
-
+140042465812976
 ~~~
 {:.output}
 
@@ -34,8 +33,7 @@ The "in-memory" location of `a` returned by `id()` ...
 
 ~~~python
 >>> id('xyz')
-139730616193464
-
+140042465812976
 ~~~
 {:.output}
 
@@ -47,7 +45,6 @@ The idiom to test this "sameness" is typical of the Python language: it uses pla
 ~~~python
 >>> a is 'xyz'
 True
-
 ~~~
 {:.output}
 
@@ -61,10 +58,15 @@ The `id()` function helps demonstrate that "equal" is not the "same".
 
 
 ~~~python
->>> b = [1, 2, 3]
->>> id(b)
-139730449437064
+b = [1, 2, 3]
+~~~
+{:.text-document title="worksheet.py"}
 
+
+
+~~~python
+>>> id(b)
+140042299057032
 ~~~
 {:.output}
 
@@ -75,8 +77,7 @@ The "in-memory" location of the list labeled `b` isn't the same as a list genera
 
 ~~~python
 >>> id([1, 2, 3])
-139730449437384
-
+140042299052872
 ~~~
 {:.output}
 
@@ -88,7 +89,6 @@ Even though `b == [1, 2, 3]` returns `True`, these are not the same object:
 ~~~python
 >>> b is [1, 2, 3]
 False
-
 ~~~
 {:.output}
 
@@ -104,7 +104,6 @@ The reason to be aware of what `b` **is** has to do with "side-effects", an impo
 ~~~python
 >>> b.pop()
 3
-
 ~~~
 {:.output}
 
@@ -114,7 +113,6 @@ The reason to be aware of what `b` **is** has to do with "side-effects", an impo
 ~~~python
 >>> b
 [1, 2]
-
 ~~~
 {:.output}
 
@@ -126,8 +124,7 @@ Question
 : Re-check the "in-memory" location---is it the same `b`?
 
 Answer
-: Yes! The list got shorter but it is the same list.
-{:.fragment}
+: {:.fragment} Yes! The list got shorter but it is the same list.
 
 ===
 
@@ -135,12 +132,16 @@ Side-effects trip up Python programmers when an object has multiple labels, whic
 
 
 ~~~python
->>> c = b
->>> b.pop()
-2
+c = b
+b.pop()
+~~~
+{:.text-document title="worksheet.py"}
+
+
+
+~~~python
 >>> c
 [1]
-
 ~~~
 {:.output}
 
@@ -148,7 +149,7 @@ Side-effects trip up Python programmers when an object has multiple labels, whic
 
 The assignment to `c` does not create a new list, so the side-effect of popping off the tail of `b` ripples into `c`.
 
-A common mistake for those coming to Python from R, is to write `b = b.append(4)`, which overwrites `b` with the value `None` that happens to be returned by the `list.append()` function.
+A common mistake for those coming to Python from R, is to write `b = b.append(4)`, which overwrites `b` with the value `None` that happens to be returned by the `append()` method.
 {:.notes}
 
 ===
@@ -160,7 +161,6 @@ Not every object is mutable; for example, the `a` assigned earlier is not.
 >>> x = a
 >>> a.upper()
 'XYZ'
-
 ~~~
 {:.output}
 
@@ -170,7 +170,6 @@ Not every object is mutable; for example, the `a` assigned earlier is not.
 ~~~python
 >>> x
 'xyz'
-
 ~~~
 {:.output}
 
@@ -182,7 +181,6 @@ The string 'xyz' hasn't changed---it's immutable. So it is also a safe guess tha
 ~~~python
 >>> a
 'xyz'
-
 ~~~
 {:.output}
 

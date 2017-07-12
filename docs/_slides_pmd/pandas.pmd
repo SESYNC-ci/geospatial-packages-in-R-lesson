@@ -28,7 +28,7 @@ animals.dtypes
 
 There are many ways to slice a `DataFrame`. To select a subset of rows and/or columns by name, use the `loc` attribute and `[` for indexing.
 
-```{python}
+```{python, term=False}
 animals.loc[:, ['plot_id', 'species_id']]
 ```
 
@@ -52,7 +52,7 @@ animals.iloc[2:4, 4:6]
 
 The default indexing for a DataFrame, without using the `loc` or `iloc` attributes, is by column name.
 
-```{python}
+```{python, term=False}
 animals[['hindfoot_length', 'weight']].describe()
 ```
 
@@ -63,7 +63,7 @@ The `loc` attribute also allows logical indexing, i.e. the use of a boolean arra
 The subset of `animals` where the species is "DM" is extracted into a new data frame.
 
 ```{python, term=False}
-animals_dm = animals.loc[animals['species_id'] == 'DM', 'month':'weight']
+animals_dm = animals.loc[animals['species_id'] == 'DM', ]
 ```
 ```{python}
 animals_dm.head()
