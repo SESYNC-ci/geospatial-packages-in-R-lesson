@@ -20,7 +20,7 @@ The simplest kind of sequence, a tuple is declared with comma-separated values i
 ~~~python
 t = 'cat',
 ~~~
-{:.text-document title="worksheet.py"}
+{:.text-document title="{{ site.handouts }}"}
 
 
 
@@ -42,7 +42,7 @@ The more common kind of sequence in Python is the list, which is declared with c
 ~~~python
 l = [3.14, 'xyz', t]
 ~~~
-{:.text-document title="worksheet.py"}
+{:.text-document title="{{ site.handouts }}"}
 
 
 
@@ -132,13 +132,13 @@ The third and last "sequence" data structure is a set, used mainly for quick acc
 ~~~python
 s = set(l)
 ~~~
-{:.text-document title="worksheet.py"}
+{:.text-document title="{{ site.handouts }}"}
 
 
 
 ~~~python
 >>> s.difference({3.14})
-{('cat',), 'xyz'}
+{'xyz', ('cat',)}
 ~~~
 {:.output}
 
@@ -159,7 +159,7 @@ Construct a dictionary with comma-separated `key:value` pairs in `{}`.
 ~~~python
 toons = {'Snowy':'dog', 'Garfield':'cat', 'Bugs':'bunny'}
 ~~~
-{:.text-document title="worksheet.py"}
+{:.text-document title="{{ site.handouts }}"}
 
 
 
@@ -192,13 +192,13 @@ To add a single new element to the dictionary, define a new `key:value` pair by 
 ~~~python
 toons['Goofy'] = 'dog'
 ~~~
-{:.text-document title="worksheet.py"}
+{:.text-document title="{{ site.handouts }}"}
 
 
 
 ~~~python
 >>> toons
-{'Bugs': 'bunny', 'Snowy': 'dog', 'Goofy': 'dog', 'Garfield': 'cat'}
+{'Snowy': 'dog', 'Garfield': 'cat', 'Bugs': 'bunny', 'Goofy': 'dog'}
 ~~~
 {:.output}
 

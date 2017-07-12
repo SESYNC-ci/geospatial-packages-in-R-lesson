@@ -21,7 +21,7 @@ animals data from the file `animals.csv`.
 import pandas as pd
 animals = pd.read_csv("data/animals.csv")
 ~~~
-{:.text-document title="worksheet.py"}
+{:.text-document title="{{ site.handouts }}"}
 
 
 
@@ -50,7 +50,7 @@ There are many ways to slice a `DataFrame`. To select a subset of rows and/or co
 ~~~python
 animals.loc[:, ['plot_id', 'species_id']]
 ~~~
-{:.text-document title="worksheet.py"}
+{:.text-document title="{{ site.handouts }}"}
 
 
 
@@ -93,7 +93,7 @@ The default indexing for a DataFrame, without using the `loc` or `iloc` attribut
 ~~~python
 animals[['hindfoot_length', 'weight']].describe()
 ~~~
-{:.text-document title="worksheet.py"}
+{:.text-document title="{{ site.handouts }}"}
 
 
 
@@ -107,7 +107,7 @@ The subset of `animals` where the species is "DM" is extracted into a new data f
 ~~~python
 animals_dm = animals.loc[animals['species_id'] == 'DM', ]
 ~~~
-{:.text-document title="worksheet.py"}
+{:.text-document title="{{ site.handouts }}"}
 
 
 
@@ -133,7 +133,7 @@ The `query()` method accepts an expression that may reference columns, increasin
 ~~~python
 animals_dm = animals.query('species_id == "DM"')
 ~~~
-{:.text-document title="worksheet.py"}
+{:.text-document title="{{ site.handouts }}"}
 
 
 
@@ -164,7 +164,7 @@ dm_stats = (
   .mean()
   )
 ~~~
-{:.text-document title="worksheet.py"}
+{:.text-document title="{{ site.handouts }}"}
 
 
 

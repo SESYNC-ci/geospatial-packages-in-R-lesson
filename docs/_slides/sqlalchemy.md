@@ -21,7 +21,7 @@ engine = create_engine('postgresql+pygresql://@localhost/portal')
 Base.prepare(engine, reflect=True)
 Session = sessionmaker(bind=engine)
 ~~~
-{:.text-document title="worksheet.py"}
+{:.text-document title="{{ site.handouts }}"}
 
 
 
@@ -35,7 +35,7 @@ a class or data structure, in which each field corresponds to an attribute. Each
 
 ~~~python
 >>> Base.classes.keys()
-['plots', 'animals', 'species']
+['species', 'animals', 'plots']
 ~~~
 {:.output}
 
@@ -53,7 +53,7 @@ Plots = Base.classes['plots']
 Animals = Base.classes['animals']
 Species = Base.classes['species']
 ~~~
-{:.text-document title="worksheet.py"}
+{:.text-document title="{{ site.handouts }}"}
 
 
 
@@ -84,14 +84,14 @@ session = Session()
 session.add(plot)
 session.commit()
 ~~~
-{:.text-document title="worksheet.py"}
+{:.text-document title="{{ site.handouts }}"}
 
 
 
 
 ~~~python
 >>> plot.id
-32
+33
 ~~~
 {:.output}
 
@@ -112,7 +112,7 @@ Let's pull a `species` record using the `session.query()` method.
 query = session.query(Species).filter_by(id='RO')
 species = query.one()
 ~~~
-{:.text-document title="worksheet.py"}
+{:.text-document title="{{ site.handouts }}"}
 
 
 
@@ -134,7 +134,7 @@ Not only do we have the species' attributes
 
 ~~~python
 >>> species.animals_collection
-[<sqlalchemy.ext.automap.animals object at 0x7f5e1b3123c8>, <sqlalchemy.ext.automap.animals object at 0x7f5e1b312438>, <sqlalchemy.ext.automap.animals object at 0x7f5e1b3124e0>, <sqlalchemy.ext.automap.animals object at 0x7f5e1b3125c0>, <sqlalchemy.ext.automap.animals object at 0x7f5e1b312668>, <sqlalchemy.ext.automap.animals object at 0x7f5e1b312748>, <sqlalchemy.ext.automap.animals object at 0x7f5e1b312828>, <sqlalchemy.ext.automap.animals object at 0x7f5e1b3128d0>]
+[<sqlalchemy.ext.automap.animals object at 0x7fb89a019470>, <sqlalchemy.ext.automap.animals object at 0x7fb89a0194e0>, <sqlalchemy.ext.automap.animals object at 0x7fb89a019588>, <sqlalchemy.ext.automap.animals object at 0x7fb89a019668>, <sqlalchemy.ext.automap.animals object at 0x7fb89a019710>, <sqlalchemy.ext.automap.animals object at 0x7fb89a0197f0>, <sqlalchemy.ext.automap.animals object at 0x7fb89a0198d0>, <sqlalchemy.ext.automap.animals object at 0x7fb89a019978>]
 ~~~
 {:.output}
 
@@ -153,7 +153,7 @@ Suppose a surveyor mistakenly reversed the labels of two plots during a particul
 plot_a = session.query(Plots).filter_by(id=2).one()
 plot_b = session.query(Plots).filter_by(id=12).one()
 ~~~
-{:.text-document title="worksheet.py"}
+{:.text-document title="{{ site.handouts }}"}
 
 
 
@@ -167,7 +167,7 @@ query = session.query(Animals).filter_by(year=2002, month=1, day=12)
 animals_a = query.filter(Animals.plots == plot_a).all()
 animals_b = query.filter(Animals.plots == plot_b).all()
 ~~~
-{:.text-document title="worksheet.py"}
+{:.text-document title="{{ site.handouts }}"}
 
 
 
@@ -191,7 +191,7 @@ for animal in animals_a:
 for animal in animals_b:
     animal.plot = plot_a
 ~~~
-{:.text-document title="worksheet.py"}
+{:.text-document title="{{ site.handouts }}"}
 
 
 
@@ -215,7 +215,7 @@ and commit the result to the database.
 session.commit()
 animals_a[0].plots is plot_b
 ~~~
-{:.text-document title="worksheet.py"}
+{:.text-document title="{{ site.handouts }}"}
 
 
 
@@ -234,7 +234,7 @@ query = (session
     )
 rodents = pd.read_sql(query.statement, engine)
 ~~~
-{:.text-document title="worksheet.py"}
+{:.text-document title="{{ site.handouts }}"}
 
 
 
