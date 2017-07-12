@@ -14,7 +14,7 @@ class Formatter(PwebPandocFormatter):
         super(Formatter, self).__init__(*args, **kwargs)
         self.formatdict.update({
             'codestart': '~~~%s',
-            'codeend': '~~~\n{:.text-document title="worksheet.py"}\n\n',
+            'codeend': '~~~\n{:.text-document title="{{ site.handouts }}"}\n\n',
             'termstart': '~~~%s',
             'termend': '~~~\n{:.output}\n\n',
             })
