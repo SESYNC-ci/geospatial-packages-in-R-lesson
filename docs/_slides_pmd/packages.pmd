@@ -1,11 +1,11 @@
 ---
 ---
 
-## Python packages for scientific computing
+## Python packages
 
-So far we have only covered elements of the base Python language. However, most of
-Python's useful tools for scientific programming can be found in packages that extend
-its base functionalities. 
+So far we have only covered elements of the core Python language. However, most of
+Python's useful tools for scientific programming can be found in contributed packages
+that extend Python in every direction.
 
 ===
 
