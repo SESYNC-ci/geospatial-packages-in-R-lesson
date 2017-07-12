@@ -13,7 +13,6 @@ DATA := $(shell find . -path "./data/*")
 # adding a lesson number to any "worksheet"
 # it is intended to be called in the handouts Makefile
 HANDOUTS := $(addprefix ../../, $(HANDOUTS:worksheet%=worksheet-$(LESSON)%))
-$(info HANDOUTS is ${HANDOUTS})
 
 # do not run rules in parallel; because
 # - bin/build_slides.R runs over all .Rmd slides
