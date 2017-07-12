@@ -20,7 +20,7 @@ for i in range(1, 5):
     squares.append(j)
 n_squares = len(squares)
 ~~~
-{:.text-document title="{{ site.handouts }}"}
+{:.text-document title="worksheet.py"}
 
 
 
@@ -70,7 +70,7 @@ for c in contacts:
     else:
         print(c['name'])
 ~~~
-{:.text-document title="{{ site.handouts }}"}
+{:.text-document title="worksheet.py"}
 
 ~~~~{.python}
 555-111-2222

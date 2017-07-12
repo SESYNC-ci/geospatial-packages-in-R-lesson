@@ -9,7 +9,7 @@ Variable assignment attaches the label left of an `=` to the return value of the
 ~~~python
 a = 'xyz'
 ~~~
-{:.text-document title="{{ site.handouts }}"}
+{:.text-document title="worksheet.py"}
 
 
 
@@ -22,7 +22,7 @@ The "in-memory" location of `a` returned by `id()` ...
 
 ~~~python
 >>> id(a)
-140431140458712
+140005786272016
 ~~~
 {:.output}
 
@@ -33,7 +33,7 @@ The "in-memory" location of `a` returned by `id()` ...
 
 ~~~python
 >>> id('xyz')
-140431140458712
+140005786272016
 ~~~
 {:.output}
 
@@ -60,13 +60,13 @@ The `id()` function helps demonstrate that "equal" is not the "same".
 ~~~python
 b = [1, 2, 3]
 ~~~
-{:.text-document title="{{ site.handouts }}"}
+{:.text-document title="worksheet.py"}
 
 
 
 ~~~python
 >>> id(b)
-140430973703496
+140005619517064
 ~~~
 {:.output}
 
@@ -77,7 +77,7 @@ The "in-memory" location of the list labeled `b` isn't the same as a list genera
 
 ~~~python
 >>> id([1, 2, 3])
-140430973699208
+140005619512392
 ~~~
 {:.output}
 
@@ -135,7 +135,7 @@ Side-effects trip up Python programmers when an object has multiple labels, whic
 c = b
 b.pop()
 ~~~
-{:.text-document title="{{ site.handouts }}"}
+{:.text-document title="worksheet.py"}
 
 
 
