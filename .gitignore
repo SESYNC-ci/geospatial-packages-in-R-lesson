@@ -3,5 +3,5 @@
 .Rproj.user
 docs/_slides_Rmd/cache
 
-# Jekyll
-docs/_site
+# Jupyter
+.ipynb_checkpoints/

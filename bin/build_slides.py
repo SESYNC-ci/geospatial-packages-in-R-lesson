@@ -3,6 +3,7 @@ from pweave import Pweb, PwebPandocFormatter, rcParams
 import yaml
 
 rcParams['chunk']['defaultoptions'].update({
+    'wrap': False,
     'term': True,
     'f_size': (4, 3),
     })
