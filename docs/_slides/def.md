@@ -12,7 +12,7 @@ def add_two(x):
     result = x + 2
     return result
 ~~~
-{:.text-document title="worksheet.py"}
+{:.text-document title="{{ site.handouts }}"}
 
 
 
@@ -47,7 +47,7 @@ def add_any(x, y=0):
     result = x + y
     return result
 ~~~
-{:.text-document title="worksheet.py"}
+{:.text-document title="{{ site.handouts }}"}
 
 
 
@@ -128,7 +128,7 @@ toons.update({
   'Bugs':'rabbit',
   })
 ~~~
-{:.text-document title="worksheet.py"}
+{:.text-document title="{{ site.handouts }}"}
 
 
 ===

@@ -17,7 +17,7 @@ Packing the `for x in y` expression inside a sequence declaration is one way to 
 ~~~python
 letters = [x for x in 'abcde']
 ~~~
-{:.text-document title="worksheet.py"}
+{:.text-document title="{{ site.handouts }}"}
 
 
 
@@ -47,7 +47,7 @@ To declare a dictionary in this way, specify a `key:value` pair.
 
 ~~~python
 >>> CAPS
-{'d': 'D', 'b': 'B', 'e': 'E', 'a': 'A', 'c': 'C'}
+{'b': 'B', 'a': 'A', 'e': 'E', 'c': 'C', 'd': 'D'}
 ~~~
 {:.output}
 

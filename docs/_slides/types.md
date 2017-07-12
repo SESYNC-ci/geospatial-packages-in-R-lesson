@@ -17,7 +17,7 @@ Any object can be queried with `type()`
 ~~~python
 t = ('x', 3, True)
 ~~~
-{:.text-document title="worksheet.py"}
+{:.text-document title="{{ site.handouts }}"}
 
 
 
