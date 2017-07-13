@@ -15,15 +15,18 @@ library(raster)
 ~~~
 
 ~~~
-Error in library(raster): there is no package called 'raster'
+
+Attaching package: 'raster'
+~~~
+
+~~~
+The following object is masked from 'package:dplyr':
+
+    select
 ~~~
 
 ~~~r
 nlcd <- raster("data/nlcd_agg.grd")
-~~~
-
-~~~
-Error in raster("data/nlcd_agg.grd"): could not find function "raster"
 ~~~
 {:.text-document title="{{ site.handouts }}"}
 
@@ -40,7 +43,18 @@ nlcd
 ~~~
 {:.input}
 ~~~
-Error in eval(expr, envir, enclos): object 'nlcd' not found
+class       : RasterLayer 
+dimensions  : 2514, 3004, 7552056  (nrow, ncol, ncell)
+resolution  : 150, 150  (x, y)
+extent      : 1394535, 1845135, 1724415, 2101515  (xmin, xmax, ymin, ymax)
+coord. ref. : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+data source : /home/Ian/handouts/build/geospatial-packages-in-R-lesson/data/nlcd_agg.grd 
+names       : nlcd_2011_landcover_2011_edition_2014_03_31 
+values      : 0, 95  (min, max)
+attributes  :
+        ID      COUNT Red Green Blue Land.Cover.Class Opacity
+ from:   0 7854240512   0     0    0     Unclassified       1
+ to  : 255          0   0     0    0                        0
 ~~~
 {:.output}
 
@@ -52,11 +66,12 @@ The plot method interprets the pixel values of the raster matrix according to a 
 ~~~r
 plot(nlcd)
 ~~~
-
-~~~
-Error in plot(nlcd): object 'nlcd' not found
-~~~
 {:.text-document title="{{ site.handouts }}"}
+
+===
+
+![plot of chunk show_raster]({{ site.baseurl }}/images/show_raster-1.png)
+{:.captioned}
 
 ===
 
@@ -65,36 +80,16 @@ The `crop()` function trims a raster object to a given spatial "extent" (or rang
 
 ~~~r
 extent <- matrix(st_bbox(huc_md), nrow=2)
-~~~
-
-~~~
-Error in st_bbox(huc_md): could not find function "st_bbox"
-~~~
-
-~~~r
 nlcd <- crop(nlcd, extent)
-~~~
-
-~~~
-Error in crop(nlcd, extent): could not find function "crop"
-~~~
-
-~~~r
 plot(nlcd)
-~~~
-
-~~~
-Error in plot(nlcd): object 'nlcd' not found
-~~~
-
-~~~r
 plot(huc_md, col = NA, add = TRUE)
 ~~~
-
-~~~
-Error in plot(huc_md, col = NA, add = TRUE): object 'huc_md' not found
-~~~
 {:.text-document title="{{ site.handouts }}"}
+
+===
+
+![plot of chunk crop_raster]({{ site.baseurl }}/images/crop_raster-1.png)
+{:.captioned}
 
 Note that the transformed raster is now loaded in R memory, as indicated by the size of `nlcd`. We could have also saved the output to disk by specifying an optional `filename` argument to `crop`; the same is true for othe raster transformation functions.
 {:.notes}
@@ -109,7 +104,8 @@ nlcd[1, 1]
 ~~~
 {:.input}
 ~~~
-Error in eval(expr, envir, enclos): object 'nlcd' not found
+   
+41 
 ~~~
 {:.output}
 
@@ -123,7 +119,13 @@ head(nlcd@data@attributes[[1]])
 ~~~
 {:.input}
 ~~~
-Error in head(nlcd@data@attributes[[1]]): object 'nlcd' not found
+  ID      COUNT Red     Green Blue Land.Cover.Class Opacity
+1  0 7854240512   0 0.0000000    0     Unclassified       1
+2  1          0   0 0.9764706    0                        1
+3  2          0   0 0.0000000    0                        1
+4  3          0   0 0.0000000    0                        1
+5  4          0   0 0.0000000    0                        1
+6  5          0   0 0.0000000    0                        1
 ~~~
 {:.output}
 
@@ -135,10 +137,6 @@ The `Land.Cover.Class` vector gives string names for the land cover type corresp
 ~~~r
 lc_types <- nlcd@data@attributes[[1]]$Land.Cover.Class
 ~~~
-
-~~~
-Error in eval(expr, envir, enclos): object 'nlcd' not found
-~~~
 {:.text-document title="{{ site.handouts }}"}
 
 ~~~r
@@ -146,7 +144,15 @@ levels(lc_types)
 ~~~
 {:.input}
 ~~~
-Error in levels(lc_types): object 'lc_types' not found
+ [1] ""                              "Barren Land"                  
+ [3] "Cultivated Crops"              "Deciduous Forest"             
+ [5] "Developed, High Intensity"     "Developed, Low Intensity"     
+ [7] "Developed, Medium Intensity"   "Developed, Open Space"        
+ [9] "Emergent Herbaceuous Wetlands" "Evergreen Forest"             
+[11] "Hay/Pasture"                   "Herbaceuous"                  
+[13] "Mixed Forest"                  "Open Water"                   
+[15] "Perennial Snow/Ice"            "Shrub/Scrub"                  
+[17] "Unclassified"                  "Woody Wetlands"               
 ~~~
 {:.output}
 
@@ -163,20 +169,14 @@ Logical operations work too: `r1 > 5` returns a raster with pixel values `TRUE` 
 
 ~~~r
 pasture <- mask(nlcd, nlcd == 81, maskvalue = FALSE)
-~~~
-
-~~~
-Error in mask(nlcd, nlcd == 81, maskvalue = FALSE): could not find function "mask"
-~~~
-
-~~~r
 plot(pasture)
 ~~~
-
-~~~
-Error in plot(pasture): object 'pasture' not found
-~~~
 {:.text-document title="{{ site.handouts }}"}
+
+===
+
+![plot of chunk mask]({{ site.baseurl }}/images/mask-1.png)
+{:.captioned}
 
 ===
 
@@ -185,28 +185,15 @@ To further reduce the resolution of the `nlcd` raster, the `aggregate()` functio
 
 ~~~r
 nlcd_agg <- aggregate(nlcd, fact = 25, fun = modal)
-~~~
-
-~~~
-Error in aggregate(nlcd, fact = 25, fun = modal): object 'nlcd' not found
-~~~
-
-~~~r
 nlcd_agg@legend <- nlcd@legend
-~~~
-
-~~~
-Error in eval(expr, envir, enclos): object 'nlcd' not found
-~~~
-
-~~~r
 plot(nlcd_agg)
 ~~~
-
-~~~
-Error in plot(nlcd_agg): object 'nlcd_agg' not found
-~~~
 {:.text-document title="{{ site.handouts }}"}
+
+===
+
+![plot of chunk agg_raster]({{ site.baseurl }}/images/agg_raster-1.png)
+{:.captioned}
 
 Here, `fact = 25` means that we are aggregating blocks 25 x 25 pixels and `fun = modal` indicates that the aggregate value is the mode of the original pixels (averaging would not work since land cover is a categorical variable).
 {:.notes}

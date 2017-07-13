@@ -23,27 +23,10 @@ The [US Census website](http://www2.census.gov/geo/tiger/GENZ2014/shp/cb_2014_us
 
 ~~~r
 library(sf)
-~~~
-
-~~~
-Error in library(sf): there is no package called 'sf'
-~~~
-
-~~~r
 library(rgdal)
-~~~
 
-~~~
-Error in library(rgdal): there is no package called 'rgdal'
-~~~
-
-~~~r
 shp <- 'data/cb_2016_us_county_5m'
 counties <- st_read(shp, stringsAsFactors = FALSE)
-~~~
-
-~~~
-Error in st_read(shp, stringsAsFactors = FALSE): could not find function "st_read"
 ~~~
 {:.text-document title="{{ site.handouts }}"}
 
@@ -57,7 +40,26 @@ head(counties)
 ~~~
 {:.input}
 ~~~
-Error in head(counties): object 'counties' not found
+Simple feature collection with 6 features and 9 fields
+geometry type:  MULTIPOLYGON
+dimension:      XY
+bbox:           xmin: -114.7556 ymin: 29.26116 xmax: -81.10192 ymax: 38.77443
+epsg (SRID):    4269
+proj4string:    +proj=longlat +datum=NAD83 +no_defs
+  STATEFP COUNTYFP COUNTYNS       AFFGEOID GEOID      NAME LSAD
+1      04      015 00025445 0500000US04015 04015    Mohave   06
+2      12      035 00308547 0500000US12035 12035   Flagler   06
+3      20      129 00485135 0500000US20129 20129    Morton   06
+4      28      093 00695770 0500000US28093 28093  Marshall   06
+5      29      510 00767557 0500000US29510 29510 St. Louis   25
+6      35      031 00929107 0500000US35031 35031  McKinley   06
+        ALAND    AWATER                       geometry
+1 34475567011 387344307 MULTIPOLYGON(((-114.755618 ...
+2  1257365642 221047161 MULTIPOLYGON(((-81.52366 29...
+3  1889993251    507796 MULTIPOLYGON(((-102.041952 ...
+4  1828989833   9195190 MULTIPOLYGON(((-89.72432442...
+5   160458044  10670040 MULTIPOLYGON(((-90.318212 3...
+6 14116799068  14078537 MULTIPOLYGON(((-109.046481 ...
 ~~~
 {:.output}
 
@@ -89,7 +91,14 @@ st_crs(counties)
 ~~~
 {:.input}
 ~~~
-Error in st_crs(counties): could not find function "st_crs"
+$epsg
+[1] 4269
+
+$proj4string
+[1] "+proj=longlat +datum=NAD83 +no_defs"
+
+attr(,"class")
+[1] "crs"
 ~~~
 {:.output}
 
@@ -105,7 +114,8 @@ st_bbox(counties)
 ~~~
 {:.input}
 ~~~
-Error in st_bbox(counties): could not find function "st_bbox"
+      xmin       ymin       xmax       ymax 
+-179.14734  -14.55255  179.77847   71.35256 
 ~~~
 {:.output}
 
@@ -113,18 +123,12 @@ Error in st_bbox(counties): could not find function "st_bbox"
 ~~~r
 library(dplyr)
 counties_md <- filter(counties, STATEFP == '24')
-~~~
-{:.input}
-~~~
-Error in filter(counties, STATEFP == "24"): object 'counties' not found
-~~~
-{:.input}
-~~~r
 st_bbox(counties_md)
 ~~~
 {:.input}
 ~~~
-Error in st_bbox(counties_md): could not find function "st_bbox"
+     xmin      ymin      xmax      ymax 
+-79.48765  37.91172 -75.04894  39.72312 
 ~~~
 {:.output}
 
@@ -140,7 +144,14 @@ st_crs(st_bbox(counties_md))
 ~~~
 {:.input}
 ~~~
-Error in st_crs(st_bbox(counties_md)): could not find function "st_crs"
+$epsg
+[1] 4269
+
+$proj4string
+[1] "+proj=longlat +datum=NAD83 +no_defs"
+
+attr(,"class")
+[1] "crs"
 ~~~
 {:.output}
 
@@ -152,10 +163,6 @@ A rectangular grid made over a `sf` object is a geometry---by default, a POLYGON
 ~~~r
 grid_md <- st_make_grid(counties_md, n = 4)
 ~~~
-
-~~~
-Error in st_make_grid(counties_md, n = 4): could not find function "st_make_grid"
-~~~
 {:.text-document title="{{ site.handouts }}"}
 
 ~~~r
@@ -163,7 +170,33 @@ grid_md
 ~~~
 {:.input}
 ~~~
-Error in eval(expr, envir, enclos): object 'grid_md' not found
+Geometry set for 16 features 
+geometry type:  POLYGON
+dimension:      XY
+bbox:           xmin: -79.48765 ymin: 37.91172 xmax: -75.04894 ymax: 39.72312
+epsg (SRID):    4269
+proj4string:    +proj=longlat +datum=NAD83 +no_defs
+First 5 geometries:
+~~~
+{:.input}
+~~~
+POLYGON((-79.487651 37.911717, -78.377973 37.91...
+~~~
+{:.input}
+~~~
+POLYGON((-78.377973 37.911717, -77.268295 37.91...
+~~~
+{:.input}
+~~~
+POLYGON((-77.268295 37.911717, -76.158617 37.91...
+~~~
+{:.input}
+~~~
+POLYGON((-76.158617 37.911717, -75.048939 37.91...
+~~~
+{:.input}
+~~~
+POLYGON((-79.487651 38.36456825, -78.377973 38....
 ~~~
 {:.output}
 
@@ -176,20 +209,14 @@ Spatial objects defined by [sf](){:.rlib} are compatible with the `plot` functio
 
 ~~~r
 plot(grid_md)
-~~~
-
-~~~
-Error in plot(grid_md): object 'grid_md' not found
-~~~
-
-~~~r
 plot(counties_md, add = TRUE)
 ~~~
-
-~~~
-Error in plot(counties_md, add = TRUE): object 'counties_md' not found
-~~~
 {:.text-document title="{{ site.handouts }}"}
+
+===
+
+![plot of chunk plot_counties]({{ site.baseurl }}/images/plot_counties-1.png)
+{:.captioned}
 
 ===
 
@@ -201,10 +228,6 @@ sesync <- st_sfc(
     st_point(c(-76.503394, 38.976546)),
     crs = 4326)
 ~~~
-
-~~~
-Error in st_sfc(st_point(c(-76.503394, 38.976546)), crs = 4326): could not find function "st_sfc"
-~~~
 {:.text-document title="{{ site.handouts }}"}
 
 ===
@@ -214,28 +237,15 @@ The CRS for SESYNC is not identical to the CRS for `counties`, but they are impe
 
 ~~~r
 counties_md <- st_transform(counties_md, crs = st_crs(sesync))
-~~~
-
-~~~
-Error in st_transform(counties_md, crs = st_crs(sesync)): could not find function "st_transform"
-~~~
-
-~~~r
 plot(counties_md$geometry)
-~~~
-
-~~~
-Error in plot(counties_md$geometry): object 'counties_md' not found
-~~~
-
-~~~r
 plot(sesync, col = "green", pch = 20, add = TRUE)
 ~~~
-
-~~~
-Error in plot(sesync, col = "green", pch = 20, add = TRUE): object 'sesync' not found
-~~~
 {:.text-document title="{{ site.handouts }}"}
+
+===
+
+![plot of chunk plot_point]({{ site.baseurl }}/images/plot_point-1.png)
+{:.captioned}
 
 The arguments `col` and `pch` are graphical parameters used in base R, see `?par`.
 {:.notes}
@@ -252,7 +262,8 @@ st_within(sesync, counties_md)
 ~~~
 {:.input}
 ~~~
-Error in st_within(sesync, counties_md): could not find function "st_within"
+[[1]]
+[1] 5
 ~~~
 {:.output}
 
@@ -296,10 +307,6 @@ For the next part of this lesson, we import a new polygon layer corresponding to
 shp <- 'data/huc250k'
 huc <- st_read(shp, stringsAsFactors = FALSE)
 ~~~
-
-~~~
-Error in st_read(shp, stringsAsFactors = FALSE): could not find function "st_read"
-~~~
 {:.text-document title="{{ site.handouts }}"}
 
 ===
@@ -312,7 +319,7 @@ st_crs(counties_md)$proj4string
 ~~~
 {:.input}
 ~~~
-Error in st_crs(counties_md): could not find function "st_crs"
+[1] "+proj=longlat +datum=WGS84 +no_defs"
 ~~~
 {:.output}
 
@@ -322,7 +329,7 @@ st_crs(huc)$proj4string
 ~~~
 {:.input}
 ~~~
-Error in st_crs(huc): could not find function "st_crs"
+[1] "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +datum=NAD27 +units=m +no_defs"
 ~~~
 {:.output}
 
@@ -347,52 +354,18 @@ Use `st_transform()` to assign the two layers to a common projection string (`pr
 
 ~~~r
 counties_md <- st_transform(counties_md, crs = prj)
-~~~
-
-~~~
-Error in st_transform(counties_md, crs = prj): could not find function "st_transform"
-~~~
-
-~~~r
 huc <- st_transform(huc, crs = prj)
-~~~
-
-~~~
-Error in st_transform(huc, crs = prj): could not find function "st_transform"
-~~~
-
-~~~r
 sesync <- st_transform(sesync, crs = prj)
-~~~
-
-~~~
-Error in st_transform(sesync, crs = prj): could not find function "st_transform"
-~~~
-
-~~~r
 plot(counties_md$geometry)
-~~~
-
-~~~
-Error in plot(counties_md$geometry): object 'counties_md' not found
-~~~
-
-~~~r
 plot(huc, border = 'blue', add = TRUE)
-~~~
-
-~~~
-Error in plot(huc, border = "blue", add = TRUE): object 'huc' not found
-~~~
-
-~~~r
 plot(sesync, col = 'green', pch = 20, add = TRUE)
 ~~~
-
-~~~
-Error in plot(sesync, col = "green", pch = 20, add = TRUE): object 'sesync' not found
-~~~
 {:.text-document title="{{ site.handouts }}"}
+
+===
+
+![plot of chunk plot_over]({{ site.baseurl }}/images/plot_over-1.png)
+{:.captioned}
 
 ===
 
@@ -410,20 +383,14 @@ The first step is a spatial **union** operation: we want the resulting object to
 
 ~~~r
 state_md <- st_union(counties_md)
-~~~
-
-~~~
-Error in st_union(counties_md): could not find function "st_union"
-~~~
-
-~~~r
 plot(state_md)
 ~~~
-
-~~~
-Error in plot(state_md): object 'state_md' not found
-~~~
 {:.text-document title="{{ site.handouts }}"}
+
+===
+
+![plot of chunk st_union]({{ site.baseurl }}/images/st_union-1.png)
+{:.captioned}
 
 The output, `state_md`, is a new `sfc` that is no longer a column of a data frame. Tabular data can't safely survive a spatial union and is discarded.
 
@@ -432,26 +399,16 @@ The output, `state_md`, is a new `sfc` that is no longer a column of a data fram
 The second step is a spatial **intersection**, since we want to limit the polygons to areas covered by both `huc` and `state_md`. The `st_intersection()` function intersects its first argument with the second.
 
 
-~~~
-Error in plot(state_md): object 'state_md' not found
-~~~
-
 ~~~r
 huc_md <- st_intersection(huc, state_md)
-~~~
-
-~~~
-Error in st_intersection(huc, state_md): could not find function "st_intersection"
-~~~
-
-~~~r
 plot(huc_md, border = 'blue', col = NA, add = TRUE)
 ~~~
-
-~~~
-Error in plot(huc_md, border = "blue", col = NA, add = TRUE): object 'huc_md' not found
-~~~
 {:.text-document title="{{ site.handouts }}"}
+
+===
+
+![plot of chunk st_ntersect]({{ site.baseurl }}/images/st_ntersect-1.png)
+{:.captioned}
 
 The individual hydrological units are preserved but any part of them (or any whole polygon) lying outside the `state_md` polygon is cut from the output. The attribute data remains in the corresponding records of the `data.frame`, but (as warned) has not been updated. For example, the "AREA" attribute of any clipped HUC does not reflect the new polygon.
 
