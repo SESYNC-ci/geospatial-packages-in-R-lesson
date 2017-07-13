@@ -48,8 +48,10 @@ Species = Base.classes['species']
 
 Then create a new instance by calling the class "constructor" with values specified for each field.
 
-```{python}
+```{python, term=False}
 plot = Plots(treatment='Control')
+```
+```{python}
 plot.id
 ```
 

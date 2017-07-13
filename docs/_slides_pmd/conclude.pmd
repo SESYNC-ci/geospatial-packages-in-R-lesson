@@ -18,4 +18,3 @@ Additional critical packages for data science:
   - [matplotlib](){:.pylib}, [plotly](){:.pylib}, [seaborn](){:.pylib} for vizualization
   - [StatsModels](){:.pylib}, [scikit-learn](){:.pylib}, and [pystan](){:.pylib} for model fitting
   - [PyQGIS](){:.pylib}, [Shapely](){:.pylib}, and [Cartopy](){:.pylib} for GIS
-
