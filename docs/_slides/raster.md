@@ -12,20 +12,6 @@ The [National Land Cover Database](http://www.mrlc.gov/nlcd2011.php) is '.GRD' f
 
 ~~~r
 library(raster)
-~~~
-
-~~~
-
-Attaching package: 'raster'
-~~~
-
-~~~
-The following object is masked from 'package:dplyr':
-
-    select
-~~~
-
-~~~r
 nlcd <- raster("data/nlcd_agg.grd")
 ~~~
 {:.text-document title="{{ site.handouts }}"}
@@ -115,18 +101,17 @@ The meaning of this number is not immediately clear. For this particular dataset
 
 
 ~~~r
-str(nlcd@data@attributes[[1]])
+head(nlcd@data@attributes[[1]])
 ~~~
 {:.input}
 ~~~
-'data.frame':	256 obs. of  7 variables:
- $ ID              : int  0 1 2 3 4 5 6 7 8 9 ...
- $ COUNT           : num  7.85e+09 0.00 0.00 0.00 0.00 ...
- $ Red             : num  0 0 0 0 0 0 0 0 0 0 ...
- $ Green           : num  0 0.976 0 0 0 ...
- $ Blue            : num  0 0 0 0 0 0 0 0 0 0 ...
- $ Land.Cover.Class: Factor w/ 18 levels "","Barren Land",..: 17 1 1 1 1 1 1 1 1 1 ...
- $ Opacity         : num  1 1 1 1 1 1 1 1 1 1 ...
+  ID      COUNT Red     Green Blue Land.Cover.Class Opacity
+1  0 7854240512   0 0.0000000    0     Unclassified       1
+2  1          0   0 0.9764706    0                        1
+3  2          0   0 0.0000000    0                        1
+4  3          0   0 0.0000000    0                        1
+5  4          0   0 0.0000000    0                        1
+6  5          0   0 0.0000000    0                        1
 ~~~
 {:.output}
 
@@ -137,6 +122,10 @@ The `Land.Cover.Class` vector gives string names for the land cover type corresp
 
 ~~~r
 lc_types <- nlcd@data@attributes[[1]]$Land.Cover.Class
+~~~
+{:.text-document title="{{ site.handouts }}"}
+
+~~~r
 levels(lc_types)
 ~~~
 {:.input}

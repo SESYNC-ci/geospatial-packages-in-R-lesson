@@ -9,7 +9,7 @@ Raster data is a matrix or cube with additional spatial metadata (e.g. extent, r
 
 The [National Land Cover Database](http://www.mrlc.gov/nlcd2011.php) is '.GRD' format data, a lot of it. The file provided in this lesson is cropped and reduced to a lower resolution in order to speed processing.
 
-```{r load_raster, results = 'hide', title="{{ site.handouts }}"}
+```{r load_raster, title="{{ site.handouts }}"}
 library(raster)
 nlcd <- raster("data/nlcd_agg.grd")
 ```
@@ -60,15 +60,17 @@ nlcd[1, 1]
 The meaning of this number is not immediately clear. For this particular dataset, the mapping of values to land cover classes is described in the data attributes:
 
 ```{r raster_attr}
-str(nlcd@data@attributes[[1]])
+head(nlcd@data@attributes[[1]])
 ```
 
 ===
 
 The `Land.Cover.Class` vector gives string names for the land cover type corresponding to the matrix values. Note that we need to add 1 to the raster value, since these go from 0 to 255, whereas the indexing in R begins at 1.
 
-```{r lc_types}
+```{r lc_types, title="{{ site.handouts }}"}
 lc_types <- nlcd@data@attributes[[1]]$Land.Cover.Class
+```
+```{r}
 levels(lc_types)
 ```
 

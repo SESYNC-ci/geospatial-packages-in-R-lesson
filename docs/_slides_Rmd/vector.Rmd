@@ -114,7 +114,7 @@ plot(counties_md, add = TRUE)
 
 Instead of reading a shapefile, we can build spatial objects from coordinates. Here's a `sfc` object with a single "POINT", corresponding to SESYNC's postition in WGS84 degrees lat, lon.
 
-```{r st_sfc}
+```{r st_sfc, title="{{ site.handouts }}"}
 sesync <- st_sfc(
     st_point(c(-76.503394, 38.976546)),
     crs = 4326)

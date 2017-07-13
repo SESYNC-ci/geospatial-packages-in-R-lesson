@@ -228,7 +228,7 @@ sesync <- st_sfc(
     st_point(c(-76.503394, 38.976546)),
     crs = 4326)
 ~~~
-{:.input}
+{:.text-document title="{{ site.handouts }}"}
 
 ===
 
