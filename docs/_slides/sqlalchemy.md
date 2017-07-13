@@ -35,7 +35,7 @@ a class or data structure, in which each field corresponds to an attribute. Each
 
 ~~~python
 >>> Base.classes.keys()
-['species', 'plots', 'animals']
+['plots', 'animals', 'species']
 ~~~
 {:.output}
 
@@ -63,7 +63,13 @@ Then create a new instance by calling the class "constructor" with values specif
 
 
 ~~~python
->>> plot = Plots(treatment='Control')
+plot = Plots(treatment='Control')
+~~~
+{:.text-document title="{{ site.handouts }}"}
+
+
+
+~~~python
 >>> plot.id
 ~~~
 {:.output}
@@ -91,7 +97,7 @@ session.commit()
 
 ~~~python
 >>> plot.id
-36
+25
 ~~~
 {:.output}
 
@@ -134,7 +140,7 @@ Not only do we have the species' attributes
 
 ~~~python
 >>> species.animals_collection
-[<sqlalchemy.ext.automap.animals object at 0x7f440cc3a390>, <sqlalchemy.ext.automap.animals object at 0x7f440cc3a400>, <sqlalchemy.ext.automap.animals object at 0x7f440cc3a4a8>, <sqlalchemy.ext.automap.animals object at 0x7f440cc3a588>, <sqlalchemy.ext.automap.animals object at 0x7f440cc3a630>, <sqlalchemy.ext.automap.animals object at 0x7f440cc3a710>, <sqlalchemy.ext.automap.animals object at 0x7f440cc3a7f0>, <sqlalchemy.ext.automap.animals object at 0x7f440cc3a898>]
+[<sqlalchemy.ext.automap.animals object at 0x7f1adcd5d9e8>, <sqlalchemy.ext.automap.animals object at 0x7f1adcd5da58>, <sqlalchemy.ext.automap.animals object at 0x7f1adcd5db00>, <sqlalchemy.ext.automap.animals object at 0x7f1adcd5dbe0>, <sqlalchemy.ext.automap.animals object at 0x7f1adcd5dc88>, <sqlalchemy.ext.automap.animals object at 0x7f1adcd5dd68>, <sqlalchemy.ext.automap.animals object at 0x7f1adcd5de48>, <sqlalchemy.ext.automap.animals object at 0x7f1adcd5def0>]
 ~~~
 {:.output}
 
