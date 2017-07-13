@@ -122,7 +122,8 @@ st_bbox(counties)
 
 ~~~r
 library(dplyr)
-st_bbox(filter(counties, STATEFP == '24'))
+counties_md <- filter(counties, STATEFP == '24')
+st_bbox(counties_md)
 ~~~
 {:.input}
 ~~~
@@ -135,11 +136,10 @@ st_bbox(filter(counties, STATEFP == '24'))
 
 ## Grid
 
-A bounding box is not geospatial data in this library: it's two points could make up a LINESTRING but it lacks a CRS.
+A bounding box summarizes the limits, but is not itself a geometry (not a POINT or POLYGON), even though it has a CRS attribute.
 
 
 ~~~r
-counties_md <- filter(counties, STATEFP == '24')
 st_crs(st_bbox(counties_md))
 ~~~
 {:.input}
@@ -157,23 +157,46 @@ attr(,"class")
 
 ===
 
-A rectangular grid made over a `sf` object is itself an `sfc` object.
+A rectangular grid made over a `sf` object is a geometry---by default, a POLYGON.
 
 
 ~~~r
 grid_md <- st_make_grid(counties_md, n = 4)
-st_crs(grid_md)
+~~~
+{:.text-document title="{{ site.handouts }}"}
+
+~~~r
+grid_md
 ~~~
 {:.input}
 ~~~
-$epsg
-[1] 4269
-
-$proj4string
-[1] "+proj=longlat +datum=NAD83 +no_defs"
-
-attr(,"class")
-[1] "crs"
+Geometry set for 16 features 
+geometry type:  POLYGON
+dimension:      XY
+bbox:           xmin: -79.48765 ymin: 37.91172 xmax: -75.04894 ymax: 39.72312
+epsg (SRID):    4269
+proj4string:    +proj=longlat +datum=NAD83 +no_defs
+First 5 geometries:
+~~~
+{:.input}
+~~~
+POLYGON((-79.487651 37.911717, -78.377973 37.91...
+~~~
+{:.input}
+~~~
+POLYGON((-78.377973 37.911717, -77.268295 37.91...
+~~~
+{:.input}
+~~~
+POLYGON((-77.268295 37.911717, -76.158617 37.91...
+~~~
+{:.input}
+~~~
+POLYGON((-76.158617 37.911717, -75.048939 37.91...
+~~~
+{:.input}
+~~~
+POLYGON((-79.487651 38.36456825, -78.377973 38....
 ~~~
 {:.output}
 
@@ -239,7 +262,8 @@ st_within(sesync, counties_md)
 ~~~
 {:.input}
 ~~~
-although coordinates are longitude/latitude, it is assumed that they are planar
+[[1]]
+[1] 5
 ~~~
 {:.output}
 
@@ -251,7 +275,7 @@ Question
 : What was the message issued by the last command all about?
 
 Answer
-: It is a reminder that all geometric calculations are performed as if the coordinates (in this case longitutde and latitude) are Cartesian x,y coordinates.
+: {:.fragment} It is a reminder that all geometric calculations are performed as if the coordinates (in this case longitutde and latitude) are Cartesian x,y coordinates.
 
 ===
 

@@ -74,27 +74,29 @@ st_bbox(counties)
 
 ```{r st_bbox_md, message = FALSE}
 library(dplyr)
-st_bbox(filter(counties, STATEFP == '24'))
+counties_md <- filter(counties, STATEFP == '24')
+st_bbox(counties_md)
 ```
 
 ===
 
 ## Grid
 
-A bounding box is not geospatial data in this library: it's two points could make up a LINESTRING but it lacks a CRS.
+A bounding box summarizes the limits, but is not itself a geometry (not a POINT or POLYGON), even though it has a CRS attribute.
 
 ```{r}
-counties_md <- filter(counties, STATEFP == '24')
 st_crs(st_bbox(counties_md))
 ```
 
 ===
 
-A rectangular grid made over a `sf` object is itself an `sfc` object.
+A rectangular grid made over a `sf` object is a geometry---by default, a POLYGON.
 
-```{r}
+```{r, title="{{ site.handouts }}"}
 grid_md <- st_make_grid(counties_md, n = 4)
-st_crs(grid_md)
+```
+```{r}
+grid_md
 ```
 
 ===
@@ -137,7 +139,7 @@ The arguments `col` and `pch` are graphical parameters used in base R, see `?par
 
 An object created with `st_read` is a `data.frame`, which is why the `dplyr` function `filter` used above on the **non**-geospatial column named "STATEFP" worked normally. The equivalent of a "filter" operation on the "geometry" column is called a spatial "overlay". It can be seen as a type of subsetting based on spatial (rather than numeric or string) matching. Matching is implemented with functions like `st_within(x, y)`
 
-```{r pt_poly_overlay, results = 'hide'}
+```{r pt_poly_overlay, message=FALSE}
 st_within(sesync, counties_md)
 ```
 
@@ -149,7 +151,7 @@ Question
 : What was the message issued by the last command all about?
 
 Answer
-: It is a reminder that all geometric calculations are performed as if the coordinates (in this case longitutde and latitude) are Cartesian x,y coordinates.
+: {:.fragment} It is a reminder that all geometric calculations are performed as if the coordinates (in this case longitutde and latitude) are Cartesian x,y coordinates.
 
 ===
 
