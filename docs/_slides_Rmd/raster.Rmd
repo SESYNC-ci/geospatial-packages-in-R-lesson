@@ -9,7 +9,7 @@ Raster data is a matrix or cube with additional spatial metadata (e.g. extent, r
 
 The [National Land Cover Database](http://www.mrlc.gov/nlcd2011.php) is '.GRD' format data, a lot of it. The file provided in this lesson is cropped and reduced to a lower resolution in order to speed processing.
 
-```{r load_raster, title="{{ site.handouts }}"}
+```{r load_raster, message = FALSE, title = '{{ site.handouts }}'}
 library(raster)
 nlcd <- raster("data/nlcd_agg.grd")
 ```
@@ -29,7 +29,7 @@ nlcd
 
 The plot method interprets the pixel values of the raster matrix according to a pre-defined color scheme.
 
-```{r show_raster, fig.keep = 'last', title = '{{ site.handouts }}'}
+```{r show_raster, fig.keep = 'last'}
 plot(nlcd)
 ```
 

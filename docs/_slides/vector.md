@@ -123,6 +123,10 @@ st_bbox(counties)
 ~~~r
 library(dplyr)
 counties_md <- filter(counties, STATEFP == '24')
+~~~
+{:.text-document title="{{ site.handouts }}"}
+
+~~~r
 st_bbox(counties_md)
 ~~~
 {:.input}
@@ -219,6 +223,8 @@ plot(counties_md, add = TRUE)
 {:.captioned}
 
 ===
+
+## Create geometry
 
 Instead of reading a shapefile, we can build spatial objects from coordinates. Here's a `sfc` object with a single "POINT", corresponding to SESYNC's postition in WGS84 degrees lat, lon.
 

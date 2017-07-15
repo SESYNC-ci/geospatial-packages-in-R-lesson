@@ -1,59 +1,62 @@
-
 ## Importing vector data
 
 library(...)
 library(...)
 
 shp <- 'data/cb_2016_us_county_5m'
-counties <- readOGR(...,
-                    ...,
-                    stringsAsFactors = FALSE)
+counties <- ...(..., stringsAsFactors = FALSE)
 
-...(..., xlim = c(-125, -65), ... = c(24, 50))
+## Bounding box
 
-## Creating Spatial* object
+library(...)
+counties_md <- ...
 
-sesync <- Spatial...(...(c(-76.505206, 38.9767231), ...), 
-                        ...)
+## Grid
 
-plot(counties, xlim = c(-125, -65), ylim = c(20, 50))
+... <- ...(counties_md, ...)
+
+
+## Plot layers
+
+plot(...)
 plot(...)
 
-## Subsetting
+## Create geometry
 
-counties_md <- counties[..., ]
+sesync <- ...(
+    ...(c(-76.503394, 38.976546)),
+        ...)
+
+
+counties_md <- ...(counties_md, ...)
 plot(...)
+plot(..., col = "green", pch = 20, add = ...)
 
 ## Exercise 1
 
 ...
 
-## Coordinate transformations
+## Coordinate transforms
 
-shp <- "data/huc250k"
-huc <- ...(dsn = shp
-               ...,
-               stringsAsFactors = FALSE)
+shp <- 'data/huc250k'
+huc <- st_read(...)
 
+prj <- '+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'
 
-## Albers equal-area projection
-
-... "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
-
-counties_md <- ...(counties_md, ...)
-huc <- spTransform(..., proj1)
-plot(counties_md)
-plot(huc, ..., border = "blue")
+counties_md <- st_transform(counties_md, ...)
+huc <- ...
+sesync <- ...
+plot(counties_md$geometry)
+plot(..., border = 'blue', add = TRUE)
+plot(..., col = 'green', pch = 20, add = TRUE)
 
 ## Geometric operations on vector layers
 
-library(...)
+state_md <- ...
+plot(...)
 
-state_md <- ...(counties_md)
-plot(state_md)
-
-huc_md <- ...(huc, state_md, ...)
-plot(huc_md, ...)
+huc_md <- ...
+plot(..., border = 'blue', col = NA, add = TRUE)
 
 ## Exercise 2
 
@@ -62,11 +65,11 @@ plot(huc_md, ...)
 ## Working with raster data
 
 library(...)
-
 nlcd <- raster(...)
 
 ## Crop
 
+... <- matrix(..., ...)
 nlcd <- crop(..., ...)
 plot(nlcd)
 plot(...)
@@ -74,9 +77,8 @@ plot(...)
 ## Raster data attributes
 
 lc_types <- nlcd@data@attributes[[1]]$Land.Cover.Class
-levels(lc_types)
 
-## Raster manipulation
+## Raster math
 
 pasture <- mask(nlcd, nlcd == 81, maskvalue = FALSE)
 plot(pasture)
@@ -89,14 +91,21 @@ plot(nlcd_agg)
 
 ...
 
+## Mixing rasters and vectors: prelude
+
+sesync <- as(..., "Spatial")
+huc_md <- as(..., "Spatial")
+counties_md <- ...
+
 ## Mixing rasters and vectors
 
-sesync <- ..(sesync, proj1)
 plot(nlcd)
 plot(sesync, col = 'green', pch = 16, cex = 2, ...)
 
-county_nlcd <- extract(nlcd_agg, counties_md[1, ])
-table(county_nlcd)
+sesync_lc <- ...(nlcd, sesync)
 
-modal_lc <- extract(nlcd_agg, counties_md, fun = modal)
-counties_md$modal_lc <- lc_types[modal_lc + 1]
+county_nlcd <- ...
+
+modal_lc <- extract(...)
+... <- lc_types[modal_lc + 1]
+
