@@ -63,7 +63,7 @@ The Makefile includes targets for building and publishing lessons:
 
 ## Versioning and Releases
 
-A lesson should be archived after any event in which it is presented---either in a workshop or à la carte setting. The archive is a built (i.e. processed into HTML) page copied into `docs/_posts`. Given a date for the post, the `archive` target in the Makefile will download from `docs/course/archive.html` from GitHub, non-course archives should be downloaded manually. There are two "versioning" variables to set in `docs/_config.yml` before archiving:
+A lesson should be archived after any event in which it is presented&mdash;either in a workshop or à la carte setting. The archive is a built (i.e. processed into HTML) page copied into `docs/_posts`. Given a date for the post, the `archive` target in the Makefile will download from `docs/course/archive.html` from GitHub, non-course archives should be downloaded manually. There are two "versioning" variables to set in `docs/_config.yml` before archiving:
 
 - `tag` refers to a release of the lesson, along with associated data and worksheets
 - `styleurl` refers to a release of `lesson-style`
