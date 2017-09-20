@@ -13,33 +13,40 @@ opts_knit$set(
 opts_chunk$set(
     comment = NA,
     fig.path = 'images/',
-    block_ial = c('{:.input}', '{:.output}'),
     cache = TRUE,
     cache.path = 'docs/_slides_Rmd/cache/')
+block_ial = c('{:.input}', '{:.output}')
 
 current_chunk = knit_hooks$get('chunk')
 chunk = function(x, options) {
     x <- current_chunk(x, options)
     if (!is.null(options$title)) {
         # add title to kramdown block IAL
-        x <- gsub('~~~(\n*(!\\[.+)?$)',
-                  paste0('~~~\n{:.text-document title="', options$title, '"}\\1'),
-                  x)
+        x <- gsub(
+            '~~~(\n*(!\\[.+)?$)',
+            paste0('~~~\n{:.text-document title="', options$title, '"}\\1'),
+            x)
         # add 'captioned' class to figures
-        x <- gsub('(!\\[.+$)', '===\n\n\\1\n{:.captioned}', x)
+        x <- gsub('(!\\[.+$)', '\\1\n{:.captioned}', x)
     } else {
         # add default kramdown block IAL to kramdown block IAL to input
-        x <- gsub('~~~\n(\n+~~~)',
-                  paste0('~~~\n', options$block_ial[1], '\\1'),
-                  x)
+        x <- gsub(
+            '~~~\n(\n+~~~)',
+            paste0('~~~\n', block_ial[1], '\\1'),
+            x)
         if (str_count(x, '~~~') > 2) {
             idx <- 2
         } else {
             idx <- 1
+            x <- gsub(
+                '~~~\n+(!\\[.+$)',
+                paste0('~~~\n', block_ial[idx], '\n\n\\1\n{:.captioned}'),
+                x)
         }
-        x <- gsub('~~~(\n*$)',
-                  paste0('~~~\n', options$block_ial[idx], '\\1'),
-                  x)
+        x <- gsub(
+            '~~~(\n*$)',
+            paste0('~~~\n', block_ial[idx], '\\1'),
+            x)
     }
     return(x)
 }

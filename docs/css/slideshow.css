@@ -2,6 +2,10 @@ img + br + em {
     font-size: 0.5em !Important;
 }
 
+.reveal img[alt^="plot of"] {
+    display: none;
+}
+
 .reveal section p {
     margin-top: 2em;
     margin-bottom: 1em;
