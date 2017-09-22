@@ -2,6 +2,10 @@ img + br + em {
     font-size: 0.5em !Important;
 }
 
+.reveal table, .reveal pre code {
+    font-size: 90%;
+}
+
 .reveal img[alt^="plot of"] {
     display: none;
 }
@@ -17,7 +21,7 @@ img + br + em {
 }
 
 .reveal pre code {
-    max-height: 550px;
+    max-height: 30vh;
 }
 
 .text-document.highlighter-rouge pre {
