@@ -39,12 +39,17 @@ $(subst _pmd,,$(SLIDES_PMD:.pmd=.md)): $(SLIDES_PMD)
 
 # this target updates the lesson repo
 # on GitHub following a slide build
-lesson: slides
+lesson: slides .git/refs/remotes/upstream
 	git pull
 	if [ -n "$$(git status -s)" ]; then git commit -am 'commit by make'; fi
 	git fetch upstream master:upstream
 	git merge --no-edit upstream
 	git push
+
+.git/refs/remotes/upstream:
+	git remote add upstream git@github.com:SESYNC-ci/lesson-style.git
+	git fetch upstream
+	git branch --track upstream upstream/master
 
 # this target inserts into handouts repo
 # with root assumed to be at ../
