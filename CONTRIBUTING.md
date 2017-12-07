@@ -4,46 +4,47 @@ The lessons maintained by the SESYNC-CI organization are held in separate reposi
 
 ```
 lesson-style.git
-├── CONTRIBUTING.md
-├── Makefile
-├── README.md
 ├── bin/
 │   ├── build_slides.R
 │   └── build_slides.py
-└── docs/
-    ├── _includes/
-    │   ├── body.html
-    │   ├── head.html
-    │   └── subst_content.html
-    ├── _layouts/
-    │   ├── archive.html
-    │   ├── course.html
-    │   ├── default.html
-    │   ├── instructor.html
-    │   └── slides.html
-    ├── course/
-    │   ├── archive.html
-    │   └── index.md
-    ├── css/
-    │   ├── default.css
-    │   ├── slideshow.css
-    │   └── static.css
-    ├── instructor/
-    │   └── index.md
-    ├── slides/
-    │   └── index.md
-    ├── _config.yml
-    └── index.md
+├── CONTRIBUTING.md
+├── data -> /nfs/public-data/training
+├── docs/
+│   ├── _config.yml
+│   ├── course/
+│   │   ├── archive.html
+│   │   └── index.md
+│   ├── css/
+│   │   ├── default.css
+│   │   ├── slideshow.css
+│   │   └── static.css
+│   ├── Gemfile
+│   ├── Gemfile.lock
+│   ├── _includes/
+│   │   ├── body.html
+│   │   ├── head.html
+│   │   └── subst_content.html
+│   ├── index.md
+│   ├── instructor/
+│   │   └── index.md
+│   ├── _layouts/
+│   │   ├── archive.html
+│   │   ├── course.html
+│   │   ├── default.html
+│   │   ├── instructor.html
+│   │   └── slides.html
+│   └── slides/
+│       └── index.md
+├── Makefile
+└── README.md
 ```
 
-The content of each lesson shall be contained within all or some of the following files and folders:
+Each lesson repository will include the above files in addition to the topical material, carefully arranged within all or some of the following files and folders:
 
 ```
 *-lesson.git
 ├── README.md
-├── worksheet*
-├── handouts.Rproj
-├── data/
+├── ...
 └── docs/
     ├── _posts/
     ├── _slides/
@@ -58,7 +59,9 @@ Note that `README.md` and `docs/_config.yml` occur in both; the versions/templat
 
 For a lesson written in RMarkdown, place .Rmd files within `docs/_slides_Rmd`; knitted slides will be generated within `docs/_slides`. Likewise, any slides to be processed by Pweave go in `docs/_slides_pmd`. If a lesson is written purely in Markdown, the slides may reside in `docs/_slides`, but a lesson that combines Markdown slides with processed slides should include `doc/_slides_md` and let the build process populate `docs/_slides`.
 
-Data for the lesson goes in the `data` folder, which will be distributed as a [handout] to participants. Figures produced during build and any external images go in `docs/images`. Archived versions of the lesson go in `docs/_posts`. Including a `handouts.Rproj` in the distributed handouts makes it convenient to start an R session with the appropriate working directory.
+Data for the lesson goes in the `public-data/training` folder on SESYNC's research storage server, which is symlinked from the `data` folder in each lesson. References to data in lesson code shall be via the relative path `data/`. Figures produced during build and any external images go in `docs/images`. Archived versions of the lesson go in `docs/_posts`.
+
+Including a `handouts.Rproj` makes it convenient to start an R session with the appropriate working directory, and will be included in the [handouts] associated with each lesson. All additional handouts (including data) must be listed in the `docs/_config.yml`.
 
 The Makefile includes targets for building and publishing lessons:
   - `make slides` to run the `bin/build_slides.*` scripts that populate `docs/_slides`
@@ -74,24 +77,21 @@ Locally clone `lesson-style` repository into a suitably named `*-lesson` folder,
 ```
 git clone git@github.com:SESYNC-ci/lesson-style.git $LESSON-lesson
 cd $LESSON-lesson
-git remote rename origin upstream
-git branch -m master upstream
-git checkout master
-git remote add origin git@github.com:SESYNC-ci/$LESSON-lesson.git
-git push -u origin master
+git remote set-url origin git@github.com:SESYNC-ci/$LESSON-lesson.git
+git push
 ```
 
-Everythin above is standardized across lessons, the following is where the real work begins! First, go to the lesson repository's GitHub settings and select `master/docs` as the GitHub Pages source. Configure `README.md` by commiting the following to the `README.md` file, where `%name%` should be replaced with the new lesson's name.
+Everythin above is standardized across lessons, the following is where the real work begins! First, go to the lesson repository's GitHub settings and select `master/docs` as the GitHub Pages source. Configure `README.md` by commiting the following to the `README.md` file, after replacing `$LESSON` with the new lesson's name.
 
 ```
-[lesson]: https://sesync-ci.github.io/%name%-lesson
-[slideshow]: https://sesync-ci.github.io/%name%-lesson/slides
+[lesson]: https://sesync-ci.github.io/$LESSON-lesson
+[slideshow]: https://sesync-ci.github.io/$LESSON-lesson/slides
 ```
 
 Configure the lesson by setting the following variables in the `# Site` section of the `docs/_config.yml` YAML file.
 
 - `title`: a lesson title
-- `handouts`: the worksheet, or list of worksheets, distributed with the handouts
+- `handouts`: the list of handouts, e.g. worksheets and data
 - `tag`: the release version associated with the `handouts.zip` attached to a release, if any
 - `lesson`: the number of the lesson in a workshop setting
 - `instructor`: who will give the lesson in a workshop setting
@@ -104,6 +104,26 @@ Always create the `docs/_slides` folder, but develop content within one of the f
 - `docs/_slides_pmd` for Pweave (.pmd)
 
 Each file within one of these folders becomes a vertical stack of slides in a [Reveal.js] presentation: use "===" on it's own line to indicate a slide break. Vertical stacks are concatenated horizontally in the order supplied by the `slide_sorter` array in `docs/_config.yml`.
+
+## Viewing a Lesson
+
+Each lesson is a Jekyll site, automatically deployed by GitHub when pushed but also possible to serve up (with a little work) locally. The following instructions work with a `*-lesson` repo open as a project on https://rstudio.sesync.org.
+
+From a terminal, execute:
+
+```bash
+cd docs
+bundle install
+bundle exec jekyll build --watch --baseurl /p/4321
+```
+
+This builds a static Jekyll site, while watching for changes in the source (e.g. the `docs/_slides` folder). To view the page in a browser, use the `servr` R package:
+
+```r
+servr::httw('docs/_site', port = 4321, initpath = 'instructor', daemon = TRUE)
+```
+
+Other valide `initpath` arguments are `course`, `slides`, or nothing. If port 4321 is not available, try 4322, etc.
 
 ## Versioning and Releases
 
@@ -118,22 +138,19 @@ The corresponing releases must exist:
 
 ## Upstream
 
-The repository `lesson-style` is intended to be upstream of all `*-lesson` repositories, but configuration as such must be achieved in a local clone (i.e. not on GitHub). If a lesson was not created as described above, then configure a clone as follows:
+The repository `lesson-style` is intended to be upstream of all `*-lesson` repositories, but configuration as such must be achieved in a local clone (i.e. not on GitHub). This upstream remote will be configured on the first call to `make slides`.
 
-```
-git remote add upstream git@github.com:SESYNC-ci/lesson-style.git
-git fetch upstream
-git branch --track upstream upstream/master
-```
-
-To merge changes made within the `lesson-style` repository into a lesson, run `git merge upstream` from the master branch. The `upstream` branch may not have a shared history with the `master` branch; it is okay to use '--allow-unrelated-histories'.  Modifications to the upstream branch shall be meant for all lessons. A change to `docs/_layouts/default.html`, for example, should be commited to the upstream branch and pushed to the master branch of the upstream remote (i.e. to the `lesson-style` repository on GitHub):
+To merge changes made within the `lesson-style` repository into a lesson, run `git pull upstream master` from the master branch. The `upstream` commits may not have a shared history with the `master` branch; it is okay to use `--allow-unrelated-histories`.  Modifications to the upstream branch shall be meant for all lessons. A change to `docs/_layouts/default.html`, for example, should be commited to the upstream branch and pushed to the master branch of the upstream remote (i.e. to the `lesson-style` repository on GitHub):
 
 ```
 git checkout upstream
 git add docs/_layouts/default.html
 git commit
-git push
+git push upstream HEAD:master
 ```
+
+Prefer to make changes directly to the `lesson-style`.
+
 [Reveal.js]: http://lab.hakim.se/reveal-js
 [lessons]: http://www.sesync.org/for-you/cyberinfrastructure/training/%C3%A0-la-carte-lessons
 [handout]: https://github.com/sesync-ci/handouts
