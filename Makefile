@@ -9,7 +9,7 @@ SLIDES_PMD := $(shell find . -path "./docs/_slides_pmd/*.pmd")
 
 # look up auxillary files trainees will require in Jekyll _config.yml
 HANDOUTS := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['handouts']")
-WORKSHEETS := $(addprefix ../../, $(HANDOUTS:worksheet%=worksheet-$(LESSON)%))
+WORKSHEETS := $(addprefix ../../, $(patsubst worksheet%,worksheet-$(LESSON)%,$(filter worksheet%, $(HANDOUTS))))
 DATA := $(addprefix ../, $(filter-out worksheet%, $(HANDOUTS)))
 
 # do not run rules in parallel; because
