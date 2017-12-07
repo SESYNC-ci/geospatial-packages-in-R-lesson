@@ -10,7 +10,7 @@ SLIDES_PMD := $(shell find . -path "./docs/_slides_pmd/*.pmd")
 # look up auxillary files trainees will require in Jekyll _config.yml
 HANDOUTS := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['handouts']")
 WORKSHEETS := $(addprefix ../../, $(HANDOUTS:worksheet%=worksheet-$(LESSON)%))
-DATA := $(addprefix ../../, $(filter-out worksheet%, $(HANDOUTS)))
+DATA := $(addprefix ../, $(filter-out worksheet%, $(HANDOUTS)))
 
 # do not run rules in parallel; because
 # - bin/build_slides.R runs over all .Rmd slides
@@ -60,7 +60,7 @@ course: lesson $(WORKSHEETS) $(DATA)
 $(WORKSHEETS): ../../worksheet-$(LESSON)%: worksheet%
 	cp $< $@
 
-$(DATA): ../../%: %
+$(DATA): ../%: %
 	cp --recursive $< $@
 
 # must call the archive target with a
