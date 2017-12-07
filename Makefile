@@ -9,8 +9,8 @@ SLIDES_PMD := $(shell find . -path "./docs/_slides_pmd/*.pmd")
 
 # look up auxillary files trainees will require in Jekyll _config.yml
 HANDOUTS := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['handouts']")
-WORKSHEETS := $(addprefix ../../, $(patsubst worksheet%,worksheet-$(LESSON)%,$(filter worksheet%, $(HANDOUTS))))
-DATA := $(addprefix ../, $(filter-out worksheet%, $(HANDOUTS)))
+WORKSHEETS := $(addprefix ../../, $(patsubst worksheet%,worksheet-$(LESSON)%,$(filter-out data/%, $(HANDOUTS))))
+DATA := $(addprefix ../,$(filter data/%,$(HANDOUTS)))
 
 # do not run rules in parallel; because
 # - bin/build_slides.R runs over all .Rmd slides
@@ -49,19 +49,17 @@ lesson: slides
 	git push
 # FIXME should create handouts.zip (with worksheets, Rproj, and data) for binary but not upload to github
 
-# make target "course" and dependencies copy handouts to ../../
+# make target "course" copies lesson handouts to the handouts repository
 # adding a lesson number to any "worksheet"
-# course is called from the handouts Makefile
-# with root assumed to be at ../
+# make course is called within the handouts Makefile, assumed to be at ../../
 course: lesson $(WORKSHEETS) $(DATA)
-# FIXME add DATA files to handouts/build/data ?
 # FIXME use http://sesync.us/lq4iu for link sharing, zip ?
 
 $(WORKSHEETS): ../../worksheet-$(LESSON)%: worksheet%
 	cp $< $@
 
 $(DATA): ../%: %
-	cp --recursive $< $@
+	rsync -au $< $@
 
 # must call the archive target with a
 # command line parameter for DATE
