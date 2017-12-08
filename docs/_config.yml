@@ -1,8 +1,14 @@
 # Site
 
 title: Geospatial Packages in R
-handouts: worksheet.R
-tag: v0.2
+handouts:
+ - worksheet.R
+ - data/cb_2016_us_county_5m
+ - data/huc250k
+ - data/nlcd_agg.grd
+ - data/nlcd_agg.gri
+ - data/README.md
+tag: v0.3
 lesson: 9
 instructor: Benoît Parmentier
 authors:

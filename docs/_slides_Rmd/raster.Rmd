@@ -9,7 +9,7 @@ Raster data is a matrix or cube with additional spatial metadata (e.g. extent, r
 
 The [National Land Cover Database](http://www.mrlc.gov/nlcd2011.php) is '.GRD' format data, a lot of it. The file provided in this lesson is cropped and reduced to a lower resolution in order to speed processing.
 
-```{r load_raster, message = FALSE, title = '{{ site.handouts }}'}
+```{r load_raster, message = FALSE, title = '{{ site.handouts[0] }}'}
 library(raster)
 nlcd <- raster("data/nlcd_agg.grd")
 ```
@@ -37,7 +37,7 @@ plot(nlcd)
 
 The `crop()` function trims a raster object to a given spatial "extent" (or range of x and y values). The extent can be extracted from [sp](){:.rlib} package objects with `extent`, but must be created "from scratch" for an `sfc`. Here, we crop the `nlcd` raster to the extent of the `huc_md` polygon, then display both layers on the same map. 
 
-```{r crop_raster, fig.keep="last", title="{{ site.handouts }}"}
+```{r crop_raster, fig.keep="last", title="{{ site.handouts[0] }}"}
 extent <- matrix(st_bbox(huc_md), nrow=2)
 nlcd <- crop(nlcd, extent)
 plot(nlcd)
@@ -67,7 +67,7 @@ head(nlcd@data@attributes[[1]])
 
 The `Land.Cover.Class` vector gives string names for the land cover type corresponding to the matrix values. Note that we need to add 1 to the raster value, since these go from 0 to 255, whereas the indexing in R begins at 1.
 
-```{r lc_types, title="{{ site.handouts }}"}
+```{r lc_types, title="{{ site.handouts[0] }}"}
 lc_types <- nlcd@data@attributes[[1]]$Land.Cover.Class
 ```
 ```{r}
@@ -84,7 +84,7 @@ A mathematical function called on a raster gets applied to each pixel. For a ras
 
 Logical operations work too: `r1 > 5` returns a raster with pixel values `TRUE` or `FALSE` and is often used in combination with the `mask()` function. A pasture raster results from unsetting pixel values where the mask (`nlcd == 81`) is false (`maskvalue = FALSE`).
 
-```{r mask, fig.keep="last", title="{{ site.handouts }}"}
+```{r mask, fig.keep="last", title="{{ site.handouts[0] }}"}
 pasture <- mask(nlcd, nlcd == 81, maskvalue = FALSE)
 plot(pasture)
 ```
@@ -93,7 +93,7 @@ plot(pasture)
 
 To further reduce the resolution of the `nlcd` raster, the `aggregate()` function combines values in a block of a given size using a given function.
 
-```{r agg_raster, fig.keep="last", title="{{ site.handouts }}"}
+```{r agg_raster, fig.keep="last", title="{{ site.handouts[0] }}"}
 nlcd_agg <- aggregate(nlcd, fact = 25, fun = modal)
 nlcd_agg@legend <- nlcd@legend
 plot(nlcd_agg)

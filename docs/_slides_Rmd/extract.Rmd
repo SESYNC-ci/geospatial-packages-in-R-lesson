@@ -7,7 +7,7 @@ The creation of geospatial tools in R has been a community effort, but not neces
 
 Presently, to mix raster and vectors, we must convert the desired `sfc` objects to their counterpart `Spatial*` objects:
 
-```{r, results = 'hide', title = '{{ site.handouts }}'}
+```{r, results = 'hide', title = '{{ site.handouts[0] }}'}
 sesync <- as(sesync, "Spatial")
 huc_md <- as(huc_md, "Spatial")
 counties_md <- as(counties_md, "Spatial")
@@ -19,7 +19,7 @@ counties_md <- as(counties_md, "Spatial")
 
 The `extract` function allows subsetting and aggregation of raster values based on a vector spatial object.
 
-```{r extract_pt, fig.keep='last', title="{{ site.handouts }}"}
+```{r extract_pt, fig.keep='last', title="{{ site.handouts[0] }}"}
 plot(nlcd)
 plot(sesync, col = 'green', pch = 16, cex = 2, add = TRUE)
 ```
@@ -28,7 +28,7 @@ plot(sesync, col = 'green', pch = 16, cex = 2, add = TRUE)
 
 When extracting by point locations (i.e. a *SpatialPoints* object), the result is a vector of values corresponding to each point.
 
-```{r, title="{{ site.handouts }}"}
+```{r, title="{{ site.handouts[0] }}"}
 sesync_lc <- extract(nlcd, sesync)
 ```
 
@@ -40,7 +40,7 @@ lc_types[sesync_lc + 1]
 
 When extracting with a polygon, the output is a vector of all raster values for pixels falling within that polygon.
 
-```{r extract_poly1, title="{{ site.handouts }}"}
+```{r extract_poly1, title="{{ site.handouts[0] }}"}
 county_nlcd <- extract(nlcd_agg, counties_md[1,])
 ```
 
@@ -52,7 +52,7 @@ table(county_nlcd)
 
 To get a summary of raster values for **each** polygon in a `SpatialPolygons` object, add an aggregation function to `extract` via the `fun` argument. For example, `fun = modal` gives the most common land cover type for each polygon in `huc_md`.
 
-```{r extract_poly_agg, title="{{ site.handouts }}"}
+```{r extract_poly_agg, title="{{ site.handouts[0] }}"}
 modal_lc <- extract(nlcd_agg, huc_md, fun = modal)
 huc_md$modal_lc <- lc_types[modal_lc + 1]
 ```

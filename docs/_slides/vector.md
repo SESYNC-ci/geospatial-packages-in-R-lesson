@@ -28,7 +28,7 @@ library(rgdal)
 shp <- 'data/cb_2016_us_county_5m'
 counties <- st_read(shp, stringsAsFactors = FALSE)
 ~~~
-{:.text-document title="{{ site.handouts }}"}
+{:.text-document title="{{ site.handouts[0] }}"}
 
 ===
 
@@ -54,12 +54,12 @@ proj4string:    +proj=longlat +datum=NAD83 +no_defs
 5      29      510 00767557 0500000US29510 29510 St. Louis   25
 6      35      031 00929107 0500000US35031 35031  McKinley   06
         ALAND    AWATER                       geometry
-1 34475567011 387344307 MULTIPOLYGON(((-114.755618 ...
-2  1257365642 221047161 MULTIPOLYGON(((-81.52366 29...
-3  1889993251    507796 MULTIPOLYGON(((-102.041952 ...
-4  1828989833   9195190 MULTIPOLYGON(((-89.72432442...
-5   160458044  10670040 MULTIPOLYGON(((-90.318212 3...
-6 14116799068  14078537 MULTIPOLYGON(((-109.046481 ...
+1 34475567011 387344307 MULTIPOLYGON (((-114.755618...
+2  1257365642 221047161 MULTIPOLYGON (((-81.52366 2...
+3  1889993251    507796 MULTIPOLYGON (((-102.041952...
+4  1828989833   9195190 MULTIPOLYGON (((-89.7243244...
+5   160458044  10670040 MULTIPOLYGON (((-90.318212 ...
+6 14116799068  14078537 MULTIPOLYGON (((-109.046481...
 ~~~
 {:.output}
 
@@ -91,14 +91,9 @@ st_crs(counties)
 ~~~
 {:.input}
 ~~~
-$epsg
-[1] 4269
-
-$proj4string
-[1] "+proj=longlat +datum=NAD83 +no_defs"
-
-attr(,"class")
-[1] "crs"
+Coordinate Reference System:
+  EPSG: 4269 
+  proj4string: "+proj=longlat +datum=NAD83 +no_defs"
 ~~~
 {:.output}
 
@@ -124,7 +119,7 @@ st_bbox(counties)
 library(dplyr)
 counties_md <- filter(counties, STATEFP == '24')
 ~~~
-{:.text-document title="{{ site.handouts }}"}
+{:.text-document title="{{ site.handouts[0] }}"}
 
 ~~~r
 st_bbox(counties_md)
@@ -148,14 +143,9 @@ st_crs(st_bbox(counties_md))
 ~~~
 {:.input}
 ~~~
-$epsg
-[1] 4269
-
-$proj4string
-[1] "+proj=longlat +datum=NAD83 +no_defs"
-
-attr(,"class")
-[1] "crs"
+Coordinate Reference System:
+  EPSG: 4269 
+  proj4string: "+proj=longlat +datum=NAD83 +no_defs"
 ~~~
 {:.output}
 
@@ -167,7 +157,7 @@ A rectangular grid made over a `sf` object is a geometry---by default, a POLYGON
 ~~~r
 grid_md <- st_make_grid(counties_md, n = 4)
 ~~~
-{:.text-document title="{{ site.handouts }}"}
+{:.text-document title="{{ site.handouts[0] }}"}
 
 ~~~r
 grid_md
@@ -184,23 +174,23 @@ First 5 geometries:
 ~~~
 {:.input}
 ~~~
-POLYGON((-79.487651 37.911717, -78.377973 37.91...
+POLYGON ((-79.487651 37.911717, -78.377973 37.9...
 ~~~
 {:.input}
 ~~~
-POLYGON((-78.377973 37.911717, -77.268295 37.91...
+POLYGON ((-78.377973 37.911717, -77.268295 37.9...
 ~~~
 {:.input}
 ~~~
-POLYGON((-77.268295 37.911717, -76.158617 37.91...
+POLYGON ((-77.268295 37.911717, -76.158617 37.9...
 ~~~
 {:.input}
 ~~~
-POLYGON((-76.158617 37.911717, -75.048939 37.91...
+POLYGON ((-76.158617 37.911717, -75.048939 37.9...
 ~~~
 {:.input}
 ~~~
-POLYGON((-79.487651 38.36456825, -78.377973 38....
+POLYGON ((-79.487651 38.36456825, -78.377973 38...
 ~~~
 {:.output}
 
@@ -215,7 +205,12 @@ Spatial objects defined by [sf](){:.rlib} are compatible with the `plot` functio
 plot(grid_md)
 plot(counties_md, add = TRUE)
 ~~~
-{:.text-document title="{{ site.handouts }}"}
+
+~~~
+Warning in plot.sf(counties_md, add = TRUE): ignoring all but the first
+attribute
+~~~
+{:.text-document title="{{ site.handouts[0] }}"}
 
 ===
 
@@ -234,7 +229,7 @@ sesync <- st_sfc(
     st_point(c(-76.503394, 38.976546)),
     crs = 4326)
 ~~~
-{:.text-document title="{{ site.handouts }}"}
+{:.text-document title="{{ site.handouts[0] }}"}
 
 ===
 
@@ -246,7 +241,7 @@ counties_md <- st_transform(counties_md, crs = st_crs(sesync))
 plot(counties_md$geometry)
 plot(sesync, col = "green", pch = 20, add = TRUE)
 ~~~
-{:.text-document title="{{ site.handouts }}"}
+{:.text-document title="{{ site.handouts[0] }}"}
 
 ===
 
@@ -268,8 +263,8 @@ st_within(sesync, counties_md)
 ~~~
 {:.input}
 ~~~
-[[1]]
-[1] 5
+Sparse geometry binary predicate list of length 1, where the predicate was `within'
+ 1: 5
 ~~~
 {:.output}
 
@@ -313,7 +308,7 @@ For the next part of this lesson, we import a new polygon layer corresponding to
 shp <- 'data/huc250k'
 huc <- st_read(shp, stringsAsFactors = FALSE)
 ~~~
-{:.text-document title="{{ site.handouts }}"}
+{:.text-document title="{{ site.handouts[0] }}"}
 
 ===
 
@@ -351,7 +346,7 @@ Here is a slightly different Albers equal-area projection:
 ~~~r
 prj <- '+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'
 ~~~
-{:.text-document title="{{ site.handouts }}"}
+{:.text-document title="{{ site.handouts[0] }}"}
 
 ===
 
@@ -364,9 +359,17 @@ huc <- st_transform(huc, crs = prj)
 sesync <- st_transform(sesync, crs = prj)
 plot(counties_md$geometry)
 plot(huc, border = 'blue', add = TRUE)
+~~~
+
+~~~
+Warning in plot.sf(huc, border = "blue", add = TRUE): ignoring all but the
+first attribute
+~~~
+
+~~~r
 plot(sesync, col = 'green', pch = 20, add = TRUE)
 ~~~
-{:.text-document title="{{ site.handouts }}"}
+{:.text-document title="{{ site.handouts[0] }}"}
 
 ===
 
@@ -391,7 +394,7 @@ The first step is a spatial **union** operation: we want the resulting object to
 state_md <- st_union(counties_md)
 plot(state_md)
 ~~~
-{:.text-document title="{{ site.handouts }}"}
+{:.text-document title="{{ site.handouts[0] }}"}
 
 ===
 
@@ -409,7 +412,7 @@ The second step is a spatial **intersection**, since we want to limit the polygo
 huc_md <- st_intersection(huc, state_md)
 plot(huc_md, border = 'blue', col = NA, add = TRUE)
 ~~~
-{:.text-document title="{{ site.handouts }}"}
+{:.text-document title="{{ site.handouts[0] }}"}
 
 ===
 

@@ -13,7 +13,7 @@ sesync <- as(sesync, "Spatial")
 huc_md <- as(huc_md, "Spatial")
 counties_md <- as(counties_md, "Spatial")
 ~~~
-{:.text-document title="{{ site.handouts }}"}
+{:.text-document title="{{ site.handouts[0] }}"}
 
 ===
 
@@ -26,7 +26,7 @@ The `extract` function allows subsetting and aggregation of raster values based 
 plot(nlcd)
 plot(sesync, col = 'green', pch = 16, cex = 2, add = TRUE)
 ~~~
-{:.text-document title="{{ site.handouts }}"}
+{:.text-document title="{{ site.handouts[0] }}"}
 
 ===
 
@@ -41,7 +41,7 @@ When extracting by point locations (i.e. a *SpatialPoints* object), the result i
 ~~~r
 sesync_lc <- extract(nlcd, sesync)
 ~~~
-{:.text-document title="{{ site.handouts }}"}
+{:.text-document title="{{ site.handouts[0] }}"}
 
 
 ~~~r
@@ -62,7 +62,7 @@ When extracting with a polygon, the output is a vector of all raster values for 
 ~~~r
 county_nlcd <- extract(nlcd_agg, counties_md[1,])
 ~~~
-{:.text-document title="{{ site.handouts }}"}
+{:.text-document title="{{ site.handouts[0] }}"}
 
 
 ~~~r
@@ -85,7 +85,7 @@ To get a summary of raster values for **each** polygon in a `SpatialPolygons` ob
 modal_lc <- extract(nlcd_agg, huc_md, fun = modal)
 huc_md$modal_lc <- lc_types[modal_lc + 1]
 ~~~
-{:.text-document title="{{ site.handouts }}"}
+{:.text-document title="{{ site.handouts[0] }}"}
 
 
 ~~~r

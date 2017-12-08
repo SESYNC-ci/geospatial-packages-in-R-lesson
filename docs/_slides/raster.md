@@ -14,7 +14,7 @@ The [National Land Cover Database](http://www.mrlc.gov/nlcd2011.php) is '.GRD' f
 library(raster)
 nlcd <- raster("data/nlcd_agg.grd")
 ~~~
-{:.text-document title="{{ site.handouts }}"}
+{:.text-document title="{{ site.handouts[0] }}"}
 
 By default, raster data is *not* loaded into working memory, as you can confirm by checking the R object size with `object.size(nlcd)`. This means that unlike most analyses in R, you can actually process raster datasets larger than the RAM available on your computer; the raster package automatically loads pieces of the data and computes on each of them in sequence.
 {:.notes}
@@ -34,7 +34,7 @@ dimensions  : 2514, 3004, 7552056  (nrow, ncol, ncell)
 resolution  : 150, 150  (x, y)
 extent      : 1394535, 1845135, 1724415, 2101515  (xmin, xmax, ymin, ymax)
 coord. ref. : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
-data source : /home/Ian/handouts/build/geospatial-packages-in-R-lesson/data/nlcd_agg.grd 
+data source : /research-home/icarroll/training/geospatial-packages-in-R-lesson/data/nlcd_agg.grd 
 names       : nlcd_2011_landcover_2011_edition_2014_03_31 
 values      : 0, 95  (min, max)
 attributes  :
@@ -66,7 +66,7 @@ nlcd <- crop(nlcd, extent)
 plot(nlcd)
 plot(huc_md, col = NA, add = TRUE)
 ~~~
-{:.text-document title="{{ site.handouts }}"}
+{:.text-document title="{{ site.handouts[0] }}"}
 
 ===
 
@@ -119,7 +119,7 @@ The `Land.Cover.Class` vector gives string names for the land cover type corresp
 ~~~r
 lc_types <- nlcd@data@attributes[[1]]$Land.Cover.Class
 ~~~
-{:.text-document title="{{ site.handouts }}"}
+{:.text-document title="{{ site.handouts[0] }}"}
 
 ~~~r
 levels(lc_types)
@@ -153,7 +153,7 @@ Logical operations work too: `r1 > 5` returns a raster with pixel values `TRUE` 
 pasture <- mask(nlcd, nlcd == 81, maskvalue = FALSE)
 plot(pasture)
 ~~~
-{:.text-document title="{{ site.handouts }}"}
+{:.text-document title="{{ site.handouts[0] }}"}
 
 ===
 
@@ -170,7 +170,7 @@ nlcd_agg <- aggregate(nlcd, fact = 25, fun = modal)
 nlcd_agg@legend <- nlcd@legend
 plot(nlcd_agg)
 ~~~
-{:.text-document title="{{ site.handouts }}"}
+{:.text-document title="{{ site.handouts[0] }}"}
 
 ===
 
