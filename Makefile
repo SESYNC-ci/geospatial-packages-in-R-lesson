@@ -47,7 +47,7 @@ lesson: slides
 	git fetch upstream master:upstream
 	git merge --no-edit upstream
 	git push
-	zip -FSr handouts $(HANDOUTS)
+	ln *.Rproj handouts.Rproj && zip -FSr handouts handouts.Rproj $(HANDOUTS) && rm handouts.Rproj
 
 # make target "course" copies lesson handouts to the handouts repository
 # adding a lesson number to any "worksheet"
