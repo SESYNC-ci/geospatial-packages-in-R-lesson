@@ -47,7 +47,7 @@ lesson: slides
 	git fetch upstream master:upstream
 	git merge --no-edit upstream
 	git push
-# FIXME should create handouts.zip (with worksheets, Rproj, and data) for binary but not upload to github
+	zip -FSr handouts $(HANDOUTS)
 
 # make target "course" copies lesson handouts to the handouts repository
 # adding a lesson number to any "worksheet"
