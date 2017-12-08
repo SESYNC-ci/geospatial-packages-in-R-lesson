@@ -1,18 +1,16 @@
-# look up slides, lesson number and handouts in Jekyll _config.yml
+# look up slides and lesson number in Jekyll _config.yml
 SLIDES := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['slide_sorter']")
 LESSON := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['lesson']")
-HANDOUTS := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['handouts']")
 
-# list available Markdown, RMarkdown and Pweave slides and data
+# list available Markdown, RMarkdown and Pweave slides
 SLIDES_MD := $(shell find . -path "./docs/_slides_md/*.md")
 SLIDES_RMD := $(shell find . -path "./docs/_slides_Rmd/*.Rmd")
 SLIDES_PMD := $(shell find . -path "./docs/_slides_pmd/*.pmd")
-DATA := $(shell find . -path "./data/*")
 
-# make target "course" copies handouts to ../../
-# adding a lesson number to any "worksheet"
-# it is intended to be called in the handouts Makefile
-HANDOUTS := $(addprefix ../../, $(HANDOUTS:worksheet%=worksheet-$(LESSON)%))
+# look up auxillary files trainees will require in Jekyll _config.yml
+HANDOUTS := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['handouts']")
+WORKSHEETS := $(addprefix ../../, $(patsubst worksheet%,worksheet-$(LESSON)%,$(filter-out data/%, $(HANDOUTS))))
+DATA := $(addprefix ../,$(filter data/%,$(HANDOUTS)))
 
 # do not run rules in parallel; because
 # - bin/build_slides.R runs over all .Rmd slides
@@ -21,11 +19,17 @@ HANDOUTS := $(addprefix ../../, $(HANDOUTS:worksheet%=worksheet-$(LESSON)%))
 .DEFAULT_GOAL: slides
 .PHONY: course lesson slides archive
 
-# this target exists for building .md slides
-# without commit and push 
-slides: $(SLIDES:%=docs/_slides/%.md)
+# target to build .md slides
+slides: $(SLIDES:%=docs/_slides/%.md) | .git/refs/remotes/upstream
 
-# cannot use a pattern as the target for next three blocks, because
+# target to ensure upstream remote is lesson-style
+.git/refs/remotes/upstream:
+	git remote add upstream "git@github.com:sesync-ci/lesson-style.git"
+	git fetch upstream
+	git checkout -b upstream upstream/master
+	git checkout master
+
+# cannot use a pattern as the next three targets, because
 # the targets are only a subset of docs/_slides/%.md
 
 $(subst _md,,$(SLIDES_MD)): docs/_slides/%: docs/_slides_md/%
@@ -37,25 +41,26 @@ $(subst _Rmd,,$(SLIDES_RMD:.Rmd=.md)): $(SLIDES_RMD)
 $(subst _pmd,,$(SLIDES_PMD:.pmd=.md)): $(SLIDES_PMD)
 	@bin/build_slides.py
 
-# this target updates the lesson repo
-# on GitHub following a slide build
+# target to update lesson repo on GitHub
 lesson: slides
 	git pull
 	if [ -n "$$(git status -s)" ]; then git commit -am 'commit by make'; fi
 	git fetch upstream master:upstream
 	git merge --no-edit upstream
 	git push
+	ln *.Rproj handouts.Rproj && zip -FSr handouts handouts.Rproj $(HANDOUTS) && rm handouts.Rproj
 
-# this target inserts into handouts repo
-# with root assumed to be at ../
-course: lesson $(HANDOUTS)
-	if [ -d "data" ]; then rsync -au data/ ../data/; fi
+# make target "course" copies lesson handouts to the handouts repository
+# adding a lesson number to any "worksheet"
+# make course is called within the handouts Makefile, assumed to be at ../../
+course: lesson $(WORKSHEETS) $(DATA)
+# FIXME use http://sesync.us/lq4iu for link sharing, zip ?
 
-../../worksheet-$(LESSON)%: worksheet%
+$(WORKSHEETS): ../../worksheet-$(LESSON)%: worksheet%
 	cp $< $@
 
-$(filter-out ../../worksheet%, $(HANDOUTS)): ../../%: %
-	cp $< $@
+$(DATA): ../%: %
+	rsync -au $< $@
 
 # must call the archive target with a
 # command line parameter for DATE
