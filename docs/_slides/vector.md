@@ -212,8 +212,6 @@ attribute
 ~~~
 {:.text-document title="{{ site.handouts[0] }}"}
 
-===
-
 ![plot of chunk plot_counties]({{ site.baseurl }}/images/plot_counties-1.png)
 {:.captioned}
 
@@ -242,8 +240,6 @@ plot(counties_md$geometry)
 plot(sesync, col = "green", pch = 20, add = TRUE)
 ~~~
 {:.text-document title="{{ site.handouts[0] }}"}
-
-===
 
 ![plot of chunk plot_point]({{ site.baseurl }}/images/plot_point-1.png)
 {:.captioned}
@@ -305,7 +301,7 @@ For the next part of this lesson, we import a new polygon layer corresponding to
 
 
 ~~~r
-shp <- 'data/huc250k'
+shp <- 'data/huc250k_shp'
 huc <- st_read(shp, stringsAsFactors = FALSE)
 ~~~
 {:.text-document title="{{ site.handouts[0] }}"}
@@ -371,8 +367,6 @@ plot(sesync, col = 'green', pch = 20, add = TRUE)
 ~~~
 {:.text-document title="{{ site.handouts[0] }}"}
 
-===
-
 ![plot of chunk plot_over]({{ site.baseurl }}/images/plot_over-1.png)
 {:.captioned}
 
@@ -396,8 +390,6 @@ plot(state_md)
 ~~~
 {:.text-document title="{{ site.handouts[0] }}"}
 
-===
-
 ![plot of chunk st_union]({{ site.baseurl }}/images/st_union-1.png)
 {:.captioned}
 
@@ -413,8 +405,6 @@ huc_md <- st_intersection(huc, state_md)
 plot(huc_md, border = 'blue', col = NA, add = TRUE)
 ~~~
 {:.text-document title="{{ site.handouts[0] }}"}
-
-===
 
 ![plot of chunk st_ntersect]({{ site.baseurl }}/images/st_ntersect-1.png)
 {:.captioned}

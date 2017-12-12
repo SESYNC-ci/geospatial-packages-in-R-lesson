@@ -34,7 +34,7 @@ dimensions  : 2514, 3004, 7552056  (nrow, ncol, ncell)
 resolution  : 150, 150  (x, y)
 extent      : 1394535, 1845135, 1724415, 2101515  (xmin, xmax, ymin, ymax)
 coord. ref. : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
-data source : /research-home/icarroll/training/geospatial-packages-in-R-lesson/data/nlcd_agg.grd 
+data source : /nfs/public-data/training/nlcd_agg.grd 
 names       : nlcd_2011_landcover_2011_edition_2014_03_31 
 values      : 0, 95  (min, max)
 attributes  :
@@ -52,8 +52,10 @@ The plot method interprets the pixel values of the raster matrix according to a 
 ~~~r
 plot(nlcd)
 ~~~
+{:.input}
 
 ![plot of chunk show_raster]({{ site.baseurl }}/images/show_raster-1.png)
+{:.captioned}
 
 ===
 
@@ -67,8 +69,6 @@ plot(nlcd)
 plot(huc_md, col = NA, add = TRUE)
 ~~~
 {:.text-document title="{{ site.handouts[0] }}"}
-
-===
 
 ![plot of chunk crop_raster]({{ site.baseurl }}/images/crop_raster-1.png)
 {:.captioned}
@@ -155,8 +155,6 @@ plot(pasture)
 ~~~
 {:.text-document title="{{ site.handouts[0] }}"}
 
-===
-
 ![plot of chunk mask]({{ site.baseurl }}/images/mask-1.png)
 {:.captioned}
 
@@ -171,8 +169,6 @@ nlcd_agg@legend <- nlcd@legend
 plot(nlcd_agg)
 ~~~
 {:.text-document title="{{ site.handouts[0] }}"}
-
-===
 
 ![plot of chunk agg_raster]({{ site.baseurl }}/images/agg_raster-1.png)
 {:.captioned}

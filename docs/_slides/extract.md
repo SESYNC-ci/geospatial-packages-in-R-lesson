@@ -28,8 +28,6 @@ plot(sesync, col = 'green', pch = 16, cex = 2, add = TRUE)
 ~~~
 {:.text-document title="{{ site.handouts[0] }}"}
 
-===
-
 ![plot of chunk extract_pt]({{ site.baseurl }}/images/extract_pt-1.png)
 {:.captioned}
 

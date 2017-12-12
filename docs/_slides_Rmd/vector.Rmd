@@ -183,7 +183,7 @@ Produce a map of Maryland counties with the county that contains SESYNC colored 
 For the next part of this lesson, we import a new polygon layer corresponding to the 1:250k map of US hydrological units (HUC) [downloaded](http://water.usgs.gov/GIS/dsdl/huc250k_shp.zip) from the United States Geological Survey.
 
 ```{r load_huc, results='hide', message=FALSE, title="{{ site.handouts[0] }}"}
-shp <- 'data/huc250k'
+shp <- 'data/huc250k_shp'
 huc <- st_read(shp, stringsAsFactors = FALSE)
 ```
 
