@@ -26,8 +26,7 @@ slides: $(SLIDES:%=docs/_slides/%.md) | .git/refs/remotes/upstream
 .git/refs/remotes/upstream:
 	git remote add upstream "git@github.com:sesync-ci/lesson-style.git"
 	git fetch upstream
-	git checkout -b upstream
-	git branch --set-upstream-to=upstream/master upstream
+	git checkout -b upstream remotes/upstream/master
 	git checkout master
 
 # cannot use a pattern as the next three targets, because
