@@ -64,7 +64,7 @@ $(DATA): ../%: %
 # must call the archive target with a
 # command line parameter for DATE
 archive:
-	@curl "https://sesync-ci.github.io/$${PWD##*/}/course/archive.html" -o docs/_posts/$(DATE)-index.html
+	@curl -L "https://sesync-ci.github.io/$${PWD##*/}/course/archive.html" -o docs/_posts/$(DATE)-index.html
 
 # create binary for GitHub release
 release:
