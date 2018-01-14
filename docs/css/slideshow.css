@@ -20,10 +20,6 @@ img + br + em {
     margin-left: 65vw;
 }
 
-.reveal pre code {
-    max-height: 40vh;
-}
-
 .text-document.highlighter-rouge pre {
     background-color: #000000;
     margin: 2px auto;
