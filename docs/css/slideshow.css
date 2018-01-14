@@ -21,7 +21,7 @@ img + br + em {
 }
 
 .reveal pre code {
-    max-height: 30vh;
+    max-height: 40vh;
 }
 
 .text-document.highlighter-rouge pre {

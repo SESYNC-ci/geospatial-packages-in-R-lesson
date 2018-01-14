@@ -1,5 +1,12 @@
-code, pre {
-    font-family: Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal, Consolas, Liberation Mono, DejaVu Sans Mono, Courier New, monospace;
+code {
+    font-family: Monaco, Lucida Console, Terminal, Courier New, monospace;
+    background-color: #EBECE4;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3);
+}
+
+pre > code {
+  box-shadow: none;
+  background: none;
 }
 
 .text-document pre {
@@ -15,7 +22,7 @@ code, pre {
 div.text-document::before {
     content: attr(title);
     text-align: left;
-    font-family: Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal, Consolas, Liberation Mono, DejaVu Sans Mono, Courier New, monospace;
+    font-family: Monaco, Lucida Console, Terminal, Courier New, monospace;
     font-size: 80%;
     color: #000000;
     background: #C0C0C0;
@@ -24,7 +31,7 @@ div.text-document::before {
     display: block;
 }     
 
-.input pre {
+.input pre, .output pre {
     width: 100%;
     background-color: #EBECE4;
 }
