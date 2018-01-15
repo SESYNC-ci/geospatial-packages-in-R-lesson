@@ -1,3 +1,5 @@
+SHELL := /bin/bash
+
 # look up slides and lesson number in Jekyll _config.yml
 SLIDES := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['slide_sorter']")
 LESSON := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['lesson']")
@@ -45,14 +47,24 @@ lesson: slides
 	git merge --no-edit upstream
 	git push
 
-# make target "course" copies lesson handouts to the handouts repository
-# adding a lesson number to any "worksheet"
-# make course is called within the handouts Makefile, assumed to be at ../../
-course: lesson $(HANDOUTS)
-
+# target copies lesson handouts to the ../../release/ director,
+# while adding lesson numbers to worksheets
 .SECONDEXPANSION:
 $(HANDOUTS): $$(patsubst worksheet-$(LESSON)%,worksheet%,$$(subst ../../release/,,$$@))
 	cp $< $@
+
+# targets keep jekyll site up to date
+export GEM_HOME=$(HOME)/.gem
+SITE = $(shell find ./docs/ ! -name _site)
+docs/_site: $(SITE) | docs/Gemfile.lock
+	pushd docs && bundle exec jekyll build --baseurl=/p/4000 && popd
+	touch docs/_site
+docs/Gemfile.lock:
+	pushd docs && bundle install && popd
+
+# make target "course" is called within the handouts Makefile,
+# assumed to be at ../../
+course: lesson $(HANDOUTS) docs/_site
 
 # call the archive target with a
 # command line parameter for DATE
