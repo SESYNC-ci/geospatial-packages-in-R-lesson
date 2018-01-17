@@ -6,6 +6,10 @@ img + br + em {
     font-size: 90%;
 }
 
+.reveal .output pre code {
+    max-height: 300px;
+}
+
 .reveal img[alt^="plot of"] {
     display: none;
 }

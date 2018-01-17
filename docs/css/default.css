@@ -31,7 +31,7 @@ div.text-document::before {
     display: block;
 }     
 
-.input pre, .output pre {
+.input pre {
     width: 100%;
     background-color: #EBECE4;
 }
@@ -39,6 +39,7 @@ div.text-document::before {
 .output pre {
     width: 100%;
     background-color: #FFFFFF;
+    max-height: 300px
 }
 
 p {
