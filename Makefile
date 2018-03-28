@@ -51,7 +51,7 @@ lesson: slides
 # while adding lesson numbers to worksheets
 .SECONDEXPANSION:
 $(HANDOUTS): $$(patsubst worksheet-$(LESSON)%,worksheet%,$$(subst ../../release/,,$$@))
-	cp $< $@
+	cp -r $< $@
 
 # targets keep jekyll site up to date
 export GEM_HOME=$(HOME)/.gem
