@@ -6,6 +6,11 @@ style: /css/static.css
 # {{ site.title }}
 {:style="text-transform: none;"}
 
+{% if site.subtitle %}
+## {{ site.subtitle }}
+{:style="text-transform: none;"}
+{% endif %}
+
 Lesson {{ site.lesson }} with *{{ site.instructor }}*
 
 ## Contents

@@ -6,6 +6,11 @@ style: /css/static.css
 # {{ site.title }}
 {:style="text-transform: none;"}
 
+{% if site.subtitle %}
+## {{ site.subtitle }}
+{:style="text-transform: none;"}
+{% endif %}
+
 {% if site.handouts %}
 > Handouts for this lesson need to be saved on your computer. [Download]({{ site.github.releases_url }}/download/{{ site.tag }}/handouts.zip) and unzip this material into the directory (a.k.a. folder) where you plan to work.
 {% endif %}
