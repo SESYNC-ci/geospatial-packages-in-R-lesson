@@ -4,7 +4,7 @@ import yaml
 
 rcParams['chunk']['defaultoptions'].update({
     'wrap': False,
-    'term': True,
+    'term': False,
     'f_size': (4, 3),
     })
 
@@ -14,9 +14,9 @@ class Formatter(PwebPandocFormatter):
         super(Formatter, self).__init__(*args, **kwargs)
         self.formatdict.update({
             'codestart': '~~~%s',
-            'codeend': '~~~\n{:.text-document title="{{ site.handouts }}"}\n\n',
-            'termstart': '~~~%s',
-            'termend': '~~~\n{:.output}\n\n',
+            'codeend': '~~~\n{:.input}\n',
+            'outputstart': '~~~',
+            'outputend': '~~~\n{:.output}\n\n'
             })
         return
     
@@ -38,5 +38,5 @@ for fname in config['slide_sorter']:
         )
     doc.setreader('markdown')
     doc.setformat(Formatter=Formatter)
-#    doc.weave(shell='ipython') ## See https://github.com/mpastell/Pweave/issues/59
-    doc.weave()
+    doc.weave(shell='ipython') ## See https://github.com/mpastell/Pweave/issues/59
+#    doc.weave()

@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-	  {% include head.html %}
-	  <link rel="stylesheet" href="{{ site.styleurl }}{{ page.style }}">
+    {% include head.html stylesource=site.styleurl %}
   </head>
   <body>
-	  <div class="page-content">
-	    <div class="wrapper">
+    <div class="page-content">
+      <div class="wrapper">
         {% include subst_content.html %}
-	    </div>
-	  </div>
+      </div>
+    </div>
+  {% include body.html %}
   </body>
 </html>
