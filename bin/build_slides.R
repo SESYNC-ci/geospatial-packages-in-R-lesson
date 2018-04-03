@@ -12,7 +12,6 @@ opts_knit$set(
     base.url = '{{ site.baseurl }}/')
 opts_chunk$set(
     comment = NA,
-    fig.path = 'images/',
     cache = TRUE,
     cache.path = 'docs/_slides_Rmd/cache/')
 
@@ -45,6 +44,7 @@ for (f in config$slide_sorter) {
     f.Rmd <- paste0(f, '.Rmd')
     if (f.Rmd %in% files) {
         f.md <- paste0(f, '.md')
+	opts_chunk$set(fig.path = paste0('images/', f, '/'))
         knit(input = file.path('docs/_slides_Rmd', f.Rmd),
              output = file.path('docs/_slides', f.md))
     }
