@@ -23,8 +23,18 @@ class Formatter(PwebPandocFormatter):
     def make_figure_string(self, *args, **kwargs):
         f_str = super(Formatter, self).make_figure_string(*args, **kwargs)
         f_str = f_str.replace('..', '{{ site.baseurl }}')
-        f_str = f_str[:f_str.find('{#')]
+        f_str = f_str[:f_str.find('\\')]
+        f_str = f_str.replace(
+            '[]',
+            '[plot of {}]'.format(args[0]))
         return f_str
+
+    def preformat_chunk(self, chunk):
+        if chunk['type'] == 'code':
+            if 'title' in chunk:
+                codeend = '~~~\n{{:.text-document title="{}"}}\n\n'
+                chunk['codeend'] = codeend.format(chunk['title'])
+        return chunk
         
 
 with open('docs/_config.yml') as f:
@@ -32,9 +42,9 @@ with open('docs/_config.yml') as f:
     
 for fname in config['slide_sorter']:
     doc = Pweb(
-        file='docs/_slides_pmd/{}.pmd'.format(fname),
-        output='docs/_slides/{}.md'.format(fname),
-        figdir='../images',
+        file = 'docs/_slides_pmd/{}.md'.format(fname),
+        output = 'docs/_slides/{}.md'.format(fname),
+        figdir = '../images',
         )
     doc.setreader('markdown')
     doc.setformat(Formatter=Formatter)
