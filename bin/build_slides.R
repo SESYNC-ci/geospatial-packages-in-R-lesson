@@ -12,8 +12,10 @@ opts_knit$set(
     base.url = '{{ site.baseurl }}/')
 opts_chunk$set(
     comment = NA,
-    cache = TRUE,
-    cache.path = 'docs/_slides_Rmd/cache/')
+    cache = FALSE, ## FIXME
+    cache.path = 'docs/_slides_Rmd/cache/',
+    fig.cap = '',
+    screenshot.force = FALSE)
 
 in_ial <- '\n{:.input}\n'
 out_ial <- '\n{:.output}\n'
@@ -40,12 +42,29 @@ chunk <- function(x, options) {
 knit_hooks$set(chunk = chunk)
 
 files <- list.files('docs/_slides_Rmd')
+deps <- list()
 for (f in config$slide_sorter) {
     f.Rmd <- paste0(f, '.Rmd')
     if (f.Rmd %in% files) {
         f.md <- paste0(f, '.md')
-	opts_chunk$set(fig.path = paste0('images/', f, '/'))
+        opts_chunk$set(fig.path = paste0('images/', f, '/'))
         knit(input = file.path('docs/_slides_Rmd', f.Rmd),
              output = file.path('docs/_slides', f.md))
+        deps <- c(deps, knit_meta())
     }
 }
+deps <- unique(deps)
+deps <- lapply(deps, FUN = function(d) {
+  # create path for htmlwidgets
+  htmlwidgets <- str_extract(d$src$file, 'htmlwidgets.*')
+  htmlwidgets_dest <- file.path('docs', dirname(htmlwidgets))
+  dir.create(htmlwidgets, showWarnings = FALSE, recursive = TRUE)
+  system2('rsync', c('-a', '--update', d$src$file, htmlwidgets_dest))
+  d$src <- htmlwidgets
+  return(d)
+})
+
+f <- 'docs/_data/htmlwidgets.yml'
+if (!(file.exists(f) && identical(yaml.load_file(f), deps))) {
+  cat(as.yaml(deps), file = f)
+} 
