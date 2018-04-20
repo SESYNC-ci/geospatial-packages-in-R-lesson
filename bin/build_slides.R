@@ -65,6 +65,6 @@ deps <- lapply(deps, FUN = function(d) {
 })
 
 f <- 'docs/_data/htmlwidgets.yml'
-if (!(file.exists(f) && identical(yaml.load_file(f), deps))) {
+if (file.exists(f) && !identical(yaml.load_file(f), deps)) {
   cat(as.yaml(deps), file = f)
-} 
+}
