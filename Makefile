@@ -15,20 +15,15 @@ HANDOUTS := $(HANDOUTS:worksheet%=worksheet-$(LESSON)%)
 HANDOUTS := $(HANDOUTS:%=../../release/%)
 
 # do not run rules in parallel; because
-# bin/build_slides.* runs over all .Rmd and .pmd slides
+# bin/build_slides.R (.py) runs over all .Rmd (.pmd) slides
 .NOTPARALLEL:
 .DEFAULT_GOAL: slides
 .PHONY: course lesson slides archive
 
 # target to check files in docs/_slides
-slides: $(SLIDES:%=docs/_slides/%.md) | .git/refs/remotes/upstream
-
-# target to ensure upstream remote is lesson-style
-.git/refs/remotes/upstream:
-	git remote add upstream "git@github.com:sesync-ci/lesson-style.git"
-	git fetch upstream
-	git checkout -b upstream upstream/master
-	git checkout master
+slides: $(SLIDES:%=docs/_slides/%.md) | docs/_slides
+docs/_slides:
+	mkdir docs/_slides
 
 # cannot use a pattern as the next three targets, because
 # the targets are only a subset of docs/_slides/%.md and
@@ -41,11 +36,16 @@ $(subst _pmd,,$(SLIDES_PMD:.pmd=.md)): $(SLIDES_PMD)
 	@bin/build_slides.py
 
 # target to update lesson repo on GitHub
-lesson: slides
+lesson: slides | .git/refs/remotes/upstream
 	git pull
 	git fetch upstream master:upstream
 	git merge --no-edit upstream
 	git push
+.git/refs/remotes/upstream:
+	git remote add upstream "git@github.com:sesync-ci/lesson-style.git"
+	git fetch upstream
+	git checkout -b upstream upstream/master
+	git checkout master
 
 # target copies lesson handouts to the ../../release/ director,
 # while adding lesson numbers to worksheets

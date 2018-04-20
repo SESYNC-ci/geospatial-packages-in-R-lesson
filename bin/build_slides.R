@@ -12,9 +12,9 @@ opts_knit$set(
     base.url = '{{ site.baseurl }}/')
 opts_chunk$set(
     comment = NA,
-    cache = FALSE, ## FIXME
+    cache = TRUE,
     cache.path = 'docs/_slides_Rmd/cache/',
-    fig.cap = '',
+    fig.cap = ' ', # whitespace forces .caption after htmlwidget
     screenshot.force = FALSE)
 
 in_ial <- '\n{:.input}\n'
@@ -61,10 +61,10 @@ deps <- lapply(deps, FUN = function(d) {
   dir.create(htmlwidgets, showWarnings = FALSE, recursive = TRUE)
   system2('rsync', c('-a', '--update', d$src$file, htmlwidgets_dest))
   d$src <- htmlwidgets
-  return(d)
+  return(unclass(d))
 })
 
 f <- 'docs/_data/htmlwidgets.yml'
-if (file.exists(f) && !identical(yaml.load_file(f), deps)) {
+if (!(file.exists(f) && identical(yaml.load_file(f), deps))) {
   cat(as.yaml(deps), file = f)
 }
