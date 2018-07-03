@@ -13,10 +13,10 @@ style: /css/static.css
 
 Lesson {{ site.lesson }} with *{{ site.instructor }}*
 
-## Contents
-
+<nav id="ToC" markdown="1">
 {% for sorted in site.slide_sorter %}{% capture id %}/slides/{{ sorted }}{% endcapture %}{% assign hslide = site.slides | where: "id", id | first %}
 - [{{ hslide.excerpt | strip_html | strip }}](#{{ id }}){% endfor %}
+</nav>
 
 ---
 

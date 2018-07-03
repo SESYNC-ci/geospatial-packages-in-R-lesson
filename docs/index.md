@@ -15,10 +15,10 @@ style: /css/static.css
 > Handouts for this lesson need to be saved on your computer. [Download]({{ site.github.releases_url }}/download/{{ site.tag }}/handouts.zip) and unzip this material into the directory (a.k.a. folder) where you plan to work.
 {% endif %}
 
-## Contents
-
+<nav id="ToC" markdown="1">
 {% for sorted in site.slide_sorter %}{% capture id %}/slides/{{ sorted }}{% endcapture %}{% assign hslide = site.slides | where: "id", id | first %}
 - [{{ hslide.excerpt | strip_html | strip }}](#{{ id }}){% endfor %}
+</nav>
 
 ---
 
