@@ -17,16 +17,18 @@ opts_chunk$set(
     fig.cap = ' ', # whitespace forces .caption after htmlwidget
     screenshot.force = FALSE)
 
-in_ial <- '\n{:.input}'
+in_ial <- '\n{:.input title="Console"}'
 out_ial <- '\n{:.output}'
 fig_ial <- '\n{:.captioned}'
   
 knit_hooks$set(chunk = function(x, options) {
-    if (!is.null(options$title)) {
-      in_ial <- paste0('\n{:.text-document title="', options$title, '"}')
-      options$prompt <- FALSE
+    if (!is.null(options$title) & options$eval) {
+        in_ial <- paste0('\n{:.text-document title="', options$title, '"}')
     }
-
+    if (!is.null(options$title) & !options$eval) {
+        in_ial <- paste0('\n{:.text-document .no-eval title="', options$title, '"}')
+    }
+  
     # add 'input' class or 'text-document' class with 'title' attribute to code
     x <- gsub('(~~~r\n.+?~~~)(\n|$)', paste0('\\1', in_ial), x)
     
@@ -74,5 +76,4 @@ if (length(deps) > 0) {
   if (!(file.exists(f) && identical(yaml.load_file(f), deps))) {
     cat(as.yaml(deps), file = f)
   }
-  
 }

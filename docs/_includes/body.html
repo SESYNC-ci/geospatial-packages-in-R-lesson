@@ -1,12 +1,11 @@
 <script>
- var collection = document.getElementsByClassName('rlib');
- for (var i = 0; i < collection.length; i++) {
-     var a = collection[i];
-     a.href = 'https://cran.r-project.org/package=' + a.innerText;
- };
- var collection = document.getElementsByClassName('pylib');
- for (var i = 0; i < collection.length; i++) {
-     var a = collection[i];
-     a.href = 'https://pypi.python.org/pypi/' + a.innerText;
- };
+$(document).ready(function(){
+  // Add links to R and Python package repositories
+  $('a.rlib').map(function(){
+    this.href = 'https://cran.r-project.org/package=' + this.innerText;
+  });
+  $('a.pylib').map(function(){
+    this.href = 'https://pypi.python.org/pypi/' + this.innerText;
+  });
+});
 </script>

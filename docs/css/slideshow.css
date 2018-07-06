@@ -2,7 +2,7 @@ img + br + em {
     font-size: 0.5em !Important;
 }
 
-div.text-document::before {
+.text-document::before, .input::before {
     top: 3.4px;
 }
 
@@ -43,7 +43,7 @@ div.text-document::before {
     margin-left: 65vw;
 }
 
-.text-document pre {
+.text-document pre, .input pre {
     margin: 2px auto;
 }
 

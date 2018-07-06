@@ -18,9 +18,8 @@ Lesson {{ site.lesson }} with *{{ site.instructor }}*
 - [{{ hslide.excerpt | strip_html | strip }}](#{{ id }}){% endfor %}
 </nav>
 
----
-
 {% for sorted in site.slide_sorter %}{% capture id %}/slides/{{ sorted }}{% endcapture %}{% assign hslide = site.slides | where: "id", id | first %}
+---
 <a name="{{ id }}"></a>
 {% assign vslides = hslide.content | split: "<p>===</p>" %}
 {% for vslide in vslides %}
@@ -28,6 +27,5 @@ Lesson {{ site.lesson }} with *{{ site.instructor }}*
 {% endfor %}
 [Top of Section](#{{ id }})
 {:.ToS}
-  
----
+
 {% endfor %}

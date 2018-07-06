@@ -1,5 +1,5 @@
 body {
-  background-color: #fff;
+  background-color: #FFF;
   padding: 50px;
   font: 1em/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #727272;
@@ -29,7 +29,7 @@ p, ul, ol, table, dl {
 }
 
 a {
-  color: #39c;
+  color: #39C;
   text-decoration: none;
 }
 
@@ -55,6 +55,7 @@ a:hover small {
 
 #ToC {
   position: fixed;
+  margin: 8px 0;
   padding: 50px 0;
   top: 0;
   left: 0;
@@ -68,7 +69,7 @@ a:hover small {
 }
 
 blockquote {
-  border-left: 1px solid #e5e5e5;
+  border-left: 1px solid #E5E5E5;
   margin: 0;
   padding: 0 0 0 20px;
   font-style: italic;
@@ -83,6 +84,23 @@ pre {
   margin: 0;
 }
 
+.text-document, .input {
+  position: relative;
+}
+
+ul.code-help {
+  list-style: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+}
+
+.code-help li {
+  cursor: pointer;
+  display: inline-block;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -91,7 +109,7 @@ table {
 th, td {
   text-align: left;
   padding: 5px 10px;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #E5E5E5;
 }
 
 dt {
@@ -118,16 +136,16 @@ header ul {
   list-style: none;
   height: 40px;
   padding: 0;
-  background: #f4f4f4;
+  background: #F4F4F4;
   border-radius: 5px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #E0E0E0;
   width: 270px;
 }
 
 header li {
   width: 89px;
   float: left;
-  border-right: 1px solid #e0e0e0;
+  border-right: 1px solid #E0E0E0;
   height: 40px;
 }
 
@@ -154,7 +172,7 @@ header ul a:hover {
 }
 
 header ul a:active {
-  background-color: #f0f0f0;
+  background-color: #F0F0F0;
 }
 
 strong {
@@ -179,7 +197,7 @@ small {
 
 hr {
   border: 0;
-  background: #e5e5e5;
+  background: #E5E5E5;
   height: 1px;
   margin: 0 0 20px;
 }
@@ -214,7 +232,7 @@ footer {
   }
 
   section {
-    /* border: 1px solid #e5e5e5; */
+    /* border: 1px solid #E5E5E5; */
     border-width: 1px 0;
     padding: 20px 0;
     margin: 0 0 20px;

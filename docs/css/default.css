@@ -1,7 +1,7 @@
 code {
     font-family: Monaco, Lucida Console, Terminal, Courier New, monospace;
-    background-color: #EBECE4;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    background-color: #F8F8F8;
     padding: 0 0.2em;
 }
 
@@ -10,13 +10,17 @@ pre > code {
   background: none;
 }
 
-.text-document pre {
-    border: 1px solid #AAA;
-    z-index: 0;
-    margin-bottom: 1em;
+.output + .input, .output + .text-document, .text-document + .input {
+  margin-top: 1em;
 }
 
-div.text-document::before {
+.input pre, .text-document pre {
+    overflow: scroll;
+    border: 1px solid #AAA;
+    z-index: 0;
+}
+
+.text-document::before, .input::before {
     content: attr(title);
     font-family: Monaco, Lucida Console, Terminal, Courier New, monospace;
     color: #727272;
@@ -26,19 +30,13 @@ div.text-document::before {
     border: 1px solid #AAA;
     border-bottom: none;
     z-index: 1;
-    margin-top: 1em;
     padding: 0 0.5em;
     border-radius: 3px 3px 0 0;
     display: inline-block;
 }     
 
-.input pre {
-    overflow: auto;
-    background-color: #EBECE4;
-}
-
 .output pre {
-    overflow: auto;
+    overflow: scroll;
     background-color: #FFFFFF;
     max-height: 300px;
     box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.3) inset;
