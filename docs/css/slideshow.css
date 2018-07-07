@@ -25,7 +25,7 @@ img + br + em {
     display: none;
 }
 
-.reveal .input + p.captioned {
+.input + p.captioned, .text-document + p.captioned {
     display: none;
 }
 
