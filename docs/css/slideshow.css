@@ -39,8 +39,13 @@ img + br + em {
 }
 
 .reveal .slides section.right-third {
-    width: 50%;
-    margin-left: 65vw;
+    width: 60%;
+    margin-left: 20vw;
+}
+
+.reveal .slides .right-third h2 {
+    color: #FFFFFF;
+    font-weight: 500;
 }
 
 .text-document pre, .input pre {
