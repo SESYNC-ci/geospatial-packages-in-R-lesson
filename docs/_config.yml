@@ -1,6 +1,6 @@
 # Site
 
-title: Geospatial Packages in R
+title: Vector and Raster Geospatial Data
 handouts:
  - worksheet.R
  - data/cb_2016_us_county_5m
@@ -8,8 +8,8 @@ handouts:
  - data/nlcd_agg.grd
  - data/nlcd_agg.gri
  - data/README.md
-tag: v0.3
-lesson: 9
+tag: v0.4
+lesson: 5
 instructor: Benoît Parmentier
 authors:
   - Philippe Marchand
@@ -23,7 +23,7 @@ slide_sorter:
   - raster
   - extract
   - refs
-  - solutions
+  - exercise
 
 #####################################
 # Only modify content above or risk #

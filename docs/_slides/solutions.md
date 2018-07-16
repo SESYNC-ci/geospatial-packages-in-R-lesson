@@ -9,14 +9,16 @@
 
 
 
+
 ~~~r
-plot(counties_md$geometry)
-overlay	<- st_within(sesync, counties_md)
-counties_sesync <- counties_md[overlay[[1]], 'geometry']
-plot(counties_sesync, col = "red", add = TRUE)
-plot(sesync, col = 'green', pch = 20, add = TRUE)
+> plot(counties_md$geometry)
+> overlay	<- st_within(sesync, counties_md)
+> counties_sesync <- counties_md[overlay[[1]], 'geometry']
+> plot(counties_sesync, col = "red", add = TRUE)
+> plot(sesync, col = 'green', pch = 20, add = TRUE)
 ~~~
-{:.input}
+{:.input title="Console"}
+
 
 [Return](#exercise-1)
 {:.notes}
@@ -26,12 +28,14 @@ plot(sesync, col = 'green', pch = 20, add = TRUE)
 ## Solution 2
 
 
+
 ~~~r
-bubble_md <- st_buffer(state_md, 5000)
-plot(state_md)
-plot(bubble_md, lty = 'dotted', add = TRUE)
+> bubble_md <- st_buffer(state_md, 5000)
+> plot(state_md)
+> plot(bubble_md, lty = 'dotted', add = TRUE)
 ~~~
-{:.input}
+{:.input title="Console"}
+
 
 [Return](#exercise-2)
 {:.notes}
@@ -41,10 +45,12 @@ plot(bubble_md, lty = 'dotted', add = TRUE)
 ## Solution 3
 
 
+
 ~~~r
-cellStats(nlcd == 41, "mean")
+> cellStats(nlcd == 41, "mean")
 ~~~
-{:.input}
+{:.input title="Console"}
+
 
 [Return](#exercise-3)
 {:.notes}

@@ -1,7 +1,7 @@
 ---
 ---
 
-## Objectives for this lesson
+## Lesson Objectives
 
 - Meet the key R packages for geospatial analysis
 - Learn basic wrangling of vector and raster data
@@ -9,12 +9,9 @@
 
 ===
 
-## Specific achievements
+## Specific Achievements
 
-- Load and plot vector layers (points, lines and polygons)
-- Filter vector layers based on associated data or another layer (overlay)
-- Read projections and transform coordinates
-- Perform geometric operations (union, intersection and buffering) on polygon layers
-- Load, subset and plot raster layers (grids of pixels)
-- Filter (mask) and aggregate raster pixels
-- Extract raster values based on a vectors
+- Create, load and plot vector data types, or "features"
+- Filter features based on associated data or on space
+- Perform geometric operations on polygons
+- Load, manipulate and extract raster data

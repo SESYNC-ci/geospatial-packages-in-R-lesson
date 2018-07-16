@@ -1,11 +1,11 @@
 ---
+excerpt: Crossing Types
 ---
 
-## Mixing raster and vectors: prelude
+## Crossing Rasters with Vectors: Prelude
 
-The creation of geospatial tools in R has been a community effort, but not necessarilly a well-organized one. One current stumbling block is that the [raster](){:.rlib} package, which is tightly integrated with the [sp](){:.rlib} package, has not caught up to the [sf](){:.rlib} package.
-
-Presently, to mix raster and vectors, we must convert the desired `sfc` objects to their counterpart `Spatial*` objects:
+Presently, to mix raster and vectors, we must convert needed `sf` objects
+to their counterpart `Spatial*` objects:
 
 ```{r, results = 'hide', title = '{{ site.handouts[0] }}'}
 sesync <- as(sesync, "Spatial")
@@ -13,20 +13,31 @@ huc_md <- as(huc_md, "Spatial")
 counties_md <- as(counties_md, "Spatial")
 ```
 
+The creation of geospatial tools in R has been a community effort, and not
+necessarilly a well-organized one. One current stumbling block is that the
+[raster](){:.rlib} package, which is tightly integrated with the [sp](){:.rlib}
+package, has not caught up to the [sf](){:.rlib} package. The
+still-under-development [stars](https://r-spatial.github.io/stars/) package aims
+to remedy this problem and others.
+{:.notes}
+
 ===
 
-## Mixing rasters and vectors
+## Crossing Rasters with Vectors
 
-The `extract` function allows subsetting and aggregation of raster values based on a vector spatial object.
+The `extract` function allows subsetting and aggregation of raster values based
+on a vector spatial object.
 
 ```{r extract_pt, fig.keep='last', title="{{ site.handouts[0] }}"}
 plot(nlcd)
-plot(sesync, col = 'green', pch = 16, cex = 2, add = TRUE)
+plot(sesync, col = 'green',
+     pch = 16, cex = 2, add = TRUE)
 ```
 
 ===
 
-When extracting by point locations (i.e. a *SpatialPoints* object), the result is a vector of values corresponding to each point.
+When extracting by point locations (i.e. a *SpatialPoints* object), the result
+is a vector of values corresponding to each point.
 
 ```{r, title="{{ site.handouts[0] }}"}
 sesync_lc <- extract(nlcd, sesync)
@@ -38,10 +49,12 @@ lc_types[sesync_lc + 1]
 
 ===
 
-When extracting with a polygon, the output is a vector of all raster values for pixels falling within that polygon.
+When extracting with a polygon, the output is a vector of all raster values for
+pixels falling within that polygon.
 
 ```{r extract_poly1, title="{{ site.handouts[0] }}"}
-county_nlcd <- extract(nlcd_agg, counties_md[1,])
+county_nlcd <- extract(nlcd_agg,
+    counties_md[1,])
 ```
 
 ```{r}
@@ -50,10 +63,14 @@ table(county_nlcd)
 
 ===
 
-To get a summary of raster values for **each** polygon in a `SpatialPolygons` object, add an aggregation function to `extract` via the `fun` argument. For example, `fun = modal` gives the most common land cover type for each polygon in `huc_md`.
+To get a summary of raster values for **each** polygon in a `SpatialPolygons`
+object, add an aggregation function to `extract` via the `fun` argument. For
+example, `fun = modal` gives the most common land cover type for each polygon in
+`huc_md`.
 
 ```{r extract_poly_agg, title="{{ site.handouts[0] }}"}
-modal_lc <- extract(nlcd_agg, huc_md, fun = modal)
+modal_lc <- extract(nlcd_agg,
+    huc_md, fun = modal)
 huc_md$modal_lc <- lc_types[modal_lc + 1]
 ```
 

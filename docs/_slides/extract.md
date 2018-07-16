@@ -1,11 +1,12 @@
 ---
+excerpt: Crossing Types
 ---
 
-## Mixing raster and vectors: prelude
+## Crossing Rasters with Vectors: Prelude
 
-The creation of geospatial tools in R has been a community effort, but not necessarilly a well-organized one. One current stumbling block is that the [raster](){:.rlib} package, which is tightly integrated with the [sp](){:.rlib} package, has not caught up to the [sf](){:.rlib} package.
+Presently, to mix raster and vectors, we must convert needed `sf` objects
+to their counterpart `Spatial*` objects:
 
-Presently, to mix raster and vectors, we must convert the desired `sfc` objects to their counterpart `Spatial*` objects:
 
 
 ~~~r
@@ -15,25 +16,38 @@ counties_md <- as(counties_md, "Spatial")
 ~~~
 {:.text-document title="{{ site.handouts[0] }}"}
 
+
+The creation of geospatial tools in R has been a community effort, and not
+necessarilly a well-organized one. One current stumbling block is that the
+[raster](){:.rlib} package, which is tightly integrated with the [sp](){:.rlib}
+package, has not caught up to the [sf](){:.rlib} package. The
+still-under-development [stars](https://r-spatial.github.io/stars/) package aims
+to remedy this problem and others.
+{:.notes}
+
 ===
 
-## Mixing rasters and vectors
+## Crossing Rasters with Vectors
 
-The `extract` function allows subsetting and aggregation of raster values based on a vector spatial object.
+The `extract` function allows subsetting and aggregation of raster values based
+on a vector spatial object.
+
 
 
 ~~~r
 plot(nlcd)
-plot(sesync, col = 'green', pch = 16, cex = 2, add = TRUE)
+plot(sesync, col = 'green',
+     pch = 16, cex = 2, add = TRUE)
 ~~~
 {:.text-document title="{{ site.handouts[0] }}"}
-
-![plot of chunk extract_pt]({{ site.baseurl }}/images/extract_pt-1.png)
+![ ]({{ site.baseurl }}/images/extract/extract_pt-1.png)
 {:.captioned}
 
 ===
 
-When extracting by point locations (i.e. a *SpatialPoints* object), the result is a vector of values corresponding to each point.
+When extracting by point locations (i.e. a *SpatialPoints* object), the result
+is a vector of values corresponding to each point.
+
 
 
 ~~~r
@@ -42,31 +56,43 @@ sesync_lc <- extract(nlcd, sesync)
 {:.text-document title="{{ site.handouts[0] }}"}
 
 
+
+
 ~~~r
-lc_types[sesync_lc + 1]
+> lc_types[sesync_lc + 1]
 ~~~
-{:.input}
+{:.input title="Console"}
+
+
 ~~~
 [1] Developed, Medium Intensity
 18 Levels:  Barren Land Cultivated Crops ... Woody Wetlands
 ~~~
 {:.output}
 
+
 ===
 
-When extracting with a polygon, the output is a vector of all raster values for pixels falling within that polygon.
+When extracting with a polygon, the output is a vector of all raster values for
+pixels falling within that polygon.
+
 
 
 ~~~r
-county_nlcd <- extract(nlcd_agg, counties_md[1,])
+county_nlcd <- extract(nlcd_agg,
+    counties_md[1,])
 ~~~
 {:.text-document title="{{ site.handouts[0] }}"}
 
 
+
+
 ~~~r
-table(county_nlcd)
+> table(county_nlcd)
 ~~~
-{:.input}
+{:.input title="Console"}
+
+
 ~~~
 county_nlcd
 11 21 22 23 24 41 
@@ -74,22 +100,32 @@ county_nlcd
 ~~~
 {:.output}
 
+
 ===
 
-To get a summary of raster values for **each** polygon in a `SpatialPolygons` object, add an aggregation function to `extract` via the `fun` argument. For example, `fun = modal` gives the most common land cover type for each polygon in `huc_md`.
+To get a summary of raster values for **each** polygon in a `SpatialPolygons`
+object, add an aggregation function to `extract` via the `fun` argument. For
+example, `fun = modal` gives the most common land cover type for each polygon in
+`huc_md`.
+
 
 
 ~~~r
-modal_lc <- extract(nlcd_agg, huc_md, fun = modal)
+modal_lc <- extract(nlcd_agg,
+    huc_md, fun = modal)
 huc_md$modal_lc <- lc_types[modal_lc + 1]
 ~~~
 {:.text-document title="{{ site.handouts[0] }}"}
 
 
+
+
 ~~~r
-head(huc_md)
+> head(huc_md)
 ~~~
-{:.input}
+{:.input title="Console"}
+
+
 ~~~
           AREA PERIMETER HUC250K_ HUC250K_ID HUC_CODE
 903 6413577966  454290.2      904        916 02050306
@@ -107,3 +143,4 @@ head(huc_md)
 975              Monocacy  02 0207 020700 02070009 Cultivated Crops
 ~~~
 {:.output}
+
