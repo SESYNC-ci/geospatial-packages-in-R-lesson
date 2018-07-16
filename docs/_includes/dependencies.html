@@ -1,0 +1,6 @@
+{% for d in site.data.htmlwidgets %}
+  {% for s in d.script %}<script src="{{ d.src | relative_url }}/{{ s }}"></script>
+  {% endfor %}
+  {% for s in d.stylesheet %}<link rel="stylesheet" href="{{ d.src | relative_url }}/{{ s }}">
+  {% endfor %}
+{% endfor %}

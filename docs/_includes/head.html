@@ -3,7 +3,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ site.title }}</title>
 <meta name="description" content="{{ site.github.project_tagline }}">
-<link rel="canonical" href="{{ page.url | replace:'index.html', '' | prepend: site.github.url }}">
-<link rel="stylesheet" href="{{ include.stylesource }}/css/default.css">
-<link rel="stylesheet" href="{{ include.stylesource }}{{ page.style }}">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript"></script>
+<link rel="canonical"
+  href="{{ page.url | replace:'index.html', '' | prepend: site.github.url }}">
+<link href="{{ include.stylesource }}/css/default.css" rel="stylesheet">
+<link href="{{ include.stylesource }}/css/syntax.css" rel="stylesheet">
+<link href="{{ include.stylesource }}{{ page.style }}" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>

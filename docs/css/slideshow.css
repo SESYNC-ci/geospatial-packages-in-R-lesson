@@ -2,11 +2,30 @@ img + br + em {
     font-size: 0.5em !Important;
 }
 
-.reveal table, .reveal pre code {
+.text-document::before, .input::before {
+    top: 3.4px;
+}
+
+.reveal table {
     font-size: 90%;
 }
 
-.reveal img[alt^="plot of"] {
+.reveal pre {
+  font-size: 1em;
+  width: 100%;
+  box-shadow: none;
+  border: 1px solid #AAA;
+}
+
+.reveal code {
+    padding: 0 0.2em;
+}
+
+.reveal .output {
+    display: none;
+}
+
+.input + p.captioned, .text-document + p.captioned {
     display: none;
 }
 
@@ -15,29 +34,22 @@ img + br + em {
     margin-bottom: 1em;
 }
 
+.reveal .slides section {
+    text-align: left;
+}
+
 .reveal .slides section.right-third {
-    width: 50%;
-    margin-left: 65vw;
+    width: 60%;
+    margin-left: 20vw;
 }
 
-.reveal pre code {
-    max-height: 30vh;
-}
-
-.text-document.highlighter-rouge pre {
-    background-color: #000000;
-    margin: 2px auto;
-    border-radius: 0px 0px 5px 5px;
-}
-
-.text-document.highlighter-rouge code {
-    background-color: transparent;
+.reveal .slides .right-third h2 {
     color: #FFFFFF;
+    font-weight: 500;
 }
 
-.reveal pre {
-    border-radius: 5px;
-    font-size: 100%;
+.text-document pre, .input pre {
+    margin: 2px auto;
 }
 
 .reveal {
@@ -50,8 +62,9 @@ p.on-white {
     border-radius: 15px;
 }
 
-.reveal h2, .reveal h1 {
-    text-transform: capitalize;
+.reveal h3, .reveal h2, .reveal h1 {
+    text-align: center;
+    text-transform: none;
 }
 
 .reveal ol, .reveal ul {

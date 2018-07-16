@@ -81,7 +81,7 @@ git remote set-url origin git@github.com:SESYNC-ci/$LESSON-lesson.git
 git push
 ```
 
-Everythin above is standardized across lessons, the following is where the real work begins! First, go to the lesson repository's GitHub settings and select `master/docs` as the GitHub Pages source. Configure `README.md` by commiting the following to the `README.md` file, after replacing `$LESSON` with the new lesson's name.
+Everything above is standardized across lessons, the following is where the real work begins! First, go to the lesson repository's GitHub settings and select `master/docs` as the GitHub Pages source. Configure `README.md` by commiting the following to the `README.md` file, after replacing `$LESSON` with the new lesson's name.
 
 ```
 [lesson]: https://sesync-ci.github.io/$LESSON-lesson
@@ -105,25 +105,23 @@ Always create the `docs/_slides` folder, but develop content within one of the f
 
 Each file within one of these folders becomes a vertical stack of slides in a [Reveal.js] presentation: use "===" on it's own line to indicate a slide break. Vertical stacks are concatenated horizontally in the order supplied by the `slide_sorter` array in `docs/_config.yml`.
 
-## Viewing a Lesson
+## Preview a Lesson
 
 Each lesson is a Jekyll site, automatically deployed by GitHub when pushed but also possible to serve up (with a little work) locally. The following instructions work with a `*-lesson` repo open as a project on https://rstudio.sesync.org.
 
 From a terminal, execute:
 
 ```bash
-cd docs
-bundle install
-bundle exec jekyll build --watch --baseurl /p/4321
+make preview
 ```
 
-This builds a static Jekyll site, while watching for changes in the source (e.g. the `docs/_slides` folder). To view the page in a browser, use the `servr` R package:
+This builds a static Jekyll site if any of the site content (e.g. the `docs/_slides` folder) has been updated since the last site build. To view the page in a browser, use the `servr` R package:
 
 ```r
-servr::httw('docs/_site', port = 4321, initpath = 'instructor', daemon = TRUE)
+servr::httd('docs/_site', port = 4000, initpath = 'instructor', daemon = TRUE)
 ```
 
-Other valide `initpath` arguments are `course`, `slides`, or nothing. If port 4321 is not available, try 4322, etc.
+Other valid `initpath` arguments are `course`, `slides`, or nothing. If port 4000 is not available, you'll have to dig into the Makefile and manually build the Jekyll site with a different "baseurl".
 
 ## Versioning and Releases
 
@@ -133,7 +131,7 @@ A lesson should be archived after any event in which it is presented&mdash;eithe
 - `styleurl` refers to a release of `lesson-style`
 
 The corresponing releases must exist:
-- The lesson's repository needs a release corresponding to `tag` that includes any data and worksheets in a `handouts.zip` "binary" attachement.
+- The lesson's repository needs a release corresponding to `tag` that includes any data and worksheets in a `handouts.zip` "binary" attachment.
 - After updating the `styleurl`, create the release in `lesson-style` before archiving any lessons
 
 ## Upstream

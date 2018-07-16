@@ -9,6 +9,11 @@ reveal-theme: /css/theme/sky.css
 # {{ site.title }}
 {:style="text-transform: none;"}
 
+{% if site.subtitle %}
+## {{ site.subtitle }}
+{:style="text-transform: none;"}
+{% endif %}
+
 </section>
 
 {% for sorted in site.slide_sorter %}
