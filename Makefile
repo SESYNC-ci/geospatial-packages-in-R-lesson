@@ -58,14 +58,13 @@ docs/Gemfile.lock:
 
 # target that brings this lesson into a course
 ## make target "course" is called within the handouts Makefile,
-## assumed to be at ../../
-## ignore the (symlinked) data/ subdirectory
-course: lesson $(addprefix ../../release/,$(filter-out data/%,$(HANDOUTS:worksheet%=worksheet-$(LESSON)%)))
-## copy lesson handouts to the ../../release/ directory
+## assumed to be at ../../Makefile
+course: lesson $(addprefix ../../handouts/,$(HANDOUTS:worksheet%=worksheet-$(LESSON)%))
+## copy lesson handouts to the ../../handouts/ directory
 ## while adding lesson numbers to worksheets
-../../release/worksheet-$(LESSON)%: worksheet%
+../../handouts/worksheet-$(LESSON)%: worksheet%
 	cp $< $@
-../../release/%: %
+../../handouts/%: %
 	mkdir -p $(dir $@)
 	cp $< $@
 
