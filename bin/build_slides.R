@@ -14,6 +14,7 @@ opts_chunk$set(
     comment = NA,
     cache = TRUE,
     prompt = TRUE,
+    error = FALSE,
     fig.cap = ' ', # whitespace forces .caption after htmlwidget
     screenshot.force = FALSE)
 
