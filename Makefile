@@ -66,7 +66,7 @@ course: lesson $(addprefix ../../handouts/,$(HANDOUTS:worksheet%=worksheet-$(LES
 	cp $< $@
 ../../handouts/%: %
 	mkdir -p $(dir $@)
-	cp $< $@
+	cp -r $< $@
 
 # target to archive a lesson
 ## call the archive target with a command line parameter for DATE
