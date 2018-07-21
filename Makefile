@@ -23,7 +23,7 @@ HANDOUTS := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.ym
 slides: $(SLIDES)
 $(SLIDES): | docs/_slides
 docs/_slides:
-	mkdir docs/_slides
+	mkdir -p docs/_slides
 ## cannot use a pattern as the next three targets, because
 ## the targets are only a subset of docs/_slides/%.md and
 ## they have different recipes
