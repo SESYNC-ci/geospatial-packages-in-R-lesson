@@ -55,7 +55,8 @@ for (f in config$slide_sorter) {
           fig.path = paste0('images/', f, '/'),
           cache.path = paste0('cache/', f, '/'))
         knit(input = file.path('docs/_slides_Rmd', f.Rmd),
-             output = file.path('docs/_slides', f.md))
+             output = file.path('docs/_slides', f.md),
+             error = FALSE)
         deps <- c(deps, knit_meta())
     }
 }
