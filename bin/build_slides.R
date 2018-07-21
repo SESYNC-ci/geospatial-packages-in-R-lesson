@@ -14,6 +14,7 @@ opts_chunk$set(
     comment = NA,
     cache = TRUE,
     prompt = TRUE,
+    error = FALSE,
     fig.cap = ' ', # whitespace forces .caption after htmlwidget
     screenshot.force = FALSE)
 
@@ -55,8 +56,7 @@ for (f in config$slide_sorter) {
           fig.path = paste0('images/', f, '/'),
           cache.path = paste0('cache/', f, '/'))
         knit(input = file.path('docs/_slides_Rmd', f.Rmd),
-             output = file.path('docs/_slides', f.md),
-             error = FALSE)
+             output = file.path('docs/_slides', f.md))
         deps <- c(deps, knit_meta())
     }
 }
