@@ -82,7 +82,7 @@ in WGS84 degrees lat and degrees lon.
 ```{r st_sfc, title = "{{ site.handouts[0] }}"}
 sesync <- st_sfc(st_point(
     c(-76.503394, 38.976546)),
-    crs = 4269)
+    crs = st_crs(counties))
 ```
 
 ===
