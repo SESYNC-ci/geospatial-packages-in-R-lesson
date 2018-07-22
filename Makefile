@@ -1,4 +1,5 @@
 SHELL := /bin/bash
+.DEFAULT_GOAL := slides
 
 # look up lesson number and slides in Jekyll _config.yml
 LESSON := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['lesson']")
@@ -16,7 +17,6 @@ HANDOUTS := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.ym
 # do not run rules in parallel
 ## because bin/build_slides.R (.py) runs over all .Rmd (.pmd) slides
 .NOTPARALLEL:
-.DEFAULT_GOAL: slides
 .PHONY: course origin slides archive preview
 
 # target to synchronize with GitHub
