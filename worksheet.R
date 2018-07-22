@@ -7,7 +7,7 @@ counties <- ...(..., stringsAsFactors = FALSE)
 
 sesync <- ...(
     ...(c(-76.503394, 38.976546)),
-    crs = 4269)
+    crs = st_crs(counties))
 
 ## Bounding box
 
