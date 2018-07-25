@@ -9,7 +9,7 @@ SLIDES := $(SLIDES:%=docs/_slides/%.md)
 # list available Markdown, RMarkdown and Pweave slides
 SLIDES_MD := $(shell find . -path "./docs/_slides_md/*.md")
 SLIDES_RMD := $(shell find . -path "./docs/_slides_Rmd/*.Rmd")
-SLIDES_PMD := $(shell find . -path "./docs/_slides_pmd/*.pmd")
+SLIDES_PMD := $(shell find . -path "./docs/_slides_pmd/*.md")
 
 # look up files for trainees in Jekyll _config.yml
 HANDOUTS := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['handouts']")
@@ -43,7 +43,7 @@ $(subst _md,,$(SLIDES_MD)): docs/_slides/%: docs/_slides_md/%
 	cp $< $@
 $(subst _Rmd,,$(SLIDES_RMD:.Rmd=.md)): docs/_slides/%.md: docs/_slides_Rmd/%.Rmd bin/build_slides.R
 	@bin/build_slides.R
-$(subst _pmd,,$(SLIDES_PMD:.pmd=.md)): docs/_slides/%.md: docs/_slides_pmd/%.pmd
+$(subst _pmd,,$(SLIDES_PMD)): docs/_slides/%.md: docs/_slides_pmd/%.md
 	@bin/build_slides.py
 
 # targets keep jekyll site up to date
