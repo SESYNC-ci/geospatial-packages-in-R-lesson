@@ -292,7 +292,7 @@ plot(sesync, col = 'green',
 
 ### Geometric Operations
 
-The data for a map of waterhsed boundaries within the state of MD is all here;
+The data for a map of watershed boundaries within the state of MD is all here;
 in the country-wide `huc` and in the state boundary "surrounding" all of
 `counties_md`. To get just the huc in a MD outline:
 
