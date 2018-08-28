@@ -10,12 +10,13 @@ pre > code {
   background: none;
 }
 
-.output + .input, .output + .text-document, .text-document + .input {
+.output + .input, .output + .text-document, .text-document + .input,
+div.figure {
   margin-top: 1em;
 }
 
 .input pre, .text-document pre {
-    overflow: scroll;
+    overflow: auto;
     border: 1px solid #AAA;
     z-index: 0;
 }
@@ -36,7 +37,7 @@ pre > code {
 }     
 
 .output pre {
-    overflow: scroll;
+    overflow: auto;
     background-color: #FFFFFF;
     max-height: 300px;
     box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.3) inset;

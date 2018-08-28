@@ -1,4 +1,5 @@
 SHELL := /bin/bash
+.DEFAULT_GOAL := slides
 
 # look up lesson number and slides in Jekyll _config.yml
 LESSON := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['lesson']")
@@ -8,7 +9,7 @@ SLIDES := $(SLIDES:%=docs/_slides/%.md)
 # list available Markdown, RMarkdown and Pweave slides
 SLIDES_MD := $(shell find . -path "./docs/_slides_md/*.md")
 SLIDES_RMD := $(shell find . -path "./docs/_slides_Rmd/*.Rmd")
-SLIDES_PMD := $(shell find . -path "./docs/_slides_pmd/*.pmd")
+SLIDES_PMD := $(shell find . -path "./docs/_slides_pmd/*.md")
 
 # look up files for trainees in Jekyll _config.yml
 HANDOUTS := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['handouts']")
@@ -16,26 +17,10 @@ HANDOUTS := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.ym
 # do not run rules in parallel
 ## because bin/build_slides.R (.py) runs over all .Rmd (.pmd) slides
 .NOTPARALLEL:
-.DEFAULT_GOAL: slides
-.PHONY: course lesson slides archive preview
+.PHONY: course origin slides archive preview
 
-# target to just update docs/_slides
-slides: $(SLIDES)
-$(SLIDES): | docs/_slides
-docs/_slides:
-	mkdir docs/_slides
-## cannot use a pattern as the next three targets, because
-## the targets are only a subset of docs/_slides/%.md and
-## they have different recipes
-$(subst _md,,$(SLIDES_MD)): docs/_slides/%: docs/_slides_md/%
-	cp $< $@
-$(subst _Rmd,,$(SLIDES_RMD:.Rmd=.md)): docs/_slides/%.md: docs/_slides_Rmd/%.Rmd bin/build_slides.R
-	@bin/build_slides.R
-$(subst _pmd,,$(SLIDES_PMD:.pmd=.md)): docs/_slides/%.md: docs/_slides_pmd/%.pmd
-	@bin/build_slides.py
-
-# target to update lesson repo on GitHub
-lesson: slides | .git/refs/remotes/upstream
+# target to synchronize with GitHub
+origin: | .git/refs/remotes/upstream
 	git pull
 	git fetch upstream master:upstream
 	git merge --no-edit upstream
@@ -45,6 +30,21 @@ lesson: slides | .git/refs/remotes/upstream
 	git fetch upstream
 	git checkout -b upstream upstream/master
 	git checkout master
+
+# target to just update docs/_slides
+slides: $(SLIDES)
+$(SLIDES): | docs/_slides
+docs/_slides:
+	mkdir -p docs/_slides
+## cannot use a pattern as the next three targets, because
+## the targets are only a subset of docs/_slides/%.md and
+## they have different recipes
+$(subst _md,,$(SLIDES_MD)): docs/_slides/%: docs/_slides_md/%
+	cp $< $@
+$(subst _Rmd,,$(SLIDES_RMD:.Rmd=.md)): docs/_slides/%.md: docs/_slides_Rmd/%.Rmd bin/build_slides.R
+	@bin/build_slides.R
+$(subst _pmd,,$(SLIDES_PMD)): docs/_slides/%.md: docs/_slides_pmd/%.md
+	@bin/build_slides.py
 
 # targets keep jekyll site up to date
 preview: slides | docs/_site
@@ -58,16 +58,15 @@ docs/Gemfile.lock:
 
 # target that brings this lesson into a course
 ## make target "course" is called within the handouts Makefile,
-## assumed to be at ../../
-## ignore the (symlinked) data/ subdirectory
-course: lesson $(addprefix ../../release/,$(filter-out data/%,$(HANDOUTS:worksheet%=worksheet-$(LESSON)%)))
-## copy lesson handouts to the ../../release/ directory
+## assumed to be at ../../Makefile
+course: origin slides $(addprefix ../../handouts/,$(HANDOUTS:worksheet%=worksheet-$(LESSON)%))
+## copy lesson handouts to the ../../handouts/ directory
 ## while adding lesson numbers to worksheets
-../../release/worksheet-$(LESSON)%: worksheet%
+../../handouts/worksheet-$(LESSON)%: worksheet%
 	cp $< $@
-../../release/%: %
+../../handouts/%: %
 	mkdir -p $(dir $@)
-	cp $< $@
+	cp -r $< $@
 
 # target to archive a lesson
 ## call the archive target with a command line parameter for DATE

@@ -32,7 +32,7 @@ slide_sorter:
 
 # Style
 
-styleurl: https://cdn.rawgit.com/sesync-ci/lesson-style/v1.3/docs
+styleurl: https://cdn.rawgit.com/sesync-ci/lesson-style/v2.0/docs
 reveal: https://cdn.rawgit.com/hakimel/reveal.js/3.5.0
 
 # Jekyll

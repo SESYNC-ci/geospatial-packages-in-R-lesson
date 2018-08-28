@@ -1,3 +1,4 @@
+#!/usr/bin/env Rscript
 library(rvest)
 
 args <- commandArgs(TRUE)

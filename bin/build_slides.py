@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
+from pweave import PwebIPythonProcessor
 from pweave import Pweb, PwebPandocFormatter, rcParams
+import IPython
 import yaml
+import re
 
 rcParams['chunk']['defaultoptions'].update({
     'wrap': False,
@@ -8,13 +11,24 @@ rcParams['chunk']['defaultoptions'].update({
     'f_size': (4, 3),
     })
 
+IPy = IPython.core.interactiveshell.InteractiveShell().get_ipython()
+
+def init(self, *args, **kwargs):
+    super(PwebIPythonProcessor, self).__init__(*args, **kwargs)
+    self.IPy = IPy
+    self.prompt_count = 1
+    
+PwebIPythonProcessor.__init__ = init
+
 class Formatter(PwebPandocFormatter):
+    
+    out = re.compile(r'\nOut\[\d+\]: +')
 
     def __init__(self, *args, **kwargs):
         super(Formatter, self).__init__(*args, **kwargs)
         self.formatdict.update({
             'codestart': '~~~%s',
-            'codeend': '~~~\n{:.input}\n',
+            'codeend': '~~~\n{:.input title="Console"}\n',
             'outputstart': '~~~',
             'outputend': '~~~\n{:.output}\n\n'
             })
@@ -34,6 +48,7 @@ class Formatter(PwebPandocFormatter):
             if 'title' in chunk:
                 codeend = '~~~\n{{:.text-document title="{}"}}\n\n'
                 chunk['codeend'] = codeend.format(chunk['title'])
+            chunk['result'] = self.out.sub('\n', chunk['result'])
         return chunk
         
 
