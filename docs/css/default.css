@@ -10,7 +10,8 @@ pre > code {
   background: none;
 }
 
-.output + .input, .output + .text-document, .text-document + .input {
+.output + .input, .output + .text-document, .text-document + .input,
+div.figure {
   margin-top: 1em;
 }
 
