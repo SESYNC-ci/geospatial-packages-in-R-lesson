@@ -76,6 +76,6 @@ archive:
 # target to create binary for GitHub release
 release:
 	ln -s . handouts
-	ln *.Rproj handouts.Rproj
+	if [ -f *.Rproj ]; then ln *.Rproj handouts.Rproj; fi
 	zip -FSr handouts handouts/handouts.Rproj $(addprefix handouts/,$(HANDOUTS))
-	rm handouts handouts.Rproj
+	rm -f handouts handouts.Rproj
