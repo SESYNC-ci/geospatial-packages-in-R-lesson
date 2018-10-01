@@ -48,9 +48,7 @@ Each lesson repository will include the above files in addition to the topical m
 └── docs/
     ├── _posts/
     ├── _slides/
-   [├── _slides_pmd/]
-   [├── _slides_md/]
-   [├── _slides_Rmd/]
+    ├── _slides_Rmd/ | _slides_pmd/ | _slides_md/
     ├── images/
     └── _config.yml
 ```
