@@ -1,5 +1,6 @@
 SHELL := /bin/bash
-.DEFAULT_GOAL := slides
+PORT ?= 4321
+.DEFAULT_GOAL := preview
 
 # look up lesson number and slides in Jekyll _config.yml
 LESSON := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['lesson']")
@@ -51,7 +52,7 @@ preview: slides | docs/_site
 export GEM_HOME=$(HOME)/.gem
 SITE = $(shell find ./docs/ ! -name _site)
 docs/_site: $(SITE) | docs/Gemfile.lock
-	pushd docs && bundle exec jekyll build --baseurl=/p/4321 && popd
+	pushd docs && bundle exec jekyll build --baseurl=/p/$(PORT) && popd
 	touch docs/_site
 docs/Gemfile.lock:
 	pushd docs && bundle install && popd

@@ -107,19 +107,13 @@ Each file within one of these folders becomes a vertical stack of slides in a [R
 
 Each lesson is a Jekyll site, automatically deployed by GitHub when pushed but also possible to serve up (with a little work) locally. The following instructions work with a `*-lesson` repo open as a project on https://rstudio.sesync.org.
 
-From a terminal, execute:
-
-```bash
-make preview
-```
-
-This builds a static Jekyll site if any of the site content (e.g. the `docs/_slides` folder) has been updated since the last site build. To view the page in a browser, use the `servr` R package:
+From RStudio, choose "Build All" from the "Build" tab. This builds a static Jekyll site if any of the site content (e.g. the `docs/_slides` folder) has been updated since the last site build. To view the built page in a browser, use the `servr` R package:
 
 ```r
-servr::httd('docs/_site', port = 4000, initpath = 'instructor', daemon = TRUE)
+servr::httd('docs/_site', initpath = 'instructor', daemon = TRUE)
 ```
 
-Other valid `initpath` arguments are `course`, `slides`, or nothing. If port 4000 is not available, you'll have to dig into the Makefile and manually build the Jekyll site with a different "baseurl".
+Other valid `initpath` arguments are `course`, `slides`, or nothing. If the default port (i.e. 4321) is not available, use the "Configure Build Tools..." menu item to add the argument `PORT=4322` and try building again.
 
 ## Versioning and Releases
 
