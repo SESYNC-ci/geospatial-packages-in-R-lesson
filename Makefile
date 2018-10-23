@@ -1,5 +1,6 @@
 SHELL := /bin/bash
-.DEFAULT_GOAL := slides
+PORT ?= 4321
+.DEFAULT_GOAL := preview
 
 # look up lesson number and slides in Jekyll _config.yml
 LESSON := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.yml')['lesson']")
@@ -17,10 +18,10 @@ HANDOUTS := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_config.ym
 # do not run rules in parallel
 ## because bin/build_slides.R (.py) runs over all .Rmd (.pmd) slides
 .NOTPARALLEL:
-.PHONY: course origin slides archive preview
+.PHONY: course upstream slides archive preview
 
 # target to synchronize with GitHub
-origin: | .git/refs/remotes/upstream
+upstream: | .git/refs/remotes/upstream
 	git pull
 	git fetch upstream master:upstream
 	git merge --no-edit upstream
@@ -51,7 +52,7 @@ preview: slides | docs/_site
 export GEM_HOME=$(HOME)/.gem
 SITE = $(shell find ./docs/ ! -name _site)
 docs/_site: $(SITE) | docs/Gemfile.lock
-	pushd docs && bundle exec jekyll build --baseurl=/p/4000 && popd
+	pushd docs && bundle exec jekyll build --baseurl=/p/$(PORT) && popd
 	touch docs/_site
 docs/Gemfile.lock:
 	pushd docs && bundle install && popd
@@ -59,7 +60,7 @@ docs/Gemfile.lock:
 # target that brings this lesson into a course
 ## make target "course" is called within the handouts Makefile,
 ## assumed to be at ../../Makefile
-course: origin slides $(addprefix ../../handouts/,$(HANDOUTS:worksheet%=worksheet-$(LESSON)%))
+course: upstream slides $(addprefix ../../handouts/,$(HANDOUTS:worksheet%=worksheet-$(LESSON)%))
 ## copy lesson handouts to the ../../handouts/ directory
 ## while adding lesson numbers to worksheets
 ../../handouts/worksheet-$(LESSON)%: worksheet%
@@ -75,4 +76,7 @@ archive:
 
 # target to create binary for GitHub release
 release:
-	ln *.Rproj handouts.Rproj && zip -FSr handouts handouts.Rproj $(HANDOUTS) && rm handouts.Rproj
+	ln -s . handouts
+	if [ -f *.Rproj ]; then ln *.Rproj handouts.Rproj; fi
+	zip -FSr handouts handouts/handouts.Rproj $(addprefix handouts/,$(HANDOUTS))
+	rm -f handouts handouts.Rproj
