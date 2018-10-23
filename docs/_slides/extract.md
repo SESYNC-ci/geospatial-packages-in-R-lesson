@@ -137,7 +137,7 @@ huc_md$modal_lc <- lc_types[modal_lc + 1]
                  HUC_NAME REG  SUB    ACC      CAT         modal_lc
 903     Lower Susquehanna  02 0205 020503 02050306 Deciduous Forest
 915  Brandywine-Christina  02 0204 020402 02040205      Hay/Pasture
-937 Conococheague-Opequon  02 0207 020700 02070004 Deciduous Forest
+937 Conococheague-Opequon  02 0207 020700 02070004      Hay/Pasture
 956     Chester-Sassafras  02 0206 020600 02060002 Cultivated Crops
 966          Youghiogheny  05 0502 050200 05020006 Deciduous Forest
 975              Monocacy  02 0207 020700 02070009 Cultivated Crops

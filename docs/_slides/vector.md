@@ -117,7 +117,7 @@ in WGS84 degrees lat and degrees lon.
 ~~~r
 sesync <- st_sfc(st_point(
     c(-76.503394, 38.976546)),
-    crs = 4269)
+    crs = st_crs(counties))
 ~~~
 {:.text-document title="{{ site.handouts[0] }}"}
 
@@ -327,7 +327,8 @@ column is called a spatial "overlay".
 
 
 ~~~
-Error: st_crs(x) == st_crs(y) is not TRUE
+Sparse geometry binary predicate list of length 1, where the predicate was `within'
+ 1: 5
 ~~~
 {:.output}
 
@@ -481,7 +482,7 @@ plot(sesync, col = 'green',
 
 ### Geometric Operations
 
-The data for a map of waterhsed boundaries within the state of MD is all here;
+The data for a map of watershed boundaries within the state of MD is all here;
 in the country-wide `huc` and in the state boundary "surrounding" all of
 `counties_md`. To get just the huc in a MD outline:
 

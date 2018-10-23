@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vector and Raster Geospatial Data</title>
+<meta name="description" content="Manipulate geospatial data with open source tools.">
+<link rel="canonical"
+  href="http://cyberhelp.sesync.org/geospatial-packages-in-R-lesson/course/archive.html">
+<link href="https://cdn.rawgit.com/sesync-ci/lesson-style/v2.0/docs/css/default.css" rel="stylesheet">
+<link href="https://cdn.rawgit.com/sesync-ci/lesson-style/v2.0/docs/css/syntax.css" rel="stylesheet">
+<link href="https://cdn.rawgit.com/sesync-ci/lesson-style/v2.0/docs/css/static.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+    
+
+  </head>
+  <body>
+    <div class="page-content">
+      <div class="wrapper">
+        
+        
+<h1 style="text-transform: none;" id="vector-and-raster-geospatial-data">Vector and Raster Geospatial Data</h1>
+
+<p>Lesson 5 with <em>Benoît Parmentier</em></p>
+
+<nav id="ToC">
+
+  <ul>
+    <li><a href="#/slides/intro">Lesson Objectives</a></li>
+    <li><a href="#/slides/vector">Vector Data</a></li>
+    <li><a href="#/slides/raster">Raster Data</a></li>
+    <li><a href="#/slides/extract">Crossing Types</a></li>
+    <li><a href="#/slides/refs">Resources</a></li>
+    <li><a href="#/slides/exercise">Exercises</a></li>
+  </ul>
+</nav>
+
+<hr />
+<p><a name="/slides/intro"></a></p>
+
+<h2 id="lesson-objectives">Lesson Objectives</h2>
+
+<ul>
+  <li>Meet the key R packages for geospatial analysis</li>
+  <li>Learn basic wrangling of vector and raster data</li>
+  <li>Distinguish “scriptable” tasks from desktop GIS needs</li>
+</ul>
+
+<h2 id="specific-achievements">Specific Achievements</h2>
+
+<ul>
+  <li>Create, load and plot vector data types, or “features”</li>
+  <li>Filter features based on associated data or on space</li>
+  <li>Perform geometric operations on polygons</li>
+  <li>Load, manipulate and extract raster data</li>
+</ul>
+
+<p class="ToS"><a href="#/slides/intro">Top of Section</a></p>
+
+<hr />
+<p><a name="/slides/vector"></a></p>
+
+<h2 id="r-packages">R Packages</h2>
+
+<p>The key R packages for this lesson are</p>
+
+<ul>
+  <li><a href="" class="rlib">sf</a></li>
+  <li><a href="" class="rlib">raster</a></li>
+</ul>
+
+<h3 id="osgeo-dependencies">OSGeo Dependencies</h3>
+
+<p>In addition to the common case of depending on other R packages, these two have
+dependencies on system libraries.</p>
+
+<ul>
+  <li><a href="https://www.gdal.org">GDAL</a> for read/write in geospatial data formats</li>
+  <li><a href="https://trac.osgeo.org/geos">GEOS</a> for geometry operations</li>
+  <li><a href="http://proj4.org/">PROJ.4</a> for cartographic projections</li>
+</ul>
+
+<p class="notes">System libraries cannot be installed by R’s <code class="highlighter-rouge">install.packages()</code>, but can be
+bundled with these packages and for private use by them. Either way, the
+necessary libraries are maintained by the good people at the <a href="https://github.com/OSGeo">Open Source
+Geospatial Foundation</a> for free and easy distribution.</p>
+
+<h3 id="vector-data">Vector Data</h3>
+
+<p>The <a href="http://www2.census.gov/geo/tiger/GENZ2014/shp/cb_2014_us_county_5m.zip">US Census
+website</a>
+distributes county polygons (and much more) that are provided with the handouts.
+The <a href="" class="rlib">sf</a> package reads shapefiles (“.shp”) and most other vector data:</p>
+
+<div class="language-r text-document highlighter-rouge" title="worksheet-5.R"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">sf</span><span class="p">)</span><span class="w">
+
+</span><span class="n">shp</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s1">'data/cb_2016_us_county_5m'</span><span class="w">
+</span><span class="n">counties</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">st_read</span><span class="p">(</span><span class="n">shp</span><span class="p">,</span><span class="w"> </span><span class="n">stringsAsFactors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>The <code class="highlighter-rouge">counties</code> object is a <code class="highlighter-rouge">data.frame</code> that includes a <code class="highlighter-rouge">sfc</code>, which stands for
+“simple feature column”. This special column is usually called “geometry” or
+“geom”.</p>
+
+<div class="language-r input highlighter-rouge" title="Console"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span><span class="w"> </span><span class="n">head</span><span class="p">(</span><span class="n">counties</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Simple feature collection with 6 features and 9 fields
+geometry type:  MULTIPOLYGON
+dimension:      XY
+bbox:           xmin: -114.7556 ymin: 29.26116 xmax: -81.10192 ymax: 38.77443
+epsg (SRID):    4269
+proj4string:    +proj=longlat +datum=NAD83 +no_defs
+  STATEFP COUNTYFP COUNTYNS       AFFGEOID GEOID      NAME LSAD
+1      04      015 00025445 0500000US04015 04015    Mohave   06
+2      12      035 00308547 0500000US12035 12035   Flagler   06
+3      20      129 00485135 0500000US20129 20129    Morton   06
+4      28      093 00695770 0500000US28093 28093  Marshall   06
+5      29      510 00767557 0500000US29510 29510 St. Louis   25
+6      35      031 00929107 0500000US35031 35031  McKinley   06
+        ALAND    AWATER                       geometry
+1 34475567011 387344307 MULTIPOLYGON (((-114.7556 3...
+2  1257365642 221047161 MULTIPOLYGON (((-81.52366 2...
+3  1889993251    507796 MULTIPOLYGON (((-102.042 37...
+4  1828989833   9195190 MULTIPOLYGON (((-89.72432 3...
+5   160458044  10670040 MULTIPOLYGON (((-90.31821 3...
+6 14116799068  14078537 MULTIPOLYGON (((-109.0465 3...
+</code></pre></div></div>
+
+<h3 id="geometry-types">Geometry Types</h3>
+
+<p>Like any <code class="highlighter-rouge">data.frame</code> column, the <code class="highlighter-rouge">geometry</code> column is comprised of a single
+data type. The “MULTIPOLYGON” is just one of several standard geometric data
+types.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Common Types</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>POINT</td>
+      <td>zero-dimensional geometry containing a single point</td>
+    </tr>
+    <tr>
+      <td>LINESTRING</td>
+      <td>sequence of points connected by straight, non-self intersecting line pieces; one-dimensional geometry</td>
+    </tr>
+    <tr>
+      <td>POLYGON</td>
+      <td>sequence of points in closed, non-intersecting rings; the first denotes the exterior ring, any subsequent rings denote holes</td>
+    </tr>
+    <tr>
+      <td>MULTI*</td>
+      <td>set of * (POINT, LINESTRING, or POLYGON)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p class="notes">The spatial data types are built upon eachother in a logical way: lines are
+built from points, polygons are built from lines, and so on.</p>
+
+<p>We can create any of these spatial objects from coordinates.
+Here’s a <code class="highlighter-rouge">sfc</code> object with a single “POINT”, corresponding to SESYNC’s postition
+in WGS84 degrees lat and degrees lon.</p>
+
+<div class="language-r text-document highlighter-rouge" title="worksheet-5.R"><div class="highlight"><pre class="highlight"><code><span class="n">sesync</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">st_sfc</span><span class="p">(</span><span class="n">st_point</span><span class="p">(</span><span class="w">
+    </span><span class="nf">c</span><span class="p">(</span><span class="m">-76.503394</span><span class="p">,</span><span class="w"> </span><span class="m">38.976546</span><span class="p">)),</span><span class="w">
+    </span><span class="n">crs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">st_crs</span><span class="p">(</span><span class="n">counties</span><span class="p">))</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="coordinate-reference-systems">Coordinate Reference Systems</h3>
+
+<p>A key feature of a <strong>geo</strong>spatial data type is its associated CRS, stored as an
+EPSG ID and an equivalent PROJ.4 string.</p>
+
+<div class="language-r input highlighter-rouge" title="Console"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span><span class="w"> </span><span class="n">st_crs</span><span class="p">(</span><span class="n">counties</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Coordinate Reference System:
+  EPSG: 4269 
+  proj4string: "+proj=longlat +datum=NAD83 +no_defs"
+</code></pre></div></div>
+
+<h3 id="bounding-box">Bounding Box</h3>
+
+<p>A bounding box for all featurs in a <code class="highlighter-rouge">sf</code> data frame is generated by <code class="highlighter-rouge">st_bbox()</code>.</p>
+
+<div class="language-r input highlighter-rouge" title="Console"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span><span class="w"> </span><span class="n">st_bbox</span><span class="p">(</span><span class="n">counties</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      xmin       ymin       xmax       ymax 
+-179.14734  -14.55255  179.77847   71.35256 
+</code></pre></div></div>
+
+<p>The bounding box is not a static attribute—it is determined on-the-fly for the
+entire table or any subset of features.</p>
+
+<div class="language-r text-document highlighter-rouge" title="worksheet-5.R"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span><span class="w">
+</span><span class="n">counties_md</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">filter</span><span class="p">(</span><span class="w">
+  </span><span class="n">counties</span><span class="p">,</span><span class="w">
+  </span><span class="n">STATEFP</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">'24'</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="language-r input highlighter-rouge" title="Console"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span><span class="w"> </span><span class="n">st_bbox</span><span class="p">(</span><span class="n">counties_md</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     xmin      ymin      xmax      ymax 
+-79.48765  37.91172 -75.04894  39.72312 
+</code></pre></div></div>
+
+<h3 id="grid">Grid</h3>
+
+<p>A bounding box summarizes the limits, but is not itself a geometry (not a POINT
+or POLYGON), even though it has a CRS attribute.</p>
+
+<div class="language-r input highlighter-rouge" title="Console"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span><span class="w"> </span><span class="n">st_crs</span><span class="p">(</span><span class="n">st_bbox</span><span class="p">(</span><span class="n">counties_md</span><span class="p">))</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Coordinate Reference System:
+  EPSG: 4269 
+  proj4string: "+proj=longlat +datum=NAD83 +no_defs"
+</code></pre></div></div>
+
+<p>A rectangular grid made over a <code class="highlighter-rouge">sf</code> object is a geometry—by default, a POLYGON.</p>
+
+<div class="language-r text-document highlighter-rouge" title="worksheet-5.R"><div class="highlight"><pre class="highlight"><code><span class="n">grid_md</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">st_make_grid</span><span class="p">(</span><span class="n">counties_md</span><span class="p">,</span><span class="w">
+                        </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="language-r input highlighter-rouge" title="Console"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span><span class="w"> </span><span class="n">grid_md</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Geometry set for 16 features 
+geometry type:  POLYGON
+dimension:      XY
+bbox:           xmin: -79.48765 ymin: 37.91172 xmax: -75.04894 ymax: 39.72312
+epsg (SRID):    4269
+proj4string:    +proj=longlat +datum=NAD83 +no_defs
+First 5 geometries:
+</code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POLYGON ((-79.48765 37.91172, -78.37797 37.9117...
+</code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POLYGON ((-78.37797 37.91172, -77.26829 37.9117...
+</code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POLYGON ((-77.26829 37.91172, -76.15862 37.9117...
+</code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POLYGON ((-76.15862 37.91172, -75.04894 37.9117...
+</code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POLYGON ((-79.48765 38.36457, -78.37797 38.3645...
+</code></pre></div></div>
+
+<h3 id="plot-layers">Plot Layers</h3>
+
+<p>Spatial objects defined by <a href="" class="rlib">sf</a> are compatible with the <code class="highlighter-rouge">plot</code>
+function. Setting the <code class="highlighter-rouge">plot</code> parameter <code class="highlighter-rouge">add = TRUE</code> allows an existing plot to
+serve as a layer underneath the new one, so long as the CRS lines up.</p>
+
+<div class="language-r text-document highlighter-rouge" title="worksheet-5.R"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">grid_md</span><span class="p">)</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">counties_md</span><span class="p">[</span><span class="s1">'ALAND'</span><span class="p">],</span><span class="w">
+     </span><span class="n">add</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">sesync</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"green"</span><span class="p">,</span><span class="w">
+     </span><span class="n">pch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+<p class="captioned"><img src="/geospatial-packages-in-R-lesson/images/vector/plot_counties-1.png" alt=" " /></p>
+
+<p class="notes">But note that the <code class="highlighter-rouge">plot</code> function won’t prevent you from layering up geometries
+with different coordinate systems: you must safegaurd your own plots from this
+mistake. The arguments <code class="highlighter-rouge">col</code> and <code class="highlighter-rouge">pch</code>, by the way, are graphical parameters
+used in base R, see <code class="highlighter-rouge">?par</code>.</p>
+
+<h3 id="spatial-subsetting">Spatial Subsetting</h3>
+
+<p>An object created with <code class="highlighter-rouge">st_read</code> is a <code class="highlighter-rouge">data.frame</code>, which is why the <code class="highlighter-rouge">dplyr</code>
+function <code class="highlighter-rouge">filter</code> used above on the <strong>non</strong>-geospatial column named “STATEFP”
+worked normally. The equivalent of a filtering operation on the “geometry”
+column is called a spatial “overlay”.</p>
+
+<div class="language-r input highlighter-rouge" title="Console"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span><span class="w"> </span><span class="n">st_within</span><span class="p">(</span><span class="n">sesync</span><span class="p">,</span><span class="w"> </span><span class="n">counties_md</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Sparse geometry binary predicate list of length 1, where the predicate was `within'
+ 1: 5
+</code></pre></div></div>
+
+<p class="notes">It can be seen as a type of subsetting based on spatial (rather than numeric or
+string) matching. Matching is implemented with functions like <code class="highlighter-rouge">st_within(x, y)</code>.
+The output implies that the 1^st^ (and only) point in <code class="highlighter-rouge">sesync</code> is within the 5th
+element of <code class="highlighter-rouge">counties_md</code>.</p>
+
+<dl>
+  <dt>Question</dt>
+  <dd>What was the message issued by the last command all about?</dd>
+  <dt>Answer</dt>
+  <dd class="fragment">It is a reminder that all geometric calculations are performed as
+if the coordinates (in this case longitutde and latitude) are Cartesian x,y
+coordinates.</dd>
+</dl>
+
+<p>The overlay functions in the <a href="" class="rlib">sf</a> package follow the pattern
+<code class="highlighter-rouge">st_predicate(x, y)</code> and perform the test “x [is] predicate y”. Some key
+examples are:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>st_intersects</td>
+      <td>boundary or interior of x intersects boundary or interior of y</td>
+    </tr>
+    <tr>
+      <td>st_within</td>
+      <td>interior and boundary of x do not intersect exterior of y</td>
+    </tr>
+    <tr>
+      <td>st_contains</td>
+      <td>y is within x</td>
+    </tr>
+    <tr>
+      <td>st_overlaps</td>
+      <td>interior of x intersects interior of y</td>
+    </tr>
+    <tr>
+      <td>st_equals</td>
+      <td>x has the same interior and boundary as y</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="coordinate-transforms">Coordinate Transforms</h3>
+
+<p>For the next part of this lesson, we import a new polygon layer corresponding to
+the 1:250k map of US hydrological units (HUC)
+<a href="http://water.usgs.gov/GIS/dsdl/huc250k_shp.zip">downloaded</a> from the United
+States Geological Survey.</p>
+
+<div class="language-r text-document highlighter-rouge" title="worksheet-5.R"><div class="highlight"><pre class="highlight"><code><span class="n">shp</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s1">'data/huc250k'</span><span class="w">
+</span><span class="n">huc</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">st_read</span><span class="p">(</span><span class="n">shp</span><span class="p">,</span><span class="w"> </span><span class="n">stringsAsFactors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Compare the coordinate reference systems of <code class="highlighter-rouge">counties</code> and <code class="highlighter-rouge">huc</code>, as given by
+their Proj4 strings.</p>
+
+<div class="language-r input highlighter-rouge" title="Console"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span><span class="w"> </span><span class="n">st_crs</span><span class="p">(</span><span class="n">counties_md</span><span class="p">)</span><span class="o">$</span><span class="n">proj4string</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] "+proj=longlat +datum=NAD83 +no_defs"
+</code></pre></div></div>
+
+<div class="language-r input highlighter-rouge" title="Console"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span><span class="w"> </span><span class="n">st_crs</span><span class="p">(</span><span class="n">huc</span><span class="p">)</span><span class="o">$</span><span class="n">proj4string</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +datum=NAD27 +units=m +no_defs"
+</code></pre></div></div>
+
+<p class="notes">The Census data uses unprojected (longitude, latitude) coordinates, but <code class="highlighter-rouge">huc</code> is
+in an Albers equal-area projection (indicated as “+proj=aea”).</p>
+
+<p>The function <code class="highlighter-rouge">st_transform()</code> converts a <code class="highlighter-rouge">sfc</code> between coordinate reference
+systems, specified with the parameter <code class="highlighter-rouge">crs = x</code>. A numeric <code class="highlighter-rouge">x</code> must be a valid
+EPSG code; a character <code class="highlighter-rouge">x</code> is interpretted as a PROJ.4 string.</p>
+
+<div class="language-r text-document highlighter-rouge" title="worksheet-5.R"><div class="highlight"><pre class="highlight"><code><span class="n">prj</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s1">'+proj=aea +lat_1=29.5 +lat_2=45.5 \
+    +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 \
+    +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 \
+    +units=m +no_defs'</span><span class="w">
+</span></code></pre></div></div>
+
+<p class="notes">Proj4 strings contain a reference to the type of projection, this one is another
+Albers Equal Area, along with numeric parameters associated with that
+projection. An additional important parameter that may differ between two
+coordinate systems is the “datum”, which indicates the standard by which the
+irregular surface of the Earth is approximated by an ellipsoid in the
+coordinates themselves.</p>
+
+<p>Use <code class="highlighter-rouge">st_transform()</code> to assign the two layers to a common projection string
+(<code class="highlighter-rouge">prj</code>). This takes a few moments, as it requires re-calculating coordinates for
+every vertex of every polygon in the <code class="highlighter-rouge">sfc</code>.</p>
+
+<div class="language-r text-document highlighter-rouge" title="worksheet-5.R"><div class="highlight"><pre class="highlight"><code><span class="n">counties_md</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">st_transform</span><span class="p">(</span><span class="w">
+  </span><span class="n">counties_md</span><span class="p">,</span><span class="w">
+  </span><span class="n">crs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">prj</span><span class="p">)</span><span class="w">
+</span><span class="n">huc</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">st_transform</span><span class="p">(</span><span class="w">
+  </span><span class="n">huc</span><span class="p">,</span><span class="w">
+  </span><span class="n">crs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">prj</span><span class="p">)</span><span class="w">
+</span><span class="n">sesync</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">st_transform</span><span class="p">(</span><span class="w">
+  </span><span class="n">sesync</span><span class="p">,</span><span class="w">
+  </span><span class="n">crs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">prj</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="language-r text-document highlighter-rouge" title="worksheet-5.R"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">counties_md</span><span class="o">$</span><span class="n">geometry</span><span class="p">)</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">huc</span><span class="o">$</span><span class="n">geometry</span><span class="p">,</span><span class="w">
+     </span><span class="n">border</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'blue'</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">sesync</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'green'</span><span class="p">,</span><span class="w">
+     </span><span class="n">pch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+<p class="captioned"><img src="/geospatial-packages-in-R-lesson/images/vector/plot_over-1.png" alt=" " /></p>
+
+<h3 id="geometric-operations">Geometric Operations</h3>
+
+<p>The data for a map of watershed boundaries within the state of MD is all here;
+in the country-wide <code class="highlighter-rouge">huc</code> and in the state boundary “surrounding” all of
+<code class="highlighter-rouge">counties_md</code>. To get just the huc in a MD outline:</p>
+
+<ul>
+  <li>remove the internal county boundaries within the state</li>
+  <li>clip the hydrological areas to their intersection with the state</li>
+</ul>
+
+<p>The first step is a spatial <strong>union</strong> operation: we want the resulting object to
+combine the area covered by all the multipolygons in <code class="highlighter-rouge">counties_md</code>.</p>
+
+<div class="language-r text-document highlighter-rouge" title="worksheet-5.R"><div class="highlight"><pre class="highlight"><code><span class="n">state_md</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">st_union</span><span class="p">(</span><span class="n">counties_md</span><span class="p">)</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">state_md</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+<p class="captioned"><img src="/geospatial-packages-in-R-lesson/images/vector/st_union-1.png" alt=" " /></p>
+
+<p class="notes">To perform a union of all sub-geometries in a single <code class="highlighter-rouge">sfc</code>, we use the
+<code class="highlighter-rouge">st_union()</code> function with a single argument. The output, <code class="highlighter-rouge">state_md</code>, is a new
+<code class="highlighter-rouge">sfc</code> that is no longer a column of a data frame. Tabular data can’t safely
+survive a spatial union and is discarded.</p>
+
+<p>The second step is a spatial <strong>intersection</strong>, since we want to limit the
+polygons to areas covered by both <code class="highlighter-rouge">huc</code> and <code class="highlighter-rouge">state_md</code>.</p>
+
+<div class="language-r text-document highlighter-rouge" title="worksheet-5.R"><div class="highlight"><pre class="highlight"><code><span class="n">huc_md</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">st_intersection</span><span class="p">(</span><span class="w">
+  </span><span class="n">huc</span><span class="p">,</span><span class="w">
+  </span><span class="n">state_md</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Warning: attribute variables are assumed to be spatially constant
+throughout all geometries
+</code></pre></div></div>
+
+<div class="language-r text-document highlighter-rouge" title="worksheet-5.R"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">state_md</span><span class="p">)</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">huc_md</span><span class="p">,</span><span class="w"> </span><span class="n">border</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'blue'</span><span class="p">,</span><span class="w">
+     </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+<p class="captioned"><img src="/geospatial-packages-in-R-lesson/images/vector/st_intersect-1.png" alt=" " /></p>
+
+<p class="notes">The <code class="highlighter-rouge">st_intersection()</code> function intersects its first argument with the second.
+The individual hydrological units are preserved but any part of them (or any
+whole polygon) lying outside the <code class="highlighter-rouge">state_md</code> polygon is cut from the output. The
+attribute data remains in the corresponding records of the <code class="highlighter-rouge">data.frame</code>, but (as
+warned) has not been updated. For example, the “AREA” attribute of any clipped
+HUC does not reflect the new polygon.</p>
+
+<p>The GEOS library provides many functions dealing with distances and areas. Many
+of these are accessible through the <a href="" class="rlib">sf</a> package, including:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">st_buffer</code>: to create a buffer of specific width around a geometry</li>
+  <li><code class="highlighter-rouge">st_distance</code>: to calculate the shortest distance between geometries</li>
+  <li><code class="highlighter-rouge">st_area</code>: to calculate the area of polygons</li>
+</ul>
+
+<p class="notes">Keep in mind that all these functions use <strong>planar</strong> geometry equations and thus
+become less precise over larger distances, where the Earth’s curvature is
+noticeable. To calculate geodesic distances that account for that curvature,
+checkout the <a href="" class="rlib">geosphere</a> package.</p>
+
+<p class="ToS"><a href="#/slides/vector">Top of Section</a></p>
+
+<hr />
+<p><a name="/slides/raster"></a></p>
+
+<h2 id="raster-data">Raster Data</h2>
+
+<p>Raster data is a matrix or cube with additional spatial metadata (e.g. extent,
+resolution, and projection) that allow its values to be mapped onto geographical
+space. The <a href="" class="rlib">raster</a> package provides the eponymous <code class="highlighter-rouge">raster()</code> function
+for reading the many formats of such data.</p>
+
+<p>The <a href="http://www.mrlc.gov/nlcd2011.php">National Land Cover Database</a> is ‘.GRD’
+format data, a lot of it. The file provided in this lesson is cropped and
+reduced to a lower resolution in order to speed processing.</p>
+
+<div class="language-r text-document highlighter-rouge" title="worksheet-5.R"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">raster</span><span class="p">)</span><span class="w">
+</span><span class="n">nlcd</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">raster</span><span class="p">(</span><span class="s2">"data/nlcd_agg.grd"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p class="notes">By default, raster data is <em>not</em> loaded into working memory, as you can confirm
+by checking the R object size with <code class="highlighter-rouge">object.size(nlcd)</code>. This means that unlike
+most analyses in R, you can actually process raster datasets larger than the RAM
+available on your computer; the raster package automatically loads pieces of the
+data and computes on each of them in sequence.</p>
+
+<p>The default print method for a raster object is a summary of metadata contained
+in the raster file.</p>
+
+<div class="language-r input highlighter-rouge" title="Console"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span><span class="w"> </span><span class="n">nlcd</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class       : RasterLayer 
+dimensions  : 2514, 3004, 7552056  (nrow, ncol, ncell)
+resolution  : 150, 150  (x, y)
+extent      : 1394535, 1845135, 1724415, 2101515  (xmin, xmax, ymin, ymax)
+coord. ref. : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+data source : /nfs/public-data/training/nlcd_agg.grd 
+names       : nlcd_2011_landcover_2011_edition_2014_03_31 
+values      : 0, 95  (min, max)
+attributes  :
+        ID      COUNT Red Green Blue Land.Cover.Class Opacity
+ from:   0 7854240512   0     0    0     Unclassified       1
+ to  : 255          0   0     0    0                        0
+</code></pre></div></div>
+
+<p>The plot method interprets the pixel values of the raster matrix according to a
+pre-defined color scheme.</p>
+
+<div class="language-r input highlighter-rouge" title="Console"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span><span class="w"> </span><span class="n">plot</span><span class="p">(</span><span class="n">nlcd</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+<p class="captioned"><img src="/geospatial-packages-in-R-lesson/images/raster/show_raster-1.png" alt=" " /></p>
+
+<p>The <code class="highlighter-rouge">crop()</code> function trims a raster object to a given spatial “extent” (or
+range of x and y values).</p>
+
+<div class="language-r text-document highlighter-rouge" title="worksheet-5.R"><div class="highlight"><pre class="highlight"><code><span class="n">extent</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">matrix</span><span class="p">(</span><span class="n">st_bbox</span><span class="p">(</span><span class="n">huc_md</span><span class="p">),</span><span class="w"> </span><span class="n">nrow</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="w">
+</span><span class="n">nlcd</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">crop</span><span class="p">(</span><span class="n">nlcd</span><span class="p">,</span><span class="w"> </span><span class="n">extent</span><span class="p">)</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">nlcd</span><span class="p">)</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">huc_md</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+<p class="captioned"><img src="/geospatial-packages-in-R-lesson/images/raster/crop_raster-1.png" alt=" " /></p>
+
+<p class="notes">The extent can be extracted from <a href="" class="rlib">sp</a> package objects with <code class="highlighter-rouge">extent</code>,
+but must be created “from scratch” for an <code class="highlighter-rouge">sfc</code>. Here, we crop the <code class="highlighter-rouge">nlcd</code> raster
+to the extent of the <code class="highlighter-rouge">huc_md</code> polygon, then display both layers on the same map.
+Also note that the transformed raster is now loaded in R memory, as indicated by
+the size of <code class="highlighter-rouge">nlcd</code>. We could have also saved the output to disk by specifying an
+optional <code class="highlighter-rouge">filename</code> argument to <code class="highlighter-rouge">crop</code>; the same is true for many other
+functions in the <a href="" class="rlib">raster</a> package.</p>
+
+<p>A raster is fundamentally a data matrix, and individual pixel values can be
+extracted by regular matrix subscripting. For example, the value of
+the <em>bottom</em>-left corner pixel:</p>
+
+<div class="language-r input highlighter-rouge" title="Console"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span><span class="w"> </span><span class="n">nlcd</span><span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   
+41 
+</code></pre></div></div>
+
+<p>The meaning of this number is not immediately clear. For this particular
+dataset, the mapping of values to land cover classes is described in the data
+attributes:</p>
+
+<div class="language-r input highlighter-rouge" title="Console"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span><span class="w"> </span><span class="n">head</span><span class="p">(</span><span class="n">nlcd</span><span class="o">@</span><span class="n">data</span><span class="o">@</span><span class="n">attributes</span><span class="p">[[</span><span class="m">1</span><span class="p">]])</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ID      COUNT Red     Green Blue Land.Cover.Class Opacity
+1  0 7854240512   0 0.0000000    0     Unclassified       1
+2  1          0   0 0.9764706    0                        1
+3  2          0   0 0.0000000    0                        1
+4  3          0   0 0.0000000    0                        1
+5  4          0   0 0.0000000    0                        1
+6  5          0   0 0.0000000    0                        1
+</code></pre></div></div>
+
+<p>The <code class="highlighter-rouge">Land.Cover.Class</code> vector gives string names for the land cover type
+corresponding to the matrix values. Note that we need to add 1 to the raster
+value, since these go from 0 to 255, whereas the indexing in R begins at 1.</p>
+
+<div class="language-r text-document highlighter-rouge" title="worksheet-5.R"><div class="highlight"><pre class="highlight"><code><span class="n">nlcd_attr</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">nlcd</span><span class="o">@</span><span class="n">data</span><span class="o">@</span><span class="n">attributes</span><span class="w"> 
+</span><span class="n">lc_types</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">nlcd_attr</span><span class="p">[[</span><span class="m">1</span><span class="p">]]</span><span class="o">$</span><span class="n">Land.Cover.Class</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="language-r input highlighter-rouge" title="Console"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span><span class="w"> </span><span class="n">levels</span><span class="p">(</span><span class="n">lc_types</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code> [1] ""                              "Barren Land"                  
+ [3] "Cultivated Crops"              "Deciduous Forest"             
+ [5] "Developed, High Intensity"     "Developed, Low Intensity"     
+ [7] "Developed, Medium Intensity"   "Developed, Open Space"        
+ [9] "Emergent Herbaceuous Wetlands" "Evergreen Forest"             
+[11] "Hay/Pasture"                   "Herbaceuous"                  
+[13] "Mixed Forest"                  "Open Water"                   
+[15] "Perennial Snow/Ice"            "Shrub/Scrub"                  
+[17] "Unclassified"                  "Woody Wetlands"               
+</code></pre></div></div>
+
+<h3 id="raster-math">Raster Math</h3>
+
+<p>Mathematical functions called on a raster gets applied to each pixel. For a
+single raster <code class="highlighter-rouge">r</code>, the function <code class="highlighter-rouge">log(r)</code> returns a new raster where each pixel’s
+value is the log of the corresponding pixel in <code class="highlighter-rouge">r</code>.</p>
+
+<p class="notes">Likewise, addition with <code class="highlighter-rouge">r1 + r2</code> creates a raster where each pixel is the sum of the
+values from <code class="highlighter-rouge">r1</code> and <code class="highlighter-rouge">r2</code>, and so on. Naturally, spatial attributes of rasters
+(e.g. extent, resolution, and projection) must match for functions that operate
+pixel-wise on multiple rasters.</p>
+
+<p>Logical operations work too: <code class="highlighter-rouge">r1 &gt; 5</code> returns a raster with pixel values <code class="highlighter-rouge">TRUE</code>
+or <code class="highlighter-rouge">FALSE</code> and is often used in combination with the <code class="highlighter-rouge">mask()</code> function.</p>
+
+<div class="language-r text-document highlighter-rouge" title="worksheet-5.R"><div class="highlight"><pre class="highlight"><code><span class="n">pasture</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mask</span><span class="p">(</span><span class="n">nlcd</span><span class="p">,</span><span class="w"> </span><span class="n">nlcd</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">81</span><span class="p">,</span><span class="w">
+    </span><span class="n">maskvalue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">pasture</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+<p class="captioned"><img src="/geospatial-packages-in-R-lesson/images/raster/mask-1.png" alt=" " /></p>
+
+<p class="notes">A pasture raster results from unsetting pixel values where the mask (<code class="highlighter-rouge">nlcd == 81</code>)
+is false (<code class="highlighter-rouge">maskvalue = FALSE</code>).</p>
+
+<p>To further reduce the resolution of the <code class="highlighter-rouge">nlcd</code> raster, the <code class="highlighter-rouge">aggregate()</code>
+function combines values in a block of a given size using a given function.</p>
+
+<div class="language-r text-document highlighter-rouge" title="worksheet-5.R"><div class="highlight"><pre class="highlight"><code><span class="n">nlcd_agg</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">aggregate</span><span class="p">(</span><span class="n">nlcd</span><span class="p">,</span><span class="w">
+    </span><span class="n">fact</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">25</span><span class="p">,</span><span class="w"> </span><span class="n">fun</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">modal</span><span class="p">)</span><span class="w">
+</span><span class="n">nlcd_agg</span><span class="o">@</span><span class="n">legend</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">nlcd</span><span class="o">@</span><span class="n">legend</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">nlcd_agg</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+<p class="captioned"><img src="/geospatial-packages-in-R-lesson/images/raster/agg_raster-1.png" alt=" " /></p>
+
+<p class="notes">Here, <code class="highlighter-rouge">fact = 25</code> means that we are aggregating blocks 25 x 25 pixels and <code class="highlighter-rouge">fun =
+modal</code> indicates that the aggregate value is the mode of the original pixels
+(averaging would not work since land cover is a categorical variable).</p>
+
+<p class="ToS"><a href="#/slides/raster">Top of Section</a></p>
+
+<hr />
+<p><a name="/slides/extract"></a></p>
+
+<h2 id="crossing-rasters-with-vectors-prelude">Crossing Rasters with Vectors: Prelude</h2>
+
+<p>Presently, to mix raster and vectors, we must convert needed <code class="highlighter-rouge">sf</code> objects
+to their counterpart <code class="highlighter-rouge">Spatial*</code> objects:</p>
+
+<div class="language-r text-document highlighter-rouge" title="worksheet-5.R"><div class="highlight"><pre class="highlight"><code><span class="n">sesync</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as</span><span class="p">(</span><span class="n">sesync</span><span class="p">,</span><span class="w"> </span><span class="s2">"Spatial"</span><span class="p">)</span><span class="w">
+</span><span class="n">huc_md</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as</span><span class="p">(</span><span class="n">huc_md</span><span class="p">,</span><span class="w"> </span><span class="s2">"Spatial"</span><span class="p">)</span><span class="w">
+</span><span class="n">counties_md</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as</span><span class="p">(</span><span class="n">counties_md</span><span class="p">,</span><span class="w"> </span><span class="s2">"Spatial"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p class="notes">The creation of geospatial tools in R has been a community effort, and not
+necessarilly a well-organized one. One current stumbling block is that the
+<a href="" class="rlib">raster</a> package, which is tightly integrated with the <a href="" class="rlib">sp</a>
+package, has not caught up to the <a href="" class="rlib">sf</a> package. The
+still-under-development <a href="https://r-spatial.github.io/stars/">stars</a> package aims
+to remedy this problem and others.</p>
+
+<h2 id="crossing-rasters-with-vectors">Crossing Rasters with Vectors</h2>
+
+<p>The <code class="highlighter-rouge">extract</code> function allows subsetting and aggregation of raster values based
+on a vector spatial object.</p>
+
+<div class="language-r text-document highlighter-rouge" title="worksheet-5.R"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">nlcd</span><span class="p">)</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">sesync</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'green'</span><span class="p">,</span><span class="w">
+     </span><span class="n">pch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">16</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+<p class="captioned"><img src="/geospatial-packages-in-R-lesson/images/extract/extract_pt-1.png" alt=" " /></p>
+
+<p>When extracting by point locations (i.e. a <em>SpatialPoints</em> object), the result
+is a vector of values corresponding to each point.</p>
+
+<div class="language-r text-document highlighter-rouge" title="worksheet-5.R"><div class="highlight"><pre class="highlight"><code><span class="n">sesync_lc</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">extract</span><span class="p">(</span><span class="n">nlcd</span><span class="p">,</span><span class="w"> </span><span class="n">sesync</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="language-r input highlighter-rouge" title="Console"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span><span class="w"> </span><span class="n">lc_types</span><span class="p">[</span><span class="n">sesync_lc</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1] Developed, Medium Intensity
+18 Levels:  Barren Land Cultivated Crops ... Woody Wetlands
+</code></pre></div></div>
+
+<p>When extracting with a polygon, the output is a vector of all raster values for
+pixels falling within that polygon.</p>
+
+<div class="language-r text-document highlighter-rouge" title="worksheet-5.R"><div class="highlight"><pre class="highlight"><code><span class="n">county_nlcd</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">extract</span><span class="p">(</span><span class="n">nlcd_agg</span><span class="p">,</span><span class="w">
+    </span><span class="n">counties_md</span><span class="p">[</span><span class="m">1</span><span class="p">,])</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="language-r input highlighter-rouge" title="Console"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span><span class="w"> </span><span class="n">table</span><span class="p">(</span><span class="n">county_nlcd</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>county_nlcd
+11 21 22 23 24 41 
+ 3  1  4  5  2  1 
+</code></pre></div></div>
+
+<p>To get a summary of raster values for <strong>each</strong> polygon in a <code class="highlighter-rouge">SpatialPolygons</code>
+object, add an aggregation function to <code class="highlighter-rouge">extract</code> via the <code class="highlighter-rouge">fun</code> argument. For
+example, <code class="highlighter-rouge">fun = modal</code> gives the most common land cover type for each polygon in
+<code class="highlighter-rouge">huc_md</code>.</p>
+
+<div class="language-r text-document highlighter-rouge" title="worksheet-5.R"><div class="highlight"><pre class="highlight"><code><span class="n">modal_lc</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">extract</span><span class="p">(</span><span class="n">nlcd_agg</span><span class="p">,</span><span class="w">
+    </span><span class="n">huc_md</span><span class="p">,</span><span class="w"> </span><span class="n">fun</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">modal</span><span class="p">)</span><span class="w">
+</span><span class="n">huc_md</span><span class="o">$</span><span class="n">modal_lc</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lc_types</span><span class="p">[</span><span class="n">modal_lc</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="language-r input highlighter-rouge" title="Console"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span><span class="w"> </span><span class="n">head</span><span class="p">(</span><span class="n">huc_md</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>          AREA PERIMETER HUC250K_ HUC250K_ID HUC_CODE
+903 6413577966  454290.2      904        916 02050306
+915 1982478663  292729.7      916        927 02040205
+937 5910074657  503796.5      938        948 02070004
+956 3159193443  506765.4      957        968 02060002
+966 4580816836  433034.1      967        978 05020006
+975 2502118608  252945.8      976        987 02070009
+                 HUC_NAME REG  SUB    ACC      CAT         modal_lc
+903     Lower Susquehanna  02 0205 020503 02050306 Deciduous Forest
+915  Brandywine-Christina  02 0204 020402 02040205      Hay/Pasture
+937 Conococheague-Opequon  02 0207 020700 02070004      Hay/Pasture
+956     Chester-Sassafras  02 0206 020600 02060002 Cultivated Crops
+966          Youghiogheny  05 0502 050200 05020006 Deciduous Forest
+975              Monocacy  02 0207 020700 02070009 Cultivated Crops
+</code></pre></div></div>
+
+<p class="ToS"><a href="#/slides/extract">Top of Section</a></p>
+
+<hr />
+<p><a name="/slides/refs"></a></p>
+
+<h2 id="resources">Resources</h2>
+
+<ul>
+  <li><a href="http://cran.r-project.org/web/packages/raster/vignettes/Raster.pdf">raster package vignette</a>.</li>
+  <li>R.S. Bivand, E.J. Pebesma and V. Gómez-Rubio (2013) Applied Spatial Data Analysis with R. UseR! Series, Springer.</li>
+  <li>R. Lovelace et al., <a href="https://geocompr.robinlovelace.net/">Geocomputation with R</a></li>
+  <li>F. Rodriguez-Sanchez. <a href="https://pakillo.github.io/R-GIS-tutorial/">Spatial data in R: Using R as a GIS.</a></li>
+  <li><a href="https://cran.r-project.org/web/views/Spatial.html">CRAN Task View: Analysis of Spatial Data</a></li>
+</ul>
+
+<p class="ToS"><a href="#/slides/refs">Top of Section</a></p>
+
+<hr />
+<p><a name="/slides/exercise"></a></p>
+
+<h2 id="exercises">Exercises</h2>
+
+<h3 id="exercise-1">Exercise 1</h3>
+
+<p>Produce a map of Maryland counties with the county that contains SESYNC colored in red.</p>
+
+<p class="notes"><a href="#solution-1">View solution</a></p>
+
+<h3 id="exercise-2">Exercise 2</h3>
+
+<p>Use <code class="highlighter-rouge">st_buffer</code> to create a 5km buffer around the <code class="highlighter-rouge">state_md</code> border and plot it as a dotted line (<code class="highlighter-rouge">plot(..., lty = 'dotted')</code>) over the true state border. <strong>Hint</strong>: check the layer’s units with <code class="highlighter-rouge">st_crs()</code> and express any distance in those units.</p>
+
+<p class="notes"><a href="#solution-2">View solution</a></p>
+
+<h3 id="exercise-3">Exercise 3</h3>
+
+<p>The function <code class="highlighter-rouge">cellStats</code> aggregates accross an entire raster. Use it to figure out the  proportion of <code class="highlighter-rouge">nlcd</code> pixels that are covered by deciduous forest (value = 41).</p>
+
+<p class="notes"><a href="#solution-3">View solution</a></p>
+
+<h2 id="solutions">Solutions</h2>
+
+<h3 id="solution-1">Solution 1</h3>
+
+<div class="language-r input highlighter-rouge" title="Console"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span><span class="w"> </span><span class="n">plot</span><span class="p">(</span><span class="n">counties_md</span><span class="o">$</span><span class="n">geometry</span><span class="p">)</span><span class="w">
+</span><span class="o">&gt;</span><span class="w"> </span><span class="n">overlay</span><span class="w">	</span><span class="o">&lt;-</span><span class="w"> </span><span class="n">st_within</span><span class="p">(</span><span class="n">sesync</span><span class="p">,</span><span class="w"> </span><span class="n">counties_md</span><span class="p">)</span><span class="w">
+</span><span class="o">&gt;</span><span class="w"> </span><span class="n">counties_sesync</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">counties_md</span><span class="p">[</span><span class="n">overlay</span><span class="p">[[</span><span class="m">1</span><span class="p">]],</span><span class="w"> </span><span class="s1">'geometry'</span><span class="p">]</span><span class="w">
+</span><span class="o">&gt;</span><span class="w"> </span><span class="n">plot</span><span class="p">(</span><span class="n">counties_sesync</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"red"</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+</span><span class="o">&gt;</span><span class="w"> </span><span class="n">plot</span><span class="p">(</span><span class="n">sesync</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'green'</span><span class="p">,</span><span class="w"> </span><span class="n">pch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p class="notes"><a href="#exercise-1">Return</a></p>
+
+<h2 id="solution-2">Solution 2</h2>
+
+<div class="language-r input highlighter-rouge" title="Console"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span><span class="w"> </span><span class="n">bubble_md</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">st_buffer</span><span class="p">(</span><span class="n">state_md</span><span class="p">,</span><span class="w"> </span><span class="m">5000</span><span class="p">)</span><span class="w">
+</span><span class="o">&gt;</span><span class="w"> </span><span class="n">plot</span><span class="p">(</span><span class="n">state_md</span><span class="p">)</span><span class="w">
+</span><span class="o">&gt;</span><span class="w"> </span><span class="n">plot</span><span class="p">(</span><span class="n">bubble_md</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'dotted'</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p class="notes"><a href="#exercise-2">Return</a></p>
+
+<h3 id="solution-3">Solution 3</h3>
+
+<div class="language-r input highlighter-rouge" title="Console"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span><span class="w"> </span><span class="n">cellStats</span><span class="p">(</span><span class="n">nlcd</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">41</span><span class="p">,</span><span class="w"> </span><span class="s2">"mean"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p class="notes"><a href="#exercise-3">Return</a></p>
+
+<p class="ToS"><a href="#/slides/exercise">Top of Section</a></p>
+
+
+
+        <hr>
+
+<p>If you need to catch-up before a section of code will work, just squish it's
+🍅 to copy code above it into your clipboard. Then paste into your interpreter's
+console, run, and you'll be ready to start in on that section. Code copied by
+both 🍅 and 📋 will also appear below, where you can edit first, and then copy,
+paste, and run again.</p>
+
+<div class="output">
+  <pre id="ketchup" contenteditable="true"><code># Nothing here yet!</code></pre>
+</div>
+
+<script>
+$(document).ready(function(){
+  
+  // Add code help icons to code blocks
+  $('.input, .text-document').append('<ul class="code-help">');
+  $('.code-help')
+    .append('<li class="clipboard">📋</li>');
+  $('.text-document:not(.no-eval) .code-help')
+    .append('<li class="ketchup">🍅</li>');
+
+  // Bind copy actions to mouse clicks on icons
+  var $ketchup = $('#ketchup');
+  var rng = document.createRange();
+  var sel = window.getSelection();
+  $('.ketchup').click(function(){
+    var $prev = $(this)
+      .parents('.text-document')
+      .prevAll('.text-document:has(.ketchup)');
+    $ketchup.find('code').text($prev.find('pre').text());
+    rng.selectNodeContents($ketchup[0]);
+    sel.removeAllRanges();
+    sel.addRange(rng);
+    document.execCommand("copy");
+    sel.removeAllRanges();
+  });
+  $('.text-document .clipboard').click(function(){
+    var pre = $(this).parents('.text-document').find('pre').text();
+    $ketchup.find('code').text(pre);
+    rng.selectNodeContents($ketchup[0]);
+    sel.removeAllRanges();
+    sel.addRange(rng);
+    document.execCommand("copy");
+    sel.removeAllRanges();
+  });
+  $('.input .clipboard').click(function(){
+    var pre = $(this).parents('.input').find('pre').text();
+    pre = pre.replace(/(^|\n)> */g, '$1');
+    $ketchup.find('code').text(pre);
+    rng.selectNodeContents($ketchup[0]);
+    sel.removeAllRanges();
+    sel.addRange(rng);
+    document.execCommand("copy");
+    sel.removeAllRanges();
+  });
+});
+</script>
+      </div>
+    </div>
+    <script>
+$(document).ready(function(){
+  // Add links to R and Python package repositories
+  $('a.rlib').map(function(){
+    this.href = 'https://cran.r-project.org/package=' + this.innerText;
+  });
+  $('a.pylib').map(function(){
+    this.href = 'https://pypi.python.org/pypi/' + this.innerText;
+  });
+});
+</script>
+
+  </body>
+</html>
