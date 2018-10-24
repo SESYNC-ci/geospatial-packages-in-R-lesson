@@ -124,6 +124,8 @@ A lesson should be archived after any event in which it is presented&mdash;eithe
 
 The corresponing releases must exist:
 - The lesson's repository needs a release corresponding to `tag` that includes any data and worksheets in a `handouts.zip` "binary" attachment.
+    - Upload handouts.zip to repository version with cooresponding `tag`
+    - Paste handouts tree
 - After updating the `styleurl`, create the release in `lesson-style` before archiving any lessons
 
 ## Upstream
