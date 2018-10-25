@@ -18,8 +18,8 @@ slide_sorter:
 
 # Style
 
-styleurl: https://cdn.rawgit.com/sesync-ci/lesson-style/v2.0/docs
-reveal: https://cdn.rawgit.com/hakimel/reveal.js/3.5.0
+styleurl: https://cdn.jsdelivr.net/gh/sesync-ci/lesson-style@v2.0/docs
+reveal: https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0
 
 # Jekyll
 
