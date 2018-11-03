@@ -7,6 +7,6 @@ cache/
 .ipynb_checkpoints/
 
 # Jekyll
-docs/.bundle
 docs/_site
+docs/.bundle
 docs/Gemfile.lock

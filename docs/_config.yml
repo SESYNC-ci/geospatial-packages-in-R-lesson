@@ -1,28 +1,17 @@
-# Site
-
-title:
-handouts:
-tag:
-lesson:
-instructor:
-authors:
-
-# Slides
-
-slide_sorter:
-
-#####################################
-# Only modify content above or risk #
-# merge conflicts with upstream.    #
-#####################################
-
-# Style
-
-styleurl: https://cdn.jsdelivr.net/gh/sesync-ci/lesson-style@v2.0/docs
-reveal: https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0
-
-# Jekyll
+# Build
 
 markdown: kramdown
 collections:
-  - slides
+  slides:
+    output: false
+  views:
+    output: true
+    permalink: /:name/
+  archive:
+    output: true
+    permalink: /:year/:month/:day/:title:output_ext
+
+# Asset URLs
+
+imageurl: /assets/images/
+styleurl: /assets/css/

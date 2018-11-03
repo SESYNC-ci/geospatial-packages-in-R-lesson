@@ -1,0 +1,8 @@
+# Asset URLs for Archived Lessons
+
+imageurl: "https://cdn.jsdelivr.net/\
+           gh/{{ site.github.owner_name }}/\
+           {{ site.github.repository_name }}@{{ site.data.lesson.tag }}/docs/\
+           assets/images/"
+styleurl: "https://cdn.jsdelivr.net/\
+           gh/{{ site.github.owner_name }}/lesson-style@v3.0/docs/assets/css/"
