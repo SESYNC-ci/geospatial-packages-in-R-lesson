@@ -55,17 +55,25 @@ Each lesson repository will include the above files in addition to the topical m
 
 Note that `README.md` and `docs/_config.yml` occur in both; the versions/templates in `lesson-style` include instructions on which parts to modify once brought into a `*-lesson` repository to avoid merge conflicts.
 
+The Makefile includes targets for building and publishing lessons:
+  - `make preview` (default) to create a local build of the lesson in `docs/_site` during development
+  - `make slides` to run the `bin/build_slides.*` scripts that populate `docs/_slides`
+  - `make upstream` merge in any updates made in the (upstream) `lesson-style` repository
+  - `make archive $DATE` copies the lesson as generated on GitHub into the `docs/_posts` archive.
+
+## Lesson Content
+
 For a lesson written in RMarkdown, place .Rmd files within `docs/_slides_Rmd`; knitted slides will be generated within `docs/_slides`. Likewise, any slides to be processed by Pweave go in `docs/_slides_pmd`. If a lesson is written purely in Markdown, the slides may reside in `docs/_slides`, but a lesson that combines Markdown slides with processed slides should include `doc/_slides_md` and let the build process populate `docs/_slides`.
 
 Data for the lesson goes in the `public-data/training` folder on SESYNC's research storage server, which is symlinked from the `data` folder in each lesson. References to data in lesson code shall be via the relative path `data/`. Figures produced during build go automatically to `docs/images`, and any additional images must go there too. Archived versions of the lesson go in `docs/_posts`.
 
 Including a `handouts.Rproj` makes it convenient to start an R session with the appropriate working directory, and will be included in the [handouts] associated with each lesson. All handouts (including data and worksheets) must be listed in the `docs/_config.yml`.
 
-The Makefile includes targets for building and publishing lessons:
-  - `make preview` (default) to create a local build of the lesson in `docs/_site` during development
-  - `make slides` to run the `bin/build_slides.*` scripts that populate `docs/_slides`
-  - `make upstream` merge in any updates made in the (upstream) `lesson-style` repository
-  - `make archive $DATE` copies the lesson as generated on GitHub into the `docs/_posts` archive.
+**Important Features to Note**
+
+- Code chunks within a document are rendered to either look like content within a text editor or typed directly into the interpreter/console. The console-look is the default. To achieve editor-look, add `title = "{{ site.handouts[i] }}"` to the code chunk options, replacing `i` with the (zero-indexed) position of the worksheet to be distributed.
+- Vertical slide breaks are introduced with `===` on a line by itself.
+- Paragraphs followed by `{:.notes}` on a line by itself, with no blank line after the paragraph, do not show up in slides.
 
 ## Creating a **new** lesson
 
