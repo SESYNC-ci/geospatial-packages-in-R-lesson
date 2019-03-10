@@ -71,7 +71,7 @@ Including a `handouts.Rproj` makes it convenient to start an R session with the 
 
 **Important Features to Note**
 
-- Code chunks within a document are rendered to either look like content within a text editor or typed directly into the interpreter/console. The console-look is the default. To achieve editor-look, add `title = "{{ site.handouts[i] }}"` to the code chunk options, replacing `i` with the (zero-indexed) position of the worksheet to be distributed.
+- Code chunks within a document are rendered to either look like content within a text editor or typed directly into the interpreter/console. The console-look is the default. To achieve the editor-look, add `title = "{{ site.handouts[i] }}"` to the code chunk options, replacing `i` with the (zero-indexed) position of the worksheet in the list of handouts.
 - Vertical slide breaks are introduced with `===` on a line by itself.
 - Paragraphs followed by `{:.notes}` on a line by itself, with no blank line after the paragraph, do not show up in slides.
 
