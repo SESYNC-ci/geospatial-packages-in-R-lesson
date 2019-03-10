@@ -55,6 +55,12 @@ p.captioned {
     font-size: 0.6em;
 }
 
+.html-widget {
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 1em;
+}
+
 .ToS {
     text-align: right;
 }
