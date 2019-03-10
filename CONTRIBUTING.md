@@ -69,11 +69,13 @@ Data for the lesson goes in the `public-data/training` folder on SESYNC's resear
 
 Including a `handouts.Rproj` makes it convenient to start an R session with the appropriate working directory, and will be included in the [handouts] associated with each lesson. All handouts (including data and worksheets) must be listed in the `docs/_config.yml`.
 
-**Important Features to Note**
+Please **note** the following useful details about how content is rendered:
 
 - Code chunks within a document are rendered to either look like content within a text editor or typed directly into the interpreter/console. The console-look is the default. To achieve the editor-look, add `title = "{{ site.handouts[i] }}"` to the code chunk options, replacing `i` with the (zero-indexed) position of the worksheet in the list of handouts.
+- If an expression in a code chunk generates results, it will render as multiple code chunks with the result interspersed. Prefer to only end code chunks with expressions that print output or generate plots.
 - Vertical slide breaks are introduced with `===` on a line by itself.
 - Paragraphs followed by `{:.notes}` on a line by itself, with no blank line after the paragraph, do not show up in slides.
+
 
 ## Creating a **new** lesson
 
