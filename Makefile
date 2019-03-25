@@ -1,5 +1,6 @@
 SHELL := /bin/bash
 PORT ?= 4321
+BASEURL ?= /
 .DEFAULT_GOAL := preview
 
 # # Get File Names
@@ -70,7 +71,7 @@ $(subst _pmd,,$(SLIDES_PMD)): docs/_slides/%.md: docs/_slides_pmd/%.md bin/build
 # targets keep jekyll site up to date
 preview: slides | docs/_site
 docs/_site: $(SITE) | docs/Gemfile.lock
-	pushd docs && bundle exec jekyll build --baseurl=/p/$(PORT) && popd
+	pushd docs && bundle exec jekyll build --baseurl=$(BASEURL)p/$(PORT) && popd
 	touch docs/_site
 docs/Gemfile.lock:
 	pushd docs && bundle install && popd
