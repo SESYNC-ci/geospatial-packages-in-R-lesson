@@ -101,6 +101,10 @@ ul.code-help {
   display: inline-block;
 }
 
+.code-help li:active {
+  opacity: 0.6;
+}
+
 table {
   margin-left: auto;
   margin-right: auto;
