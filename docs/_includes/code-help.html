@@ -46,7 +46,7 @@ $(document).ready(function(){
   });
   $('.input .clipboard').click(function(){
     var pre = $(this).parents('.input').find('pre').text();
-    pre = pre.replace(/(^|\n)> */g, '$1');
+    pre = pre.replace(/(^|\n)[>+] /g, '$1');
     $ketchup.find('code').text(pre);
     rng.selectNodeContents($ketchup[0]);
     sel.removeAllRanges();
