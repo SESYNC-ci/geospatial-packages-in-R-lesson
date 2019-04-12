@@ -2,6 +2,11 @@ img + br + em {
     font-size: 0.5em !Important;
 }
 
+.reveal section img.nobox {
+  border: none;
+  box-shadow: none;
+}
+
 .text-document::before, .input::before {
     top: 3.4px;
 }
@@ -21,6 +26,9 @@ img + br + em {
     padding: 0 0.2em;
 }
 
+.reveal pre code {
+    max-height: unset;
+}
 .reveal .output {
     display: none;
 }

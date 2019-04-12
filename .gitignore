@@ -9,3 +9,4 @@ cache/
 # Jekyll
 docs/.bundle
 docs/_site
+docs/Gemfile.lock

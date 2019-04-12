@@ -10,8 +10,11 @@ pre > code {
   background: none;
 }
 
-.output + .input, .output + .text-document, .text-document + .input,
-div.figure {
+.output.message pre > code {
+    color: rgb(197, 6, 11);
+}
+
+.output + .input, .output + .text-document, .text-document + .input, div.figure {
   margin-top: 1em;
 }
 
@@ -53,6 +56,12 @@ p.captioned {
 
 .captioned em {
     font-size: 0.6em;
+}
+
+.html-widget {
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 1em;
 }
 
 .ToS {

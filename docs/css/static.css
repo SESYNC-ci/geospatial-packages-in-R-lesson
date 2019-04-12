@@ -101,6 +101,10 @@ ul.code-help {
   display: inline-block;
 }
 
+.code-help li:active {
+  opacity: 0.6;
+}
+
 table {
   margin-left: auto;
   margin-right: auto;
@@ -204,11 +208,17 @@ hr {
 }
 
 footer {
-  width: 270px;
-  float: left;
   position: fixed;
-  bottom: 50px;
+  margin: 8px 0;
+  padding: 50px 0 50px 40px;
+  bottom: 0;
+  left: 0;
+  width: 240px;
   -webkit-font-smoothing: subpixel-antialiased;
+}
+
+footer p:last-child {
+  margin-bottom: 0;
 }
 
 @media print, screen and (max-width: 960px) {
