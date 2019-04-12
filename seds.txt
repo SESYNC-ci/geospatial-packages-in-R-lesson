@@ -1,0 +1,11 @@
+1. Add cyberhelp url to GitHub metadata (edit tagline)
+1. Move docs/_slides_*/* to slides/ (+ some edits)
+1. Move docs/_posts to docs/_archive (+ some edits)
+1. Delete all files not in the lesson tree
+
+# awesome seds!
+sed -i -e 's/title="{{ site\.handouts\[\([0-9]\)\] }}"/handout=\1/' *.Rmd
+ 
+sed -i -e 's|href=.*lesson-style[a-z]*/|href="https://cdn.jsdelivr.net/gh/sesync-ci/lesson-style@|g' docs/_posts/*.html
+
+sed -i.bak '1i---\n---' *.html

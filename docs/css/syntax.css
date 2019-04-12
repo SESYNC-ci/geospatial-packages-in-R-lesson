@@ -164,10 +164,7 @@
   color: #990000;
   font-weight: bold;
 }
-.highlight .nf {
-  color: #990000;
-  font-weight: bold;
-}
+.highlight .nf {}
 .highlight .nl {
   color: #990000;
   font-weight: bold;
@@ -202,4 +199,9 @@
 }
 .highlight {
   background-color: #f8f8f8;
+}
+
+.language-r[title="Console"] .highlight span {
+  color: rgb(0, 0, 255);
+  font-weight: normal;
 }
