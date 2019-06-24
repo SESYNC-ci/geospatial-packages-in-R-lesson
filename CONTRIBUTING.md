@@ -81,6 +81,8 @@ expressions that print output or generate plots.
 - Vertical slide breaks are introduced with `===` on a line by itself.
 - Paragraphs followed by `{:.notes}` on a line by itself, with no blank line
 after the paragraph, only show up in non-slideshow views.
+- Every file in `slides` must begin with YAML frontmatter fenced above and below
+by `---`.
 
 
 ## Creating a **new** lesson
@@ -101,7 +103,7 @@ git push
 ```
 
 Go to the lesson repository's GitHub settings and select `master/docs` as the
-GitHub Pages source. Update the new `*-lesson` repo's description with the
+GitHub Pages source. Update the repository's description with the
 website address `https://cyberhelp.sesync.org/*-lesson` and verify the page
 exists.
 
@@ -109,20 +111,21 @@ Create a `README.md` file at the top of your `*-lesson` repository, following
 this template:
 
 ```
-# Lesson Title
+## Lesson Title
 
 brief lesson description for potential students
 
-# Instructor Notes
+## Instructor Notes
 
 tips on running the tutorial for instructors
 
-# Cyberhelp @sesync
+## Cyberhelp @SESYNC
 
 The National Socio-Environmental Synthesis Center (SESYNC) curates and runs
-tutorials on cyberinfrastructure use in pursuit of the Center's scientific
-mission. Visit www.sesync.org to learn more about SESYNC and
-cyberhelp.sesync.org for more tutorials and ideas.
+tutorials on using cyberinfrastructure in pursuit of the Center's scientific
+mission. Visit [www.sesync.org](https://www.sesync.org) to learn more about
+SESYNC and [cyberhelp.sesync.org](https://cyberhelp.sesync.org) for more
+tutorials and ideas.
 ```
 
 Create a YAML file called `docs/_data/lesson.yml` specifying lesson-specific
