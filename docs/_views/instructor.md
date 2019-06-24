@@ -21,6 +21,7 @@ Lesson {{ site.data.lesson.lesson }} with *{{ site.data.lesson.instructor }}*
 </section>
 
 {% for sorted in site.data.lesson.sorter %}
+{% if sorted == "exercise" %}{% break %}{% endif %}
 {% capture id %}/slides/{{ sorted }}{% endcapture %}
 {% assign hslide = site.slides | where: "id", id | first %}
 <section>
