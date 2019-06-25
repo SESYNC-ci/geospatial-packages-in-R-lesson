@@ -61,6 +61,7 @@ knit_hooks$set(chunk = function(x, options) {
 deps <- list()
 for (f in config$sorter) {
   f.Rmd <- paste0(f, '.Rmd')
+  if (!file.exists(f.Rmd)) next
   f.md <- paste0(f, '.md')
   opts_chunk$set(
     fig.path = file.path(f, ''),
