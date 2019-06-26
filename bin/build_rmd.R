@@ -26,7 +26,7 @@ fig_ial <- '\n{:.captioned}'
   
 opts_hooks$set(title = function(options) {
   if (!is.null(options$handout)) {
-    options$title <- sprintf('{{ site.data.lesson.handouts[%d] }}', options$handout - 1)
+    options$title <- sprintf('{{ site.data.lesson.handouts[%d] }}', options$handout)
   } else if (options$title == "Console") {
     options$prompt <- TRUE
     options$text.document <- FALSE
