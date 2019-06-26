@@ -5,7 +5,7 @@ require(yaml)
 require(stringr)
 require(reticulate)
 
-config <- yaml.load_file('docs/_data/lesson.yml')
+config <- yaml.load_file(file.path('docs', '_data', 'lesson.yml'))
 render_markdown(fence_char = '~')
 opts_knit$set(
     root.dir = '.',
@@ -60,15 +60,13 @@ knit_hooks$set(chunk = function(x, options) {
 
 deps <- list()
 for (f in config$sorter) {
-  f.Rmd <- paste0(f, '.Rmd')
+  f.Rmd <- file.path('slides', paste0(f, '.Rmd'))
   if (!file.exists(f.Rmd)) next
-  f.md <- paste0(f, '.md')
+  f.md <- file.path('docs', '_slides', paste0(f, '.md'))
   opts_chunk$set(
     fig.path = file.path(f, ''),
     cache.path = file.path('cache', f, ''))
-  knit(
-    input = file.path('slides', f.Rmd),
-    output = file.path('docs', '_slides', f.md))
+  knit(input = f.Rmd, output = f.md)
   deps <- c(deps, knit_meta())
 }
 deps <- unique(deps)
@@ -83,7 +81,7 @@ deps <- lapply(deps, FUN = function(d) {
 })
 
 if (length(deps) > 0) {
-  f <- 'docs/_data/htmlwidgets.yml'
+  f <- file.path('docs', '_data', 'htmlwidgets.yml')
   if (!(file.exists(f) && identical(yaml.load_file(f), deps))) {
     cat(as.yaml(deps), file = f)
   }
