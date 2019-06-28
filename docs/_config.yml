@@ -1,6 +1,6 @@
-# Build
+# Build Configuration
 
-markdown: kramdown
+markdown: kramdown 
 collections:
   slides:
     output: false
@@ -11,7 +11,7 @@ collections:
     output: true
     permalink: /:year/:month/:day/:title:output_ext
 
-# Asset URLs
+# Asset Location
 
 imageurl: /assets/images/
 styleurl: /assets/css/

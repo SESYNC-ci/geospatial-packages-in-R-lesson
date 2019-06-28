@@ -17,19 +17,4 @@ reveal-theme: /css/theme/sky.css
 
 </section>
 
-{% for sorted in site.data.lesson.sorter %}
-
-{% capture id %}/slides/{{ sorted }}{% endcapture %}
-{% if sorted == "exercise" %}{% break %}{% endif %}
-{% assign hslide = site.slides | where: "id", id | first %}
-<section>
-  {% assign vslides = hslide.content | split: "<p>===</p>" %}
-  {% for vslide in vslides %}
-  <section{% if hslide.background %}
-    data-background="{{ hslide.background | relative_url }}"{% endif %}{% if hslide.class %}
-    class="{{ hslide.class }}"{% endif %}>
-    {{ vslide }}
-  </section>
-  {% endfor %}
-</section>
-{% endfor %}
+{% include section.html %}
