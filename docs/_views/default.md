@@ -1,6 +1,6 @@
 ---
 layout: default
-style: static.css
+style: css/static.css
 permalink: /index.html
 ---
 

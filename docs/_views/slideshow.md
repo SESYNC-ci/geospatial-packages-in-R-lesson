@@ -1,6 +1,6 @@
 ---
 layout: slides
-style: slideshow.css
+style: css/slideshow.css
 reveal: https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0
 reveal-theme: /css/theme/sky.css
 ---

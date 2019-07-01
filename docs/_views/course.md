@@ -1,6 +1,6 @@
 ---
 layout: course
-style: static.css
+style: css/static.css
 ---
 
 # {{ site.data.lesson.title }}
