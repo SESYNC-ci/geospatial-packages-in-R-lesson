@@ -1,15 +1,17 @@
 #!/usr/bin/env Rscript
-require(methods)
-require(knitr)
-require(yaml)
-require(stringr)
-require(reticulate)
+library(methods)
+library(knitr)
+library(yaml)
+library(stringr)
+library(reticulate)
+
+use_python('/usr/bin/python3')
 
 config <- yaml.load_file(file.path('docs', '_data', 'lesson.yml'))
 render_markdown(fence_char = '~')
 opts_knit$set(
     root.dir = '.',
-    base.dir = file.path('docs', 'assets', 'images'))
+    base.dir = file.path('docs', 'assets'))
 opts_chunk$set(
     comment = NA,
     cache = TRUE,
@@ -33,6 +35,12 @@ opts_hooks$set(title = function(options) {
   }
   options
 })
+opts_hooks$set(fig.path = function(options) { ## FIXME file a knitr bug about this
+  if (options$engine == 'python') {
+    options$fig.path = file.path(opts_knit$get('base.dir'), options$fig.path)
+  }
+  options
+})
 knit_hooks$set(chunk = function(x, options) {
   if (!options$eval) {
     in_ial <- sprintf(in_ial, '%s', ' .no-eval%s')
@@ -52,8 +60,8 @@ knit_hooks$set(chunk = function(x, options) {
   x <- gsub('(?s)(~~~\n(?!{:).+?~~~)(\n|$)', paste0('\\1', out_ial), x, perl = TRUE)
   
   # correct figure paths and add 'captioned' class
-  x <- gsub('(!\\[.+?)\\((.*?)\\)(\n|$)', paste0(
-    '\\1({{ "\\2" | prepend: site.imageurl | relative_url }})', fig_ial), x)
+  x <- gsub('(!\\[.+)\\(.*(images/.*)\\)(\n|$)', paste0(
+    '\\1({% include asset.html path="\\2" %})', fig_ial), x)
   
   return(x)
 })
@@ -64,7 +72,7 @@ for (f in config$sorter) {
   if (!file.exists(f.Rmd)) next
   f.md <- file.path('docs', '_slides', paste0(f, '.md'))
   opts_chunk$set(
-    fig.path = file.path(f, ''),
+    fig.path = file.path('images', f, ''),
     cache.path = file.path('cache', f, ''))
   knit(input = f.Rmd, output = f.md)
   deps <- c(deps, knit_meta())

@@ -20,6 +20,9 @@ export GEM_HOME = $(HOME)/.gem
 # execute recipes with bash shell for pushd/popd
 SHELL := /bin/bash
 
+# override RStudio display setting
+unexport DISPLAY
+
 # # Read Slide/File Names
 
 # look up lesson number and slides in Jekyll _config.yml
