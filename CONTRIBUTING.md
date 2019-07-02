@@ -156,14 +156,28 @@ also possible to build and view locally. The following instructions work with a
 
 From RStudio, choose "Build All" from the "Build" tab. This builds a static
 Jekyll site if any of the content has been updated since the last site build. To
-view the built page in a browser, use the `servr` R package:
+view the built page in a browser under the default port, use the `servr` R package:
 
 ```r
-servr::httw('docs/_site', initpath = 'instructor')
+servr::httw('docs/_site')
 ```
 
-Other valid `initpath` arguments are `course`, `slides`, or nothing.
+If needed, additionally specify an `initpath` value of `'instructor'`, `'course'`, or `'slides'`.
 
+If the default port is in use, try a different port, e.g.:
+
+```r
+servr::httw('docs/_site', port = 4321)
+```
+
+For the site to load correctly, you must update the "RSTUDIO_PROXY"
+environment variable with the new port ...
+
+```r
+Sys.setenv(RSTUDIO_PROXY=rstudioapi::translateLocalUrl('http://127.0.0.1:4322'))
+```
+
+... and for the site to build again.
 
 ## Versioning and Releases
 
