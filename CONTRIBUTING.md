@@ -65,17 +65,19 @@ lesson go automatically to `docs/_archive`.
 
 A `*.Rproj` is optional but convenient for starting an R session with the
 appropriate working directory. A `handouts.Rproj` file will be included in the
-handouts associated with any lesson having a `*.Rproj` file. All handouts
-(including data and worksheets) must be listed in the `docs/_data/lesson.yml`.
+handouts associated with any lesson having a `*.Rproj` file and a .R or .Rmd
+worksheet. All handouts (including data and worksheets) must be listed in the
+`docs/_data/lesson.yml`.
 
 Please **note** the following useful details about how content is rendered:
 
 - Code chunks within a document are rendered to either look like content within
 a text editor or content typed directly into the interpreter/console. The
-console-look is the default. To achieve the editor-look, add `title = "{{
-site.handouts[i] }}"` to the code chunk options, replacing `i` with the
-(zero-indexed) position of the worksheet in the list of handouts.
-- If an expression in a code chunk generates results, it will render as multiple
+console-look is the default. To achieve the editor-look in a Rmd script, add
+`handout = i` to the code chunk options, replacing `i` with the (zero-indexed)
+position of the worksheet in the list of handouts. Alternatively, explicitly set
+the `title="{{ site.data.lesson.handouts[i] }}"` attribute to a Markdown chunk.
+- If an expression in a code chunk generates results, it may render as multiple
 code chunks with the result interspersed. Prefer to only end code chunks with
 expressions that print output or generate plots.
 - Vertical slide breaks are introduced with `===` on a line by itself.
@@ -135,7 +137,7 @@ variables following this template:
 title: ...       # the lesson's title
 handouts:        # a list of handouts, e.g. worksheets and data
  - ...
-tag: ...         # next release version
+tag: ...         # current handout release version
 lesson: ...      # the number of the lesson (for /instructor view)
 instructor: ...  # the name of the instructor (for /instructor view)
 authors:         # a list of those writing the lesson
