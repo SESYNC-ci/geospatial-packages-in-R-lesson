@@ -179,7 +179,7 @@ environment variable with the new port ...
 Sys.setenv(RSTUDIO_PROXY=rstudioapi::translateLocalUrl('http://127.0.0.1:4322'))
 ```
 
-... and for the site to build again.
+... and force the site to build again.
 
 ## Versioning and Releases
 
