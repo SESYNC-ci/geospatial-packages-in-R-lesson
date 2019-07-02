@@ -124,6 +124,6 @@ docs/_archive:
 # target to create binary for GitHub release
 release:
 	ln -s . handouts
-	if [ -f *.Rproj ]; then ln *.Rproj handouts.Rproj; fi
+	if [ -f *.Rproj ] && [ -f worksheet*.R* ]; then ln *.Rproj handouts.Rproj; fi
 	zip -FSr handouts handouts/handouts.Rproj $(addprefix handouts/,$(HANDOUTS))
 	rm -f handouts handouts.Rproj
