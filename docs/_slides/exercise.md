@@ -47,7 +47,7 @@ The function `cellStats` aggregates accross an entire raster. Use it to figure o
 > plot(counties_sesync, col = "red", add = TRUE)
 > plot(sesync, col = 'green', pch = 20, add = TRUE)
 ~~~
-{:.input title="Console"}
+{:title="Console" .no-eval .input}
 
 
 [Return](#exercise-1)
@@ -64,7 +64,7 @@ The function `cellStats` aggregates accross an entire raster. Use it to figure o
 > plot(state_md)
 > plot(bubble_md, lty = 'dotted', add = TRUE)
 ~~~
-{:.input title="Console"}
+{:title="Console" .no-eval .input}
 
 
 [Return](#exercise-2)
@@ -79,7 +79,7 @@ The function `cellStats` aggregates accross an entire raster. Use it to figure o
 ~~~r
 > cellStats(nlcd == 41, "mean")
 ~~~
-{:.input title="Console"}
+{:title="Console" .no-eval .input}
 
 
 [Return](#exercise-3)

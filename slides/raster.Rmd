@@ -14,7 +14,7 @@ The [National Land Cover Database](http://www.mrlc.gov/nlcd2011.php) is '.GRD'
 format data, a lot of it. The file provided in this lesson is cropped and
 reduced to a lower resolution in order to speed processing.
 
-```{r load_raster, message = FALSE, title = '{{ site.handouts[0] }}'}
+```{r load_raster, message = FALSE, handout = 0}
 library(raster)
 nlcd <- raster("data/nlcd_agg.grd")
 ```
@@ -49,7 +49,7 @@ plot(nlcd)
 The `crop()` function trims a raster object to a given spatial "extent" (or
 range of x and y values).
 
-```{r crop_raster, fig.keep="last", title="{{ site.handouts[0] }}"}
+```{r crop_raster, fig.keep="last", handout = 0}
 extent <- matrix(st_bbox(huc_md), nrow=2)
 nlcd <- crop(nlcd, extent)
 plot(nlcd)
@@ -91,7 +91,7 @@ The `Land.Cover.Class` vector gives string names for the land cover type
 corresponding to the matrix values. Note that we need to add 1 to the raster
 value, since these go from 0 to 255, whereas the indexing in R begins at 1.
 
-```{r lc_types, title="{{ site.handouts[0] }}"}
+```{r lc_types, handout = 0}
 nlcd_attr <- nlcd@data@attributes 
 lc_types <- nlcd_attr[[1]]$Land.Cover.Class
 ```
@@ -118,7 +118,7 @@ pixel-wise on multiple rasters.
 Logical operations work too: `r1 > 5` returns a raster with pixel values `TRUE`
 or `FALSE` and is often used in combination with the `mask()` function.
 
-```{r mask, fig.keep="last", title="{{ site.handouts[0] }}"}
+```{r mask, fig.keep="last", handout = 0}
 pasture <- mask(nlcd, nlcd == 81,
     maskvalue = FALSE)
 plot(pasture)
@@ -133,7 +133,7 @@ is false (`maskvalue = FALSE`).
 To further reduce the resolution of the `nlcd` raster, the `aggregate()`
 function combines values in a block of a given size using a given function.
 
-```{r agg_raster, fig.keep="last", title="{{ site.handouts[0] }}"}
+```{r agg_raster, fig.keep="last", handout = 0}
 nlcd_agg <- aggregate(nlcd,
     fact = 25, fun = modal)
 nlcd_agg@legend <- nlcd@legend

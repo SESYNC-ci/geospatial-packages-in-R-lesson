@@ -1,3 +1,6 @@
+---
+---
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -8,9 +11,9 @@
 <meta name="description" content="Manipulate geospatial data with open source tools.">
 <link rel="canonical"
   href="http://cyberhelp.sesync.org/geospatial-packages-in-R-lesson/course/archive.html">
-<link href="https://cdn.rawgit.com/sesync-ci/lesson-style/v2.0/docs/css/default.css" rel="stylesheet">
-<link href="https://cdn.rawgit.com/sesync-ci/lesson-style/v2.0/docs/css/syntax.css" rel="stylesheet">
-<link href="https://cdn.rawgit.com/sesync-ci/lesson-style/v2.0/docs/css/static.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/sesync-ci/lesson-style@v2.0/docs/css/default.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/sesync-ci/lesson-style@v2.0/docs/css/syntax.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/sesync-ci/lesson-style@v2.0/docs/css/static.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
@@ -273,7 +276,7 @@ serve as a layer underneath the new one, so long as the CRS lines up.</p>
 </span><span class="n">plot</span><span class="p">(</span><span class="n">sesync</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"green"</span><span class="p">,</span><span class="w">
      </span><span class="n">pch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
-<p class="captioned"><img src="/geospatial-packages-in-R-lesson/images/vector/plot_counties-1.png" alt=" " /></p>
+<p class="captioned"><img src="https://cdn.jsdelivr.net/gh/sesync-ci/geospatial-packages-in-R-lesson@v0.4/docs/images/vector/plot_counties-1.png" alt=" " /></p>
 
 <p class="notes">But note that the <code class="highlighter-rouge">plot</code> function won’t prevent you from layering up geometries
 with different coordinate systems: you must safegaurd your own plots from this
@@ -404,7 +407,7 @@ every vertex of every polygon in the <code class="highlighter-rouge">sfc</code>.
 </span><span class="n">plot</span><span class="p">(</span><span class="n">sesync</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'green'</span><span class="p">,</span><span class="w">
      </span><span class="n">pch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
-<p class="captioned"><img src="/geospatial-packages-in-R-lesson/images/vector/plot_over-1.png" alt=" " /></p>
+<p class="captioned"><img src="https://cdn.jsdelivr.net/gh/sesync-ci/geospatial-packages-in-R-lesson@v0.4/docs/images/vector/plot_over-1.png" alt=" " /></p>
 
 <h3 id="geometric-operations">Geometric Operations</h3>
 
@@ -423,7 +426,7 @@ combine the area covered by all the multipolygons in <code class="highlighter-ro
 <div class="language-r text-document highlighter-rouge" title="worksheet-5.R"><div class="highlight"><pre class="highlight"><code><span class="n">state_md</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">st_union</span><span class="p">(</span><span class="n">counties_md</span><span class="p">)</span><span class="w">
 </span><span class="n">plot</span><span class="p">(</span><span class="n">state_md</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
-<p class="captioned"><img src="/geospatial-packages-in-R-lesson/images/vector/st_union-1.png" alt=" " /></p>
+<p class="captioned"><img src="https://cdn.jsdelivr.net/gh/sesync-ci/geospatial-packages-in-R-lesson@v0.4/docs/images/vector/st_union-1.png" alt=" " /></p>
 
 <p class="notes">To perform a union of all sub-geometries in a single <code class="highlighter-rouge">sfc</code>, we use the
 <code class="highlighter-rouge">st_union()</code> function with a single argument. The output, <code class="highlighter-rouge">state_md</code>, is a new
@@ -446,7 +449,7 @@ throughout all geometries
 </span><span class="n">plot</span><span class="p">(</span><span class="n">huc_md</span><span class="p">,</span><span class="w"> </span><span class="n">border</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'blue'</span><span class="p">,</span><span class="w">
      </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
-<p class="captioned"><img src="/geospatial-packages-in-R-lesson/images/vector/st_intersect-1.png" alt=" " /></p>
+<p class="captioned"><img src="https://cdn.jsdelivr.net/gh/sesync-ci/geospatial-packages-in-R-lesson@v0.4/docs/images/vector/st_intersect-1.png" alt=" " /></p>
 
 <p class="notes">The <code class="highlighter-rouge">st_intersection()</code> function intersects its first argument with the second.
 The individual hydrological units are preserved but any part of them (or any
@@ -520,7 +523,7 @@ pre-defined color scheme.</p>
 
 <div class="language-r input highlighter-rouge" title="Console"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span><span class="w"> </span><span class="n">plot</span><span class="p">(</span><span class="n">nlcd</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
-<p class="captioned"><img src="/geospatial-packages-in-R-lesson/images/raster/show_raster-1.png" alt=" " /></p>
+<p class="captioned"><img src="https://cdn.jsdelivr.net/gh/sesync-ci/geospatial-packages-in-R-lesson@v0.4/docs/images/raster/show_raster-1.png" alt=" " /></p>
 
 <p>The <code class="highlighter-rouge">crop()</code> function trims a raster object to a given spatial “extent” (or
 range of x and y values).</p>
@@ -530,7 +533,7 @@ range of x and y values).</p>
 </span><span class="n">plot</span><span class="p">(</span><span class="n">nlcd</span><span class="p">)</span><span class="w">
 </span><span class="n">plot</span><span class="p">(</span><span class="n">huc_md</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
-<p class="captioned"><img src="/geospatial-packages-in-R-lesson/images/raster/crop_raster-1.png" alt=" " /></p>
+<p class="captioned"><img src="https://cdn.jsdelivr.net/gh/sesync-ci/geospatial-packages-in-R-lesson@v0.4/docs/images/raster/crop_raster-1.png" alt=" " /></p>
 
 <p class="notes">The extent can be extracted from <a href="" class="rlib">sp</a> package objects with <code class="highlighter-rouge">extent</code>,
 but must be created “from scratch” for an <code class="highlighter-rouge">sfc</code>. Here, we crop the <code class="highlighter-rouge">nlcd</code> raster
@@ -607,7 +610,7 @@ or <code class="highlighter-rouge">FALSE</code> and is often used in combination
     </span><span class="n">maskvalue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
 </span><span class="n">plot</span><span class="p">(</span><span class="n">pasture</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
-<p class="captioned"><img src="/geospatial-packages-in-R-lesson/images/raster/mask-1.png" alt=" " /></p>
+<p class="captioned"><img src="https://cdn.jsdelivr.net/gh/sesync-ci/geospatial-packages-in-R-lesson@v0.4/docs/images/raster/mask-1.png" alt=" " /></p>
 
 <p class="notes">A pasture raster results from unsetting pixel values where the mask (<code class="highlighter-rouge">nlcd == 81</code>)
 is false (<code class="highlighter-rouge">maskvalue = FALSE</code>).</p>
@@ -620,7 +623,7 @@ function combines values in a block of a given size using a given function.</p>
 </span><span class="n">nlcd_agg</span><span class="o">@</span><span class="n">legend</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">nlcd</span><span class="o">@</span><span class="n">legend</span><span class="w">
 </span><span class="n">plot</span><span class="p">(</span><span class="n">nlcd_agg</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
-<p class="captioned"><img src="/geospatial-packages-in-R-lesson/images/raster/agg_raster-1.png" alt=" " /></p>
+<p class="captioned"><img src="https://cdn.jsdelivr.net/gh/sesync-ci/geospatial-packages-in-R-lesson@v0.4/docs/images/raster/agg_raster-1.png" alt=" " /></p>
 
 <p class="notes">Here, <code class="highlighter-rouge">fact = 25</code> means that we are aggregating blocks 25 x 25 pixels and <code class="highlighter-rouge">fun =
 modal</code> indicates that the aggregate value is the mode of the original pixels
@@ -657,7 +660,7 @@ on a vector spatial object.</p>
 </span><span class="n">plot</span><span class="p">(</span><span class="n">sesync</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'green'</span><span class="p">,</span><span class="w">
      </span><span class="n">pch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">16</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
-<p class="captioned"><img src="/geospatial-packages-in-R-lesson/images/extract/extract_pt-1.png" alt=" " /></p>
+<p class="captioned"><img src="https://cdn.jsdelivr.net/gh/sesync-ci/geospatial-packages-in-R-lesson@v0.4/docs/images/extract/extract_pt-1.png" alt=" " /></p>
 
 <p>When extracting by point locations (i.e. a <em>SpatialPoints</em> object), the result
 is a vector of values corresponding to each point.</p>

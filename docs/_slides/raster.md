@@ -20,7 +20,7 @@ reduced to a lower resolution in order to speed processing.
 library(raster)
 nlcd <- raster("data/nlcd_agg.grd")
 ~~~
-{:.text-document title="{{ site.handouts[0] }}"}
+{:title="{{ site.data.lesson.handouts[0] }}" .text-document}
 
 
 By default, raster data is *not* loaded into working memory, as you can confirm
@@ -40,22 +40,22 @@ in the raster file.
 ~~~r
 > nlcd
 ~~~
-{:.input title="Console"}
+{:title="Console" .input}
 
 
 ~~~
-class       : RasterLayer 
-dimensions  : 2514, 3004, 7552056  (nrow, ncol, ncell)
-resolution  : 150, 150  (x, y)
-extent      : 1394535, 1845135, 1724415, 2101515  (xmin, xmax, ymin, ymax)
-coord. ref. : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
-data source : /nfs/public-data/training/nlcd_agg.grd 
-names       : nlcd_2011_landcover_2011_edition_2014_03_31 
-values      : 0, 95  (min, max)
-attributes  :
+class      : RasterLayer 
+dimensions : 2514, 3004, 7552056  (nrow, ncol, ncell)
+resolution : 150, 150  (x, y)
+extent     : 1394535, 1845135, 1724415, 2101515  (xmin, xmax, ymin, ymax)
+crs        : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+source     : /nfs/public-data/training/nlcd_agg.grd 
+names      : nlcd_2011_landcover_2011_edition_2014_03_31 
+values     : 0, 95  (min, max)
+attributes :
         ID      COUNT Red Green Blue Land.Cover.Class Opacity
  from:   0 7854240512   0     0    0     Unclassified       1
- to  : 255          0   0     0    0                        0
+  to : 255          0   0     0    0                        0
 ~~~
 {:.output}
 
@@ -70,8 +70,8 @@ pre-defined color scheme.
 ~~~r
 > plot(nlcd)
 ~~~
-{:.input title="Console"}
-![ ]({{ site.baseurl }}/images/raster/show_raster-1.png)
+{:title="Console" .input}
+![ ]({% include asset.html path="images/raster/show_raster-1.png" %})
 {:.captioned}
 
 ===
@@ -87,8 +87,8 @@ nlcd <- crop(nlcd, extent)
 plot(nlcd)
 plot(huc_md, col = NA, add = TRUE)
 ~~~
-{:.text-document title="{{ site.handouts[0] }}"}
-![ ]({{ site.baseurl }}/images/raster/crop_raster-1.png)
+{:title="{{ site.data.lesson.handouts[0] }}" .text-document}
+![ ]({% include asset.html path="images/raster/crop_raster-1.png" %})
 {:.captioned}
 
 The extent can be extracted from [sp](){:.rlib} package objects with `extent`,
@@ -111,12 +111,11 @@ the _bottom_-left corner pixel:
 ~~~r
 > nlcd[1, 1]
 ~~~
-{:.input title="Console"}
+{:title="Console" .input}
 
 
 ~~~
-   
-41 
+[1] 41
 ~~~
 {:.output}
 
@@ -132,7 +131,7 @@ attributes:
 ~~~r
 > head(nlcd@data@attributes[[1]])
 ~~~
-{:.input title="Console"}
+{:title="Console" .input}
 
 
 ~~~
@@ -159,14 +158,14 @@ value, since these go from 0 to 255, whereas the indexing in R begins at 1.
 nlcd_attr <- nlcd@data@attributes 
 lc_types <- nlcd_attr[[1]]$Land.Cover.Class
 ~~~
-{:.text-document title="{{ site.handouts[0] }}"}
+{:title="{{ site.data.lesson.handouts[0] }}" .text-document}
 
 
 
 ~~~r
 > levels(lc_types)
 ~~~
-{:.input title="Console"}
+{:title="Console" .input}
 
 
 ~~~
@@ -209,8 +208,8 @@ pasture <- mask(nlcd, nlcd == 81,
     maskvalue = FALSE)
 plot(pasture)
 ~~~
-{:.text-document title="{{ site.handouts[0] }}"}
-![ ]({{ site.baseurl }}/images/raster/mask-1.png)
+{:title="{{ site.data.lesson.handouts[0] }}" .text-document}
+![ ]({% include asset.html path="images/raster/mask-1.png" %})
 {:.captioned}
 
 A pasture raster results from unsetting pixel values where the mask (`nlcd == 81`)
@@ -230,8 +229,8 @@ nlcd_agg <- aggregate(nlcd,
 nlcd_agg@legend <- nlcd@legend
 plot(nlcd_agg)
 ~~~
-{:.text-document title="{{ site.handouts[0] }}"}
-![ ]({{ site.baseurl }}/images/raster/agg_raster-1.png)
+{:title="{{ site.data.lesson.handouts[0] }}" .text-document}
+![ ]({% include asset.html path="images/raster/agg_raster-1.png" %})
 {:.captioned}
 
 Here, `fact = 25` means that we are aggregating blocks 25 x 25 pixels and `fun =

@@ -14,7 +14,7 @@ sesync <- as(sesync, "Spatial")
 huc_md <- as(huc_md, "Spatial")
 counties_md <- as(counties_md, "Spatial")
 ~~~
-{:.text-document title="{{ site.handouts[0] }}"}
+{:title="{{ site.data.lesson.handouts[0] }}" .text-document}
 
 
 The creation of geospatial tools in R has been a community effort, and not
@@ -39,8 +39,8 @@ plot(nlcd)
 plot(sesync, col = 'green',
      pch = 16, cex = 2, add = TRUE)
 ~~~
-{:.text-document title="{{ site.handouts[0] }}"}
-![ ]({{ site.baseurl }}/images/extract/extract_pt-1.png)
+{:title="{{ site.data.lesson.handouts[0] }}" .text-document}
+![ ]({% include asset.html path="images/extract/extract_pt-1.png" %})
 {:.captioned}
 
 ===
@@ -53,7 +53,7 @@ is a vector of values corresponding to each point.
 ~~~r
 sesync_lc <- extract(nlcd, sesync)
 ~~~
-{:.text-document title="{{ site.handouts[0] }}"}
+{:title="{{ site.data.lesson.handouts[0] }}" .text-document}
 
 
 
@@ -61,7 +61,7 @@ sesync_lc <- extract(nlcd, sesync)
 ~~~r
 > lc_types[sesync_lc + 1]
 ~~~
-{:.input title="Console"}
+{:title="Console" .input}
 
 
 ~~~
@@ -82,7 +82,7 @@ pixels falling within that polygon.
 county_nlcd <- extract(nlcd_agg,
     counties_md[1,])
 ~~~
-{:.text-document title="{{ site.handouts[0] }}"}
+{:title="{{ site.data.lesson.handouts[0] }}" .text-document}
 
 
 
@@ -90,7 +90,7 @@ county_nlcd <- extract(nlcd_agg,
 ~~~r
 > table(county_nlcd)
 ~~~
-{:.input title="Console"}
+{:title="Console" .input}
 
 
 ~~~
@@ -115,7 +115,7 @@ modal_lc <- extract(nlcd_agg,
     huc_md, fun = modal)
 huc_md$modal_lc <- lc_types[modal_lc + 1]
 ~~~
-{:.text-document title="{{ site.handouts[0] }}"}
+{:title="{{ site.data.lesson.handouts[0] }}" .text-document}
 
 
 
@@ -123,7 +123,7 @@ huc_md$modal_lc <- lc_types[modal_lc + 1]
 ~~~r
 > head(huc_md)
 ~~~
-{:.input title="Console"}
+{:title="Console" .input}
 
 
 ~~~
@@ -137,7 +137,7 @@ huc_md$modal_lc <- lc_types[modal_lc + 1]
                  HUC_NAME REG  SUB    ACC      CAT         modal_lc
 903     Lower Susquehanna  02 0205 020503 02050306 Deciduous Forest
 915  Brandywine-Christina  02 0204 020402 02040205      Hay/Pasture
-937 Conococheague-Opequon  02 0207 020700 02070004      Hay/Pasture
+937 Conococheague-Opequon  02 0207 020700 02070004 Deciduous Forest
 956     Chester-Sassafras  02 0206 020600 02060002 Cultivated Crops
 966          Youghiogheny  05 0502 050200 05020006 Deciduous Forest
 975              Monocacy  02 0207 020700 02070009 Cultivated Crops

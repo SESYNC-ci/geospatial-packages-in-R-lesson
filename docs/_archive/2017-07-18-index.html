@@ -1,3 +1,6 @@
+---
+---
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -7,11 +10,11 @@
 <title>Geospatial Packages in R</title>
 <meta name="description" content="Use R to read, query and compare spatial data">
 <link rel="canonical" href="http://sesync-ci.github.io/geospatial-packages-in-R-lesson/course/archive.html">
-<link rel="stylesheet" href="/geospatial-packages-in-R-lesson/css/default.css">
-<link rel="stylesheet" href="/geospatial-packages-in-R-lesson/css/static.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sesync-ci/lesson-style@v3.0/docs/assets/css/default.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sesync-ci/lesson-style@v3.0/docs/assets/css/static.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript"></script>
 
-	  <link rel="stylesheet" href="https://cdn.rawgit.com/sesync-ci/lesson-style/v1.2/docs/css/static.css">
+	  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sesync-ci/lesson-style@v1.2/docs/css/static.css">
   </head>
   <body>
 	  <div class="page-content">
@@ -257,7 +260,7 @@ First 5 geometries:
 </span></code></pre>
 </div>
 
-<p class="captioned"><img src="/geospatial-packages-in-R-lesson/images/plot_counties-1.png" alt="plot of chunk plot_counties" /></p>
+<p class="captioned"><img src="https://cdn.jsdelivr.net/gh/sesync-ci/geospatial-packages-in-R-lesson@v0.4/docs/images/plot_counties-1.png" alt="plot of chunk plot_counties" /></p>
 
 <h2 id="create-geometry">Create geometry</h2>
 
@@ -277,7 +280,7 @@ First 5 geometries:
 </span></code></pre>
 </div>
 
-<p class="captioned"><img src="/geospatial-packages-in-R-lesson/images/plot_point-1.png" alt="plot of chunk plot_point" /></p>
+<p class="captioned"><img src="https://cdn.jsdelivr.net/gh/sesync-ci/geospatial-packages-in-R-lesson@v0.4/docs/images/plot_point-1.png" alt="plot of chunk plot_point" /></p>
 
 <p class="notes">The arguments <code class="highlighter-rouge">col</code> and <code class="highlighter-rouge">pch</code> are graphical parameters used in base R, see <code class="highlighter-rouge">?par</code>.</p>
 
@@ -381,7 +384,7 @@ First 5 geometries:
 </span></code></pre>
 </div>
 
-<p class="captioned"><img src="/geospatial-packages-in-R-lesson/images/plot_over-1.png" alt="plot of chunk plot_over" /></p>
+<p class="captioned"><img src="https://cdn.jsdelivr.net/gh/sesync-ci/geospatial-packages-in-R-lesson@v0.4/docs/images/plot_over-1.png" alt="plot of chunk plot_over" /></p>
 
 <h2 id="geometric-operations-on-vector-layers">Geometric operations on vector layers</h2>
 
@@ -399,7 +402,7 @@ First 5 geometries:
 </span></code></pre>
 </div>
 
-<p class="captioned"><img src="/geospatial-packages-in-R-lesson/images/st_union-1.png" alt="plot of chunk st_union" /></p>
+<p class="captioned"><img src="https://cdn.jsdelivr.net/gh/sesync-ci/geospatial-packages-in-R-lesson@v0.4/docs/images/st_union-1.png" alt="plot of chunk st_union" /></p>
 
 <p>The output, <code class="highlighter-rouge">state_md</code>, is a new <code class="highlighter-rouge">sfc</code> that is no longer a column of a data frame. Tabular data can’t safely survive a spatial union and is discarded.</p>
 
@@ -410,7 +413,7 @@ First 5 geometries:
 </span></code></pre>
 </div>
 
-<p class="captioned"><img src="/geospatial-packages-in-R-lesson/images/st_ntersect-1.png" alt="plot of chunk st_ntersect" /></p>
+<p class="captioned"><img src="https://cdn.jsdelivr.net/gh/sesync-ci/geospatial-packages-in-R-lesson@v0.4/docs/images/st_ntersect-1.png" alt="plot of chunk st_ntersect" /></p>
 
 <p>The individual hydrological units are preserved but any part of them (or any whole polygon) lying outside the <code class="highlighter-rouge">state_md</code> polygon is cut from the output. The attribute data remains in the corresponding records of the <code class="highlighter-rouge">data.frame</code>, but (as warned) has not been updated. For example, the “AREA” attribute of any clipped HUC does not reflect the new polygon.</p>
 
@@ -475,7 +478,7 @@ attributes  :
 </span></code></pre>
 </div>
 
-<p><img src="/geospatial-packages-in-R-lesson/images/show_raster-1.png" alt="plot of chunk show_raster" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/sesync-ci/geospatial-packages-in-R-lesson@v0.4/docs/images/show_raster-1.png" alt="plot of chunk show_raster" /></p>
 
 <p>The <code class="highlighter-rouge">crop()</code> function trims a raster object to a given spatial “extent” (or range of x and y values). The extent can be extracted from <a href="" class="rlib">sp</a> package objects with <code class="highlighter-rouge">extent</code>, but must be created “from scratch” for an <code class="highlighter-rouge">sfc</code>. Here, we crop the <code class="highlighter-rouge">nlcd</code> raster to the extent of the <code class="highlighter-rouge">huc_md</code> polygon, then display both layers on the same map.</p>
 
@@ -486,7 +489,7 @@ attributes  :
 </span></code></pre>
 </div>
 
-<p class="captioned"><img src="/geospatial-packages-in-R-lesson/images/crop_raster-1.png" alt="plot of chunk crop_raster" /></p>
+<p class="captioned"><img src="https://cdn.jsdelivr.net/gh/sesync-ci/geospatial-packages-in-R-lesson@v0.4/docs/images/crop_raster-1.png" alt="plot of chunk crop_raster" /></p>
 
 <p class="notes">Note that the transformed raster is now loaded in R memory, as indicated by the size of <code class="highlighter-rouge">nlcd</code>. We could have also saved the output to disk by specifying an optional <code class="highlighter-rouge">filename</code> argument to <code class="highlighter-rouge">crop</code>; the same is true for othe raster transformation functions.</p>
 
@@ -547,7 +550,7 @@ attributes  :
 </span></code></pre>
 </div>
 
-<p class="captioned"><img src="/geospatial-packages-in-R-lesson/images/mask-1.png" alt="plot of chunk mask" /></p>
+<p class="captioned"><img src="https://cdn.jsdelivr.net/gh/sesync-ci/geospatial-packages-in-R-lesson@v0.4/docs/images/mask-1.png" alt="plot of chunk mask" /></p>
 
 <p>To further reduce the resolution of the <code class="highlighter-rouge">nlcd</code> raster, the <code class="highlighter-rouge">aggregate()</code> function combines values in a block of a given size using a given function.</p>
 
@@ -557,7 +560,7 @@ attributes  :
 </span></code></pre>
 </div>
 
-<p class="captioned"><img src="/geospatial-packages-in-R-lesson/images/agg_raster-1.png" alt="plot of chunk agg_raster" /></p>
+<p class="captioned"><img src="https://cdn.jsdelivr.net/gh/sesync-ci/geospatial-packages-in-R-lesson@v0.4/docs/images/agg_raster-1.png" alt="plot of chunk agg_raster" /></p>
 
 <p class="notes">Here, <code class="highlighter-rouge">fact = 25</code> means that we are aggregating blocks 25 x 25 pixels and <code class="highlighter-rouge">fun = modal</code> indicates that the aggregate value is the mode of the original pixels (averaging would not work since land cover is a categorical variable).</p>
 
@@ -594,7 +597,7 @@ attributes  :
 </span></code></pre>
 </div>
 
-<p class="captioned"><img src="/geospatial-packages-in-R-lesson/images/extract_pt-1.png" alt="plot of chunk extract_pt" /></p>
+<p class="captioned"><img src="https://cdn.jsdelivr.net/gh/sesync-ci/geospatial-packages-in-R-lesson@v0.4/docs/images/extract_pt-1.png" alt="plot of chunk extract_pt" /></p>
 
 <p>When extracting by point locations (i.e. a <em>SpatialPoints</em> object), the result is a vector of values corresponding to each point.</p>
 
