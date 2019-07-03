@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-	  <link rel="stylesheet" href="{{ site.reveal }}/css/reveal.css">
-	  <link rel="stylesheet" href="{{ site.reveal }}{{ page.reveal-theme }}" id="theme">
-	  <!--[if lt IE 9]>
-      <script src="{{ site.reveal }}/lib/js/html5shiv.js"></script>
-	  <![endif]-->
-	  {% include head.html stylesource=site.baseurl %}
+    <link rel="stylesheet" href="{{ page.reveal }}/css/reveal.css">
+    <link rel="stylesheet" href="{{ page.reveal }}{{ page.reveal-theme }}" id="theme">
+    <!--[if lt IE 9]>
+      <script src="{{ page.reveal }}/lib/js/html5shiv.js"></script>
+    <![endif]-->
+    {% include head.html %}
   </head>
   <body>
-	  <div class="reveal">
-	    <div class="slides">
+    <div class="reveal">
+      <div class="slides">
         {% include subst_content.html %}
-	    </div>
-	  </div>
+      </div>
+    </div>
     <script>
      var collection = document.getElementsByClassName("notes");
      for (var i = 0; i < collection.length; i++) {
@@ -24,34 +24,34 @@
          p.replaceWith(aside);         
          };     
     </script>
-	  <script src="{{ site.reveal }}/lib/js/head.min.js"></script>
-	  <script src="{{ site.reveal }}/js/reveal.js"></script>
-	  <script>
-	   Reveal.initialize({
-	       // Size
-	       width: 810,
-	       height: 680,
-	       margin: 0.05,
-	       // Controls
-	       controls: false,
-	       // Transition
- 	       transition: "none",
-               // Other
-               math: {
-                   mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js',
-                   config: 'TeX-AMS_SVG'
-               },
-	       // Plugins
-	       dependencies: [
-		         // Zoom in and out with Alt+click
-		         { src: "{{ site.reveal }}/plugin/zoom-js/zoom.js", async: true },
-		         // Speaker notes
-		         // { src: "{{ site.reveal }}/plugin/notes/notes.js", async: true },
-		         // MathJax
-		         { src: "{{ site.reveal }}/plugin/math/math.js", async: true },
-	       ],
-	   });
-	  </script>
-	{% include body.html %}
+    <script src="{{ page.reveal }}/lib/js/head.min.js"></script>
+    <script src="{{ page.reveal }}/js/reveal.js"></script>
+    <script>
+      Reveal.initialize({
+        // Size
+        width: 810,
+        height: 680,
+        margin: 0.05,
+        // Controls
+        controls: false,
+        // Transition
+        transition: "none",
+        // Other
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js',
+          config: 'TeX-AMS_SVG'
+        },
+        // Plugins
+        dependencies: [
+          // Zoom in and out with Alt+click
+          { src: "{{ page.reveal }}/plugin/zoom-js/zoom.js", async: true },
+          // Speaker notes
+          // { src: "{{ page.reveal }}/plugin/notes/notes.js", async: true },
+          // MathJax
+          { src: "{{ page.reveal }}/plugin/math/math.js", async: true },
+        ],
+      });
+    </script>
+    {% include body.html %}
   </body>
 </html>

@@ -1,42 +1,17 @@
-# Site
+# Build Configuration
 
-title: Vector and Raster Geospatial Data
-handouts:
- - worksheet.R
- - data/cb_2016_us_county_5m
- - data/huc250k
- - data/nlcd_agg.grd
- - data/nlcd_agg.gri
- - data/README.md
-tag: v0.4
-lesson: 5
-instructor: Benoît Parmentier
-authors:
-  - Philippe Marchand
-  - Ian Carroll
-
-# Slides
-
-slide_sorter:
-  - intro
-  - vector
-  - raster
-  - extract
-  - refs
-  - exercise
-
-#####################################
-# Only modify content above or risk #
-# merge conflicts with upstream.    #
-#####################################
-
-# Style
-
-styleurl: https://cdn.rawgit.com/sesync-ci/lesson-style/v2.0/docs
-reveal: https://cdn.rawgit.com/hakimel/reveal.js/3.5.0
-
-# Jekyll
-
-markdown: kramdown
+markdown: kramdown 
 collections:
-  - slides
+  slides:
+    output: false
+  views:
+    output: true
+    permalink: /:name/
+  archive:
+    output: true
+    permalink: /:year/:month/:day/:title:output_ext
+
+# Asset Location
+
+imageurl: /assets/images/
+styleurl: /assets/css/

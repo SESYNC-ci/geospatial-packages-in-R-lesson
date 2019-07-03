@@ -1,0 +1,11 @@
+{%- if site.cdn -%}
+  {%- assign path = include.path | split: "/" -%}
+  {%- case path[0] -%}
+    {%- when "images" -%}
+      {{ site.cdn }}/{{ site.github.owner_name }}/{{ site.github.repository_name }}@{{ site.data.lesson.tag }}/docs/assets/{{ include.path }}
+    {%- else -%}
+      {{ site.cdn }}/{{ site.github.owner_name }}/lesson-style@3.0/docs/assets/{{ include.path }}
+  {%- endcase -%}
+{%- else -%}
+  {{ include.path | prepend: "assets/" | relative_url }}
+{%- endif -%}
