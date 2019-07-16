@@ -169,7 +169,7 @@ If needed, additionally specify an `initpath` value of `'instructor'`, `'course'
 If the default port is in use, try a different port, e.g.:
 
 ```r
-servr::httw('docs/_site', port = 4321)
+servr::httw('docs/_site', port = 4322)
 ```
 
 For the site to load correctly, you must update the "RSTUDIO_PROXY"
