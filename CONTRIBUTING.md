@@ -173,13 +173,11 @@ servr::httw('docs/_site', port = 4322)
 ```
 
 For the site to load correctly, you must update the "RSTUDIO_PROXY"
-environment variable with the new port ...
+environment variable using the next line of code and then force the site to build again.
 
 ```r
 Sys.setenv(RSTUDIO_PROXY=rstudioapi::translateLocalUrl('http://127.0.0.1:4322'))
 ```
-
-... and force the site to build again.
 
 ## Versioning and Releases
 
