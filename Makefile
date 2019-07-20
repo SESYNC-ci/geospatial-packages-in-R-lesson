@@ -23,6 +23,9 @@ SHELL := /bin/bash
 # override RStudio display setting
 unexport DISPLAY
 
+# specify the owner of the upstream and current repo
+OWNER := SESYNC-ci
+
 # # Read Slide/File Names
 
 # look up lesson number and slides in Jekyll _config.yml
@@ -42,9 +45,6 @@ HANDOUTS := $(shell ruby -e "require 'yaml';puts YAML.load_file('docs/_data/less
 SITE := $(shell find docs/ ! -path "docs/_site*")
 
 # # Merge with Upstream Repo "lesson-style"
-
-# specify the owner of the upstream and current repo
-OWNER := SESYNC-ci
 
 # target to merge changes
 upstream: | .git/refs/remotes/upstream
@@ -123,7 +123,11 @@ docs/_archive:
 
 # target to create binary for GitHub release
 release:
-	ln -s . handouts
-	if [ -f *.Rproj ]; then ln *.Rproj handouts.Rproj; fi
-	zip -FSr handouts handouts/handouts.Rproj $(addprefix handouts/,$(HANDOUTS))
-	rm -f handouts handouts.Rproj
+	mkdir handouts
+	re=".R(|md)( |$$)"; \
+	if [ -f *.Rproj ] && [[ "$(filter worksheet%,$(HANDOUTS))" =~ $$re ]]; \
+	    then ln *.Rproj handouts/handouts.Rproj; \
+	fi
+	ln -s $(addprefix ../,$(HANDOUTS)) handouts
+	zip -FSr handouts.zip handouts
+	rm -rf handouts

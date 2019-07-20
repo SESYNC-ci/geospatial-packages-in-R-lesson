@@ -81,7 +81,7 @@ deps <- unique(deps)
 deps <- lapply(deps, FUN = function(d) {
   # create path for htmlwidgets
   htmlwidgets <- str_extract(d$src$file, 'htmlwidgets.*')
-  htmlwidgets_dest <- file.path('docs', dirname(htmlwidgets))
+  htmlwidgets_dest <- file.path('docs', 'assets', dirname(htmlwidgets))
   dir.create(htmlwidgets, showWarnings = FALSE, recursive = TRUE)
   system2('rsync', c('-a', '--update', d$src$file, htmlwidgets_dest))
   d$src <- htmlwidgets
