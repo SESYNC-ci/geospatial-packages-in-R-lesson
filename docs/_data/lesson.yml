@@ -5,10 +5,9 @@ handouts:
  - data/huc250k
  - data/nlcd_agg.grd
  - data/nlcd_agg.gri
- - data/README.md
-tag: v0.4
-lesson: 5
-instructor: Benoît Parmentier
+tag: v0.5
+lesson: 9
+instructor: Benoit Parmentier
 authors:
   - Philippe Marchand
   - Ian Carroll
@@ -17,5 +16,6 @@ sorter:
   - vector
   - raster
   - extract
+  - leaflet
   - refs
   - exercise

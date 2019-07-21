@@ -1,18 +1,18 @@
 ---
-excerpt: Crossing Types
+excerpt: Mixing Data Types
 ---
 
 ## Crossing Rasters with Vectors: Prelude
 
-Presently, to mix raster and vectors, we must convert needed `sf` objects
-to their counterpart `Spatial*` objects:
+Presently, to mix raster and vectors, we must convert `sf` objects to their
+counterpart `Spatial*` objects:
 
 
 
 ~~~r
-sesync <- as(sesync, "Spatial")
-huc_md <- as(huc_md, "Spatial")
-counties_md <- as(counties_md, "Spatial")
+sesync_sp <- as(sesync, "Spatial")
+huc_md_sp <- as(huc_md, "Spatial")
+counties_md_sp <- as(counties_md, "Spatial")
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
 
@@ -21,8 +21,9 @@ The creation of geospatial tools in R has been a community effort, and not
 necessarilly a well-organized one. One current stumbling block is that the
 [raster](){:.rlib} package, which is tightly integrated with the [sp](){:.rlib}
 package, has not caught up to the [sf](){:.rlib} package. The
-still-under-development [stars](https://r-spatial.github.io/stars/) package aims
-to remedy this problem and others.
+[stars](https://r-spatial.github.io/stars/) package aims to remedy this problem,
+and others, but has not yet released a "version 1.0" (it's at "0.3" as of this
+writing).
 {:.notes}
 
 ===
@@ -36,11 +37,11 @@ on a vector spatial object.
 
 ~~~r
 plot(nlcd)
-plot(sesync, col = 'green',
+plot(sesync_sp, col = 'green',
      pch = 16, cex = 2, add = TRUE)
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
-![ ]({% include asset.html path="images/extract/extract_pt-1.png" %})
+![ ]({% include asset.html path="images/extract/unnamed-chunk-2-1.png" %})
 {:.captioned}
 
 ===
@@ -51,7 +52,7 @@ is a vector of values corresponding to each point.
 
 
 ~~~r
-sesync_lc <- extract(nlcd, sesync)
+sesync_lc <- extract(nlcd, sesync_sp)
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
 
@@ -80,7 +81,7 @@ pixels falling within that polygon.
 
 ~~~r
 county_nlcd <- extract(nlcd_agg,
-    counties_md[1,])
+    counties_md_sp[1,])
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
 
@@ -106,14 +107,14 @@ county_nlcd
 To get a summary of raster values for **each** polygon in a `SpatialPolygons`
 object, add an aggregation function to `extract` via the `fun` argument. For
 example, `fun = modal` gives the most common land cover type for each polygon in
-`huc_md`.
+`huc_md_sp`.
 
 
 
 ~~~r
 modal_lc <- extract(nlcd_agg,
-    huc_md, fun = modal)
-huc_md$modal_lc <- lc_types[modal_lc + 1]
+    huc_md_sp, fun = modal)
+huc_md_sp$modal_lc <- lc_types[modal_lc + 1]
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
 
@@ -121,7 +122,7 @@ huc_md$modal_lc <- lc_types[modal_lc + 1]
 
 
 ~~~r
-> head(huc_md)
+> head(huc_md_sp)
 ~~~
 {:title="Console" .input}
 
@@ -137,7 +138,7 @@ huc_md$modal_lc <- lc_types[modal_lc + 1]
                  HUC_NAME REG  SUB    ACC      CAT         modal_lc
 903     Lower Susquehanna  02 0205 020503 02050306 Deciduous Forest
 915  Brandywine-Christina  02 0204 020402 02040205      Hay/Pasture
-937 Conococheague-Opequon  02 0207 020700 02070004 Deciduous Forest
+937 Conococheague-Opequon  02 0207 020700 02070004      Hay/Pasture
 956     Chester-Sassafras  02 0206 020600 02060002 Cultivated Crops
 966          Youghiogheny  05 0502 050200 05020006 Deciduous Forest
 975              Monocacy  02 0207 020700 02070009 Cultivated Crops

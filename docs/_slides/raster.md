@@ -10,9 +10,10 @@ for reading the many formats of such data.
 
 ===
 
-The [National Land Cover Database](http://www.mrlc.gov/nlcd2011.php) is '.GRD'
-format data, a lot of it. The file provided in this lesson is cropped and
-reduced to a lower resolution in order to speed processing.
+The [National Land Cover Database](http://www.mrlc.gov) is a 30m resolution grid
+of cells classified as forest, crops, wetland, developed, etc across the CONUS.
+The file provided in this lesson is cropped and reduced to a lower resolution in
+order to speed processing.
 
 
 
@@ -71,7 +72,7 @@ pre-defined color scheme.
 > plot(nlcd)
 ~~~
 {:title="Console" .input}
-![ ]({% include asset.html path="images/raster/show_raster-1.png" %})
+![ ]({% include asset.html path="images/raster/unnamed-chunk-3-1.png" %})
 {:.captioned}
 
 ===
@@ -88,7 +89,7 @@ plot(nlcd)
 plot(huc_md, col = NA, add = TRUE)
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
-![ ]({% include asset.html path="images/raster/crop_raster-1.png" %})
+![ ]({% include asset.html path="images/raster/unnamed-chunk-4-1.png" %})
 {:.captioned}
 
 The extent can be extracted from [sp](){:.rlib} package objects with `extent`,
@@ -209,7 +210,7 @@ pasture <- mask(nlcd, nlcd == 81,
 plot(pasture)
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
-![ ]({% include asset.html path="images/raster/mask-1.png" %})
+![ ]({% include asset.html path="images/raster/unnamed-chunk-9-1.png" %})
 {:.captioned}
 
 A pasture raster results from unsetting pixel values where the mask (`nlcd == 81`)
@@ -230,7 +231,7 @@ nlcd_agg@legend <- nlcd@legend
 plot(nlcd_agg)
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
-![ ]({% include asset.html path="images/raster/agg_raster-1.png" %})
+![ ]({% include asset.html path="images/raster/unnamed-chunk-10-1.png" %})
 {:.captioned}
 
 Here, `fact = 25` means that we are aggregating blocks 25 x 25 pixels and `fun =

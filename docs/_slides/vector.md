@@ -41,7 +41,9 @@ The [sf](){:.rlib} package reads shapefiles (".shp") and most other vector data:
 library(sf)
 
 shp <- 'data/cb_2016_us_county_5m'
-counties <- st_read(shp, stringsAsFactors = FALSE)
+counties <- st_read(
+  shp,
+  stringsAsFactors = FALSE)
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
 
@@ -95,12 +97,12 @@ types.
 
 === 
 
-| Common Types | Description                                                                                                                  |
-|--------------+------------------------------------------------------------------------------------------------------------------------------|
-| POINT        | zero-dimensional geometry containing a single point                                                                          |
-| LINESTRING   | sequence of points connected by straight, non-self intersecting line pieces; one-dimensional geometry                        |
+| Common Types | Description |
+|--------------|-------------|
+| POINT        | zero-dimensional geometry containing a single point |
+| LINESTRING   | sequence of points connected by straight, non-self intersecting line pieces; one-dimensional geometry |
 | POLYGON      | sequence of points in closed, non-intersecting rings; the first denotes the exterior ring, any subsequent rings denote holes |
-| MULTI*       | set of * (POINT, LINESTRING, or POLYGON)                                                                                     |
+| MULTI*       | set of * (POINT, LINESTRING, or POLYGON) |
 
 The spatial data types are built upon eachother in a logical way: lines are
 built from points, polygons are built from lines, and so on.
@@ -300,7 +302,7 @@ plot(sesync, col = "green",
      pch = 20, add = TRUE)
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
-![ ]({% include asset.html path="images/vector/plot_counties-1.png" %})
+![ ]({% include asset.html path="images/vector/unnamed-chunk-11-1.png" %})
 {:.captioned}
 
 But note that the `plot` function won't prevent you from layering up geometries
@@ -374,7 +376,9 @@ States Geological Survey.
 
 ~~~r
 shp <- 'data/huc250k'
-huc <- st_read(shp, stringsAsFactors = FALSE)
+huc <- st_read(
+  shp,
+  stringsAsFactors = FALSE)
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
 
@@ -426,8 +430,8 @@ EPSG code; a character `x` is interpretted as a PROJ.4 string.
 
 ~~~r
 prj <- '+proj=aea +lat_1=29.5 +lat_2=45.5 \
-    +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 \
-    +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 \
+    +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0    \
+    +ellps=GRS80 +towgs84=0,0,0,0,0,0,0   \
     +units=m +no_defs'
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
@@ -475,7 +479,7 @@ plot(sesync, col = 'green',
      pch = 20, add = TRUE)
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
-![ ]({% include asset.html path="images/vector/plot_over-1.png" %})
+![ ]({% include asset.html path="images/vector/unnamed-chunk-18-1.png" %})
 {:.captioned}
 
 ===
@@ -501,7 +505,7 @@ state_md <- st_union(counties_md)
 plot(state_md)
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
-![ ]({% include asset.html path="images/vector/st_union-1.png" %})
+![ ]({% include asset.html path="images/vector/unnamed-chunk-19-1.png" %})
 {:.captioned}
 
 To perform a union of all sub-geometries in a single `sfc`, we use the
@@ -542,7 +546,7 @@ plot(huc_md, border = 'blue',
      col = NA, add = TRUE)
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
-![ ]({% include asset.html path="images/vector/st_intersect-1.png" %})
+![ ]({% include asset.html path="images/vector/unnamed-chunk-21-1.png" %})
 {:.captioned}
 
 The `st_intersection()` function intersects its first argument with the second.
