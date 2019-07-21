@@ -6,7 +6,7 @@
     {%- assign vslides = hslide.content | split: "<p>===</p>" -%}
     {%- for vslide in vslides -%}
       <section
-        {%- if hslide.background %} data-background="{{ hslide.background | relative_url }}"
+        {%- if hslide.background %} data-background="{% include asset.html path=hslide.background %}"
 	{%- endif -%}
 	{%- if hslide.class %} class="{{ hslide.class }}"
 	{%- endif -%}>

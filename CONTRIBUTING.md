@@ -26,6 +26,16 @@ repository.
  └── Makefile
 ```
 
+The Makefile includes operations for building and publishing lessons. You can call
+the following targets from the command line. In RStudio, the "Build All" button
+runs the default Makefile target.
+
+  - `make preview` (default) to build `docs/_site` locally during development
+  - `make slides` run the `bin/build_*` scripts that populate `docs/_slides`
+  - `make upstream` merge updates made in the upstream `lesson-style` repository
+  - `make archive $DATE` freeze the lesson in the `docs/_archive` collection
+  - `make release` zip the handouts for attachment to a GitHub release
+
 Each lesson repository will include the above files **in addition to** lesson
 metadata and content wholly contained within the following files:
 
@@ -36,17 +46,14 @@ metadata and content wholly contained within the following files:
  │   ├── _data/lesson.yml
  │   └── _slides/
  ├── slides/
+[├── worksheet*.*]
 [├── *.Rproj]
  └─ README.md
 ```
 
-The Makefile includes targets for building and publishing lessons:
-  - `make preview` (default) to build `docs/_site` locally during development
-  - `make slides` run the `bin/build_*` scripts that populate `docs/_slides`
-  - `make upstream` merge updates made in the upstream `lesson-style` repository
-  - `make archive $DATE` freeze the lesson in the `docs/_archive` collection
-  - `make release` zip the handouts for attachment to a GitHub release
-
+Developing a lesson primarily involves writing "slides" (e.g. as Markdown or RMarkdown files),
+creating worksheets that will be distributed along with any data through a handout, and updating
+the metadata in `docs/_data/lesson.yml`.
 
 ## Lesson Content
 
@@ -169,26 +176,24 @@ If needed, additionally specify an `initpath` value of `'instructor'`, `'course'
 If the default port is in use, try a different port, e.g.:
 
 ```r
-servr::httw('docs/_site', port = 4321)
+servr::httw('docs/_site', port = 4322)
 ```
 
 For the site to load correctly, you must update the "RSTUDIO_PROXY"
-environment variable with the new port ...
+environment variable using the next line of code and then force the site to build again.
 
 ```r
 Sys.setenv(RSTUDIO_PROXY=rstudioapi::translateLocalUrl('http://127.0.0.1:4322'))
 ```
 
-... and force the site to build again.
-
-## Versioning and Releases
+## Releases and Handouts
 
 A lesson should be archived after any event in which it is
 presented&mdash;either in a workshop or à la carte setting. The archive is a
 built (i.e. processed into HTML) page copied into `docs/_archive`. After
-creating an archive, create a release on GitHub using the current `tag` value
-from `docs/_data/lesson.yml`, attach a "handouts.zip" (use `make release`), and
-commit the likely next `tag` value.
+creating an archive, bump the `tag` value in `docs/_data/lesson.yml`, create
+a release on GitHub using the `tag` value as the version with a "handouts.zip"
+(use `make release`) attached.
 
 The archive actually depends on two releases, and both must exist on GitHub:
 - The lesson's repository needs a release corresponding to `tag`.

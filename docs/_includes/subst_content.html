@@ -1,8 +1,8 @@
 {% assign subst = content %}
-{% for handout in site.handouts %}
+{% for handout in site.data.lesson.handouts %}
   {% if handout contains 'worksheet' %}
-    {% assign worksheet = handout | remove: 'worksheet' | prepend: site.lesson | prepend: 'worksheet-' %}
+    {% assign worksheet = handout | remove: 'worksheet' | prepend: site.data.lesson.lesson | prepend: 'worksheet-' %}
     {% assign subst = subst | replace: handout, worksheet %}
   {% endif %}
-{% endfor %}        
+{% endfor %}
 {{ subst }}
