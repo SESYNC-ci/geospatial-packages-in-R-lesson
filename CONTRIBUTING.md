@@ -36,6 +36,11 @@ runs the default Makefile target.
   - `make archive $DATE` freeze the lesson in the `docs/_archive` collection
   - `make release` zip the handouts for attachment to a GitHub release
 
+Sometimes the "Build All" button in RStudio results in a failure or halted execution.
+This can be due to a caching problem with knitr not reloading packages when it uses
+cached chunks.  The solution is to delete the cache folder in the top-level and 
+rebuild.  
+
 Each lesson repository will include the above files **in addition to** lesson
 metadata and content wholly contained within the following files:
 
