@@ -176,7 +176,7 @@ view the built page in a browser under the default port, use the `servr` R packa
 servr::httw('docs/_site')
 ```
 
-If needed, additionally specify an `initpath` value of `'instructor'`, `'course'`, or `'slides'`.
+If needed, additionally specify an `initpath` value of `'instructor/'`, `'course/'`, or `'slides/'`.
 
 If the default port is in use, try a different port, e.g.:
 
