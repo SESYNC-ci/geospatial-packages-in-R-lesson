@@ -36,6 +36,11 @@ runs the default Makefile target.
   - `make archive $DATE` freeze the lesson in the `docs/_archive` collection
   - `make release` zip the handouts for attachment to a GitHub release
 
+Sometimes the "Build All" button in RStudio results in a failure or halted execution.
+This can be due to a caching problem with knitr not reloading packages when it uses
+cached chunks.  The solution is to delete the cache folder in the top-level and 
+rebuild.  
+
 Each lesson repository will include the above files **in addition to** lesson
 metadata and content wholly contained within the following files:
 
@@ -171,7 +176,7 @@ view the built page in a browser under the default port, use the `servr` R packa
 servr::httw('docs/_site')
 ```
 
-If needed, additionally specify an `initpath` value of `'instructor'`, `'course'`, or `'slides'`.
+If needed, additionally specify an `initpath` value of `'instructor/'`, `'course/'`, or `'slideshow/'`.
 
 If the default port is in use, try a different port, e.g.:
 
@@ -179,12 +184,23 @@ If the default port is in use, try a different port, e.g.:
 servr::httw('docs/_site', port = 4322)
 ```
 
-For the site to load correctly, you must update the "RSTUDIO_PROXY"
+For the site to load correctly, you must update the `RSTUDIO_PROXY`
 environment variable using the next line of code and then force the site to build again.
 
 ```r
 Sys.setenv(RSTUDIO_PROXY=rstudioapi::translateLocalUrl('http://127.0.0.1:4322'))
 ```
+
+In order to force the site to build again, you may need to delete the entire `docs/_site`
+directory manually. Rebuilding is necessary because the `RSTUDIO_PROXY` environment variable is
+a hash that is generated within your Rstudio session every time Rstudio restarts, and
+it is hard-coded into the file paths for the images and stylesheets. If this is not done, the
+images will appear as "broken links" in the slideshow, and the slides will be formatted incorrectly.
+
+**Important note**: If you display the lesson as a slideshow in the viewer pane using
+`server::httw('docs/_site', initpath = 'slideshow/')`, the images do not display. This is 
+a feature, not a bug! The idea is for the instructor to generate the plots and other images
+and display them in their "Plots" tab, not on the slide.
 
 ## Releases and Handouts
 
