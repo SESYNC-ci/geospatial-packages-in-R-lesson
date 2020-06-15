@@ -25,7 +25,7 @@ Use `st_buffer` to create a 5km buffer around the `state_md` border and plot it 
 
 ### Exercise 3
 
-The function `cellStats` aggregates accross an entire raster. Use it to figure out the  proportion of `nlcd` pixels that are covered by deciduous forest (value = 41).
+The function `cellStats` aggregates across an entire raster. Use it to figure out the proportion of `nlcd` pixels that are covered by deciduous forest (value = 41).
 
 [View solution](#solution-3)
 {:.notes}

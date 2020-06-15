@@ -4,14 +4,15 @@
 ## Raster Data
 
 Raster data is a matrix or cube with additional spatial metadata (e.g. extent,
-resolution, and projection) that allow its values to be mapped onto geographical
+resolution, and projection) that allows its values to be mapped onto geographical
 space. The [raster](){:.rlib} package provides the eponymous `raster()` function
 for reading the many formats of such data.
 
 ===
 
 The [National Land Cover Database](http://www.mrlc.gov) is a 30m resolution grid
-of cells classified as forest, crops, wetland, developed, etc across the CONUS.
+of cells classified as forest, crops, wetland, developed, etc., across the continental
+United States.
 The file provided in this lesson is cropped and reduced to a lower resolution in
 order to speed processing.
 
@@ -29,7 +30,7 @@ data and computes on each of them in sequence.
 
 ===
 
-The default print method for a raster object is a summary of metadata contained
+The default `print` method for a `raster` object is a summary of metadata contained
 in the raster file.
 
 ```{r}
@@ -38,7 +39,7 @@ nlcd
 
 ===
 
-The plot method interprets the pixel values of the raster matrix according to a
+The `plot` method interprets the pixel values of the raster matrix according to a
 pre-defined color scheme.
 
 ```{r, fig.keep = 'last'}
@@ -104,7 +105,7 @@ levels(lc_types)
 
 ### Raster Math
 
-Mathematical functions called on a raster gets applied to each pixel. For a
+Mathematical functions called on a raster get applied to each pixel. For a
 single raster `r`, the function `log(r)` returns a new raster where each pixel's
 value is the log of the corresponding pixel in `r`.
 

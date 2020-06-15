@@ -14,7 +14,7 @@ counties_md_sp <- as(counties_md, "Spatial")
 ```
 
 The creation of geospatial tools in R has been a community effort, and not
-necessarilly a well-organized one. One current stumbling block is that the
+necessarily a well-organized one. One current stumbling block is that the
 [raster](){:.rlib} package, which is tightly integrated with the [sp](){:.rlib}
 package, has not caught up to the [sf](){:.rlib} package. The
 [stars](https://r-spatial.github.io/stars/) package aims to remedy this problem,
