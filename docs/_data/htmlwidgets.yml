@@ -1,5 +1,5 @@
 - name: htmlwidgets
-  version: '1.3'
+  version: 1.5.1
   src: htmlwidgets/www
   meta: ~
   script: htmlwidgets.js
@@ -61,7 +61,7 @@
   package: ~
   all_files: yes
 - name: leaflet-binding
-  version: 2.0.2
+  version: 2.0.3
   src: htmlwidgets
   meta: ~
   script: leaflet.js

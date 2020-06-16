@@ -4,14 +4,15 @@
 ## Raster Data
 
 Raster data is a matrix or cube with additional spatial metadata (e.g. extent,
-resolution, and projection) that allow its values to be mapped onto geographical
+resolution, and projection) that allows its values to be mapped onto geographical
 space. The [raster](){:.rlib} package provides the eponymous `raster()` function
 for reading the many formats of such data.
 
 ===
 
 The [National Land Cover Database](http://www.mrlc.gov) is a 30m resolution grid
-of cells classified as forest, crops, wetland, developed, etc across the CONUS.
+of cells classified as forest, crops, wetland, developed, etc., across the continental
+United States.
 The file provided in this lesson is cropped and reduced to a lower resolution in
 order to speed processing.
 
@@ -33,7 +34,7 @@ data and computes on each of them in sequence.
 
 ===
 
-The default print method for a raster object is a summary of metadata contained
+The default `print` method for a `raster` object is a summary of metadata contained
 in the raster file.
 
 
@@ -63,7 +64,7 @@ attributes :
 
 ===
 
-The plot method interprets the pixel values of the raster matrix according to a
+The `plot` method interprets the pixel values of the raster matrix according to a
 pre-defined color scheme.
 
 
@@ -92,8 +93,8 @@ plot(huc_md, col = NA, add = TRUE)
 ![ ]({% include asset.html path="images/raster/unnamed-chunk-4-1.png" %})
 {:.captioned}
 
-The extent can be extracted from [sp](){:.rlib} package objects with `extent`,
-but must be created "from scratch" for an `sfc`. Here, we crop the `nlcd` raster
+Here, we convert the `nlcd` raster's bounding box to a 2x2 matrix of the lower left
+and upper right corners, then crop the raster
 to the extent of the `huc_md` polygon, then display both layers on the same map.
 Also note that the transformed raster is now loaded in R memory, as indicated by
 the size of `nlcd`. We could have also saved the output to disk by specifying an
@@ -187,7 +188,7 @@ lc_types <- nlcd_attr[[1]]$Land.Cover.Class
 
 ### Raster Math
 
-Mathematical functions called on a raster gets applied to each pixel. For a
+Mathematical functions called on a raster get applied to each pixel. For a
 single raster `r`, the function `log(r)` returns a new raster where each pixel's
 value is the log of the corresponding pixel in `r`.
 

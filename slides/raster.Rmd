@@ -58,8 +58,8 @@ plot(nlcd)
 plot(huc_md, col = NA, add = TRUE)
 ```
 
-The extent can be extracted from [sp](){:.rlib} package objects with `extent`,
-but must be created "from scratch" for an `sfc`. Here, we crop the `nlcd` raster
+Here, we convert the `nlcd` raster's bounding box to a 2x2 matrix of the lower left
+and upper right corners, then crop the raster
 to the extent of the `huc_md` polygon, then display both layers on the same map.
 Also note that the transformed raster is now loaded in R memory, as indicated by
 the size of `nlcd`. We could have also saved the output to disk by specifying an

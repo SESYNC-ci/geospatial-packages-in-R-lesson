@@ -2,36 +2,33 @@
 excerpt: Mixing Data Types
 ---
 
-## Crossing Rasters with Vectors: Prelude
+## Crossing Rasters with Vectors
 
-Presently, to mix raster and vectors, we must convert `sf` objects to their
-counterpart `Spatial*` objects:
-
-```{r, results = 'hide', handout = 0}
-sesync_sp <- as(sesync, "Spatial")
-huc_md_sp <- as(huc_md, "Spatial")
-counties_md_sp <- as(counties_md, "Spatial")
-```
-
+Raster and vector geospatial data in R require different packages. 
 The creation of geospatial tools in R has been a community effort, and not
-necessarily a well-organized one. One current stumbling block is that the
-[raster](){:.rlib} package, which is tightly integrated with the [sp](){:.rlib}
-package, has not caught up to the [sf](){:.rlib} package. The
-[stars](https://r-spatial.github.io/stars/) package aims to remedy this problem,
-and others, but has not yet released a "version 1.0" (it's at "0.3" as of this
-writing).
+necessarily a well-organized one. Development is still ongoing on many packages
+dealing with raster and vector data.
+One current stumbling block is that the [raster](){:.rlib} package, which is tightly 
+integrated with the older [sp](){:.rlib} package, has not fully caught up to the [sf](){:.rlib} package. 
+The [stars](https://r-spatial.github.io/stars/) package aims to remedy this problem,
+and others, but has not yet released a "version 1.0" (it's at 0.4 as of this
+writing). In addition, the [terra](){:.rlib} package, which is better integrated with
+[sf](){:.rlib}, may ultimately replace the [raster](){:.rlib} package. It is also still in
+development (version 0.6 as of this writing).
 {:.notes}
 
-===
-
-## Crossing Rasters with Vectors
+Although not needed in this lesson, you may notice in some cases that it is necessary to
+convert a vector object from [sf](){:.rlib} (class beginning with `sfc*`) to [sp](){:.rlib}
+(class beginning with `Spatial*`) for the vector object to interact with rasters.
+You can do this by calling `sp_object <- as(sf_object, 'Spatial')`.
+{:.notes}
 
 The `extract` function allows subsetting and aggregation of raster values based
 on a vector spatial object.
 
 ```{r, fig.keep='last', handout = 0}
 plot(nlcd)
-plot(sesync_sp, col = 'green',
+plot(sesync, col = 'green',
      pch = 16, cex = 2, add = TRUE)
 ```
 
@@ -41,7 +38,7 @@ When extracting by point locations (i.e. a *SpatialPoints* object), the result
 is a vector of values corresponding to each point.
 
 ```{r, handout = 0}
-sesync_lc <- extract(nlcd, sesync_sp)
+sesync_lc <- extract(nlcd, st_coordinates(sesync))
 ```
 
 ```{r}
@@ -55,7 +52,7 @@ pixels falling within that polygon.
 
 ```{r, handout = 0}
 county_nlcd <- extract(nlcd_agg,
-    counties_md_sp[1,])
+    counties_md[1,])
 ```
 
 ```{r}
@@ -67,14 +64,15 @@ table(county_nlcd)
 To get a summary of raster values for **each** polygon in a `SpatialPolygons`
 object, add an aggregation function to `extract` via the `fun` argument. For
 example, `fun = modal` gives the most common land cover type for each polygon in
-`huc_md_sp`.
+`huc_md`.
 
 ```{r, handout = 0}
 modal_lc <- extract(nlcd_agg,
-    huc_md_sp, fun = modal)
-huc_md_sp$modal_lc <- lc_types[modal_lc + 1]
+    huc_md, fun = modal)
+huc_md <- huc_md %>%
+  mutate(modal_lc = lc_types[modal_lc + 1])
 ```
 
 ```{r}
-head(huc_md_sp)
+huc_md
 ```

@@ -154,8 +154,8 @@ grid_md
 
 Spatial objects defined by [sf](){:.rlib} are compatible with the `plot`
 function. Setting the `plot` parameter `add = TRUE` allows an existing plot to
-serve as a layer underneath the new one, as long as the two layers have the
-same CRS.
+serve as a layer underneath the new one. The two layers should have the same
+coordinate reference system.
 
 ```{r, fig.keep = "last", handout = 0}
 plot(grid_md)
