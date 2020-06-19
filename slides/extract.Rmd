@@ -50,7 +50,7 @@ lc_types[sesync_lc + 1]
 When extracting with a polygon, the output is a vector of all raster values for
 pixels falling within that polygon.
 
-```{r, handout = 0}
+```{r, handout = 0, warning = FALSE}
 county_nlcd <- extract(nlcd_agg,
     counties_md[1,])
 ```
@@ -66,7 +66,7 @@ object, add an aggregation function to `extract` via the `fun` argument. For
 example, `fun = modal` gives the most common land cover type for each polygon in
 `huc_md`.
 
-```{r, handout = 0}
+```{r, handout = 0, warning = FALSE}
 modal_lc <- extract(nlcd_agg,
     huc_md, fun = modal)
 huc_md <- huc_md %>%
