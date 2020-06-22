@@ -5,12 +5,13 @@ handouts:
  - data/huc250k
  - data/nlcd_agg.grd
  - data/nlcd_agg.gri
-tag: v0.5
-lesson: 9
-instructor: Benoit Parmentier
+tag: v0.6
+lesson: 7
+instructor: Quentin Read
 authors:
   - Philippe Marchand
   - Ian Carroll
+  - Quentin Read
 sorter:
   - intro
   - vector
