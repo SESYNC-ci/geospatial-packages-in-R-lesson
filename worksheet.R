@@ -24,11 +24,8 @@ counties_md <- ...
 ## Plot Layers
 
 plot(...)
-plot(...)
-
-counties_md <- ...(counties_md, ...)
-plot(...)
-plot(..., col = "green", pch = 20, add = ...)
+plot(..., add = ...)
+plot(..., col = "green", pch = 20, ...)
 
 ## Coordinate Transforms
 
@@ -90,24 +87,19 @@ nlcd_agg <- ...(nlcd,
 ...
 plot(nlcd_agg)
 
-## Mixing rasters and vectors: prelude
-
-sesync_sp <- as(..., "Spatial")
-huc_md_sp <- as(..., "Spatial")
-counties_md_sp <- ...
-
 ## Mixing rasters and vectors
 
 plot(nlcd)
 plot(sesync_sp, col = 'green',
      pch = 16, cex = 2, ...)
 
-sesync_lc <- ...(nlcd, sesync_sp)
+sesync_lc <- ...(nlcd, st_coordinates(...))
 
 county_nlcd <- ...
 
 modal_lc <- extract(...)
-... <- lc_types[modal_lc + 1]
+... <- ... %>%
+    mutate(modal_lc = ...[...])
 
 ## Leaflet
 
