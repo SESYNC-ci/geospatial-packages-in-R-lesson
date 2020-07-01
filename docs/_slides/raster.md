@@ -214,8 +214,9 @@ plot(pasture)
 ![ ]({% include asset.html path="images/raster/unnamed-chunk-9-1.png" %})
 {:.captioned}
 
-A pasture raster results from unsetting pixel values where the mask (`nlcd == 81`)
-is false (`maskvalue = FALSE`).
+We use the `mask` function with the logical condition `nlcd == 81` and specify that we want to 
+unset pixel values where the mask is false (`maskvalue = FALSE`). This results in a raster 
+where all pixels that are not classified as pasture (code `81`) are removed.
 {:.notes}
 
 ===
