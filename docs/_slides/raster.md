@@ -81,6 +81,17 @@ pre-defined color scheme.
 The `crop()` function trims a raster object to a given spatial "extent" (or
 range of x and y values).
 
+Here, we convert the `nlcd` raster's bounding box to a 2x2 matrix of the lower left
+and upper right corners, then crop the raster
+to the extent of the `huc_md` polygon, then display both layers on the same map.
+(We can plot polygon and raster layers together on the same map, just like we can plot
+multiple polygon layers---as long as they have the same coordinate reference system!)
+Also note that the transformed raster is now loaded in R memory, as indicated by
+the size of `nlcd`. We could have also saved the output to disk by specifying an
+optional `filename` argument to `crop`; the same is true for many other
+functions in the [raster](){:.rlib} package.
+{:.notes}
+
 
 
 ~~~r
@@ -92,15 +103,6 @@ plot(huc_md, col = NA, add = TRUE)
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
 ![ ]({% include asset.html path="images/raster/unnamed-chunk-4-1.png" %})
 {:.captioned}
-
-Here, we convert the `nlcd` raster's bounding box to a 2x2 matrix of the lower left
-and upper right corners, then crop the raster
-to the extent of the `huc_md` polygon, then display both layers on the same map.
-Also note that the transformed raster is now loaded in R memory, as indicated by
-the size of `nlcd`. We could have also saved the output to disk by specifying an
-optional `filename` argument to `crop`; the same is true for many other
-functions in the [raster](){:.rlib} package.
-{:.notes}
 
 ===
 
@@ -147,6 +149,13 @@ attributes:
 ~~~
 {:.output}
 
+
+Notice the `@` syntax for extracting the attributes from the `nlcd` raster object.
+The `@` operator is used to access properties of an object known as "slots." These
+slots are nested, so we have to access the slot named `data` from the `RasterLayer`
+object, which itself has a slot called `attributes`, which is a list with the attribute
+table as its first element(!)
+{:.notes}
 
 ===
 

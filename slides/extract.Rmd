@@ -24,7 +24,8 @@ You can do this by calling `sp_object <- as(sf_object, 'Spatial')`.
 {:.notes}
 
 The `extract` function allows subsetting and aggregation of raster values based
-on a vector spatial object.
+on a vector spatial object. For example we might want to extract the NLCD land cover 
+class at SESYNC's location.
 
 ```{r, fig.keep='last', handout = 0}
 plot(nlcd)
@@ -34,8 +35,8 @@ plot(sesync, col = 'green',
 
 ===
 
-When extracting by point locations (i.e. a *SpatialPoints* object), the result
-is a vector of values corresponding to each point.
+Pull the coordinates from the `sfc` object containing SESYNC's point location and call `extract`.
+When extracting by point locations, the result is a vector of values corresponding to each point. 
 
 ```{r, handout = 0}
 sesync_lc <- extract(nlcd, st_coordinates(sesync))
@@ -48,7 +49,8 @@ lc_types[sesync_lc + 1]
 ===
 
 When extracting with a polygon, the output is a vector of all raster values for
-pixels falling within that polygon.
+pixels falling within that polygon. This code extracts all pixels within the first
+polygon in the Maryland county data frame.
 
 ```{r, handout = 0, warning = FALSE}
 county_nlcd <- extract(nlcd_agg,

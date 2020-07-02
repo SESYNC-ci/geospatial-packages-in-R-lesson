@@ -510,6 +510,9 @@ sesync <- st_transform(
 
 ===
 
+Now that the three objects share a projection, we can plot the county boundaries, 
+watershed boundaries, and SESYNC's location on a single map.
+
 
 
 ~~~r

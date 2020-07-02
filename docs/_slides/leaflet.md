@@ -86,3 +86,7 @@ leaflet() %>%
 
 Use the map controls to zoom away from the current location and find ongoing
 storm events.
+
+This lesson only provides a very brief introduction to [leaflet](){:.rlib}. For
+a more in-depth tutorial, check out the 
+[SESYNC lesson on leaflet in R](https://cyberhelp.sesync.org/leaflet-in-R-lesson/).
