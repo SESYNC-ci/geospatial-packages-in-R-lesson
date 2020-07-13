@@ -42,8 +42,9 @@ prj <- '+proj=aea +lat_1=29.5 +lat_2=45.5 \
 counties_md <- st_transform(
     counties_md,
     ...)
-huc <- ...
+huc <- ...(huc, ...)
 sesync <- ...
+
 plot(counties_md$geometry)
 plot(...,
      border = 'blue', add = TRUE)
@@ -55,7 +56,7 @@ plot(..., col = 'green',
 state_md <- ...
 plot(...)
 
-huc_md <- ...
+huc_md <- ...(..., ...)
 plot(..., border = 'blue',
      col = NA, add = TRUE)
 
@@ -74,7 +75,7 @@ plot(...)
 ## Raster data attributes
 
 nlcd_attr <- ...
-lc_types <- nlcd_attr...
+lc_types <- nlcd_attr...$...
 
 ## Raster math
 
@@ -83,8 +84,9 @@ pasture <- mask(nlcd, nlcd == 81,
 plot(pasture)
 
 nlcd_agg <- ...(nlcd,
-    ...
-...
+    ...,
+    ...)
+nlcd_agg@legend <- ...
 plot(nlcd_agg)
 
 ## Mixing rasters and vectors
@@ -97,7 +99,7 @@ sesync_lc <- ...(nlcd, st_coordinates(...))
 
 county_nlcd <- ...
 
-modal_lc <- extract(...)
+modal_lc <- extract(..., ..., ...)
 ... <- ... %>%
     mutate(modal_lc = ...[...])
 
