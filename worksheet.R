@@ -57,6 +57,7 @@ state_md <- ...
 plot(...)
 
 huc_md <- ...(..., ...)
+
 plot(..., border = 'blue',
      col = NA, add = TRUE)
 
@@ -92,7 +93,7 @@ plot(nlcd_agg)
 ## Mixing rasters and vectors
 
 plot(nlcd)
-plot(sesync_sp, col = 'green',
+plot(sesync, col = 'green',
      pch = 16, cex = 2, ...)
 
 sesync_lc <- ...(nlcd, st_coordinates(...))
