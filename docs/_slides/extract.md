@@ -99,7 +99,7 @@ county_nlcd
 
 ===
 
-To get a summary of raster values for **each** polygon in a `SpatialPolygons`
+To get a summary of raster values for **each** polygon in an `sfc`
 object, add an aggregation function to `extract` via the `fun` argument. For
 example, `fun = modal` gives the most common land cover type for each polygon in
 `huc_md`.
@@ -147,7 +147,7 @@ First 10 features:
     SUB    ACC      CAT                       geometry         modal_lc
 1  0205 020503 02050306 MULTIPOLYGON (((1683575 203... Deciduous Forest
 2  0204 020402 02040205 MULTIPOLYGON (((1707075 202...      Hay/Pasture
-3  0207 020700 02070004 POLYGON ((1563403 2008455, ... Deciduous Forest
+3  0207 020700 02070004 POLYGON ((1563403 2008455, ...      Hay/Pasture
 4  0206 020600 02060002 POLYGON ((1701439 2037188, ... Cultivated Crops
 5  0502 050200 05020006 POLYGON ((1441528 1985664, ... Deciduous Forest
 6  0207 020700 02070009 POLYGON ((1610557 2016043, ... Cultivated Crops
