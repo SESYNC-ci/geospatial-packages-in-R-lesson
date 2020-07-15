@@ -63,7 +63,7 @@ table(county_nlcd)
 
 ===
 
-To get a summary of raster values for **each** polygon in a `SpatialPolygons`
+To get a summary of raster values for **each** polygon in an `sfc`
 object, add an aggregation function to `extract` via the `fun` argument. For
 example, `fun = modal` gives the most common land cover type for each polygon in
 `huc_md`.
