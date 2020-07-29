@@ -5,7 +5,7 @@ handouts:
  - data/huc250k
  - data/nlcd_agg.grd
  - data/nlcd_agg.gri
-tag: v0.6
+tag: v0.7
 lesson: 7
 instructor: Quentin Read
 authors:
