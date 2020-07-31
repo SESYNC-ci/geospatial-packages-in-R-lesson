@@ -204,17 +204,26 @@ and display them in their "Plots" tab, not on the slide.
 
 ## Releases and Handouts
 
-A lesson should be archived after any event in which it is
-presented&mdash;either in a workshop or à la carte setting. The archive is a
-built (i.e. processed into HTML) page copied into `docs/_archive`. After
-creating an archive, bump the `tag` value in `docs/_data/lesson.yml`, create
-a release on GitHub using the `tag` value as the version with a "handouts.zip"
-(use `make release`) attached.
+A lesson should be archived after any event in which it is presented&mdash;either in a workshop or à la carte setting. 
+
+Bump the `tag` value in `docs/_data/lesson.yml`. This will be the version number for the GitHub release. Then, archive the lesson html using the makefile. The archive is built (i.e. processed into HTML) page copied into `docs/_archive`. For example:
+
+`make archive DATE="2020-07-21"` 
+
+Create a release on GitHub using the `tag` value as the version with a "handouts.zip" (created through `make release`) attached. To get the file contents for the release description, use `tree` on the unzipped handouts directory. 
+
+To manually archive an html, copy the html from  `_site`  into `_archive`. Add the following header to the html file:
+
+```
+---
+---
+
+```
 
 The archive actually depends on two releases, and both must exist on GitHub:
 - The lesson's repository needs a release corresponding to `tag`.
-- The upstream `lesson-style` repository must have a release matching the string
-found in the `styleurl` value in `docs/_archive.yml`.
+- The upstream `lesson-style` repository must have a release matching ~~the string
+found in the `styleurl` value in~~ `docs/_archive.yml`.
 
 When preparing the first release, be sure to include all data and worksheets in
 a `handouts.zip` binary attachment and use the `tree` command to generate a
