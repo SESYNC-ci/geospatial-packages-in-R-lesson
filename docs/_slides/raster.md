@@ -81,8 +81,9 @@ pre-defined color scheme.
 The `crop()` function trims a raster object to a given spatial "extent" (or
 range of x and y values).
 
-Here, we convert the `nlcd` raster's bounding box to a 2x2 matrix of the lower left
-and upper right corners, then crop the raster
+Here, we extract the `nlcd` raster's bounding box using the `extent()` function, then
+convert the extracted extent to a 2x2 matrix of the lower left
+and upper right corners using the `matrix()` function. Next we crop the raster
 to the extent of the `huc_md` polygon, then display both layers on the same map.
 (We can plot polygon and raster layers together on the same map, just like we can plot
 multiple polygon layers---as long as they have the same coordinate reference system!)

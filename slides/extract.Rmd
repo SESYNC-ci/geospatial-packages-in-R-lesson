@@ -46,6 +46,10 @@ sesync_lc <- extract(nlcd, st_coordinates(sesync))
 lc_types[sesync_lc + 1]
 ```
 
+Note that we need to add 1 to correctly match the land cover type name with its numerical
+code, because R's numbering starts with 1 but the table starts at 0, as mentioned above.
+{:.notes}
+
 ===
 
 When extracting with a polygon, the output is a vector of all raster values for

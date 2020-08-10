@@ -23,7 +23,8 @@ packages also depend on system libraries.
 System libraries cannot be installed by R's `install.packages()`, but can be
 bundled with these packages and for private use by them. Either way, the
 necessary libraries are maintained by the good people at the [Open Source
-Geospatial Foundation](https://github.com/OSGeo) for free and easy distribution.
+Geospatial Foundation](https://github.com/OSGeo) for free and easy distribution. When
+you load [sf](){:.rlib}, it will return an error if any dependencies are not found. 
 {:.notes}
 
 ===
@@ -47,6 +48,11 @@ counties <- st_read(
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
 
+
+The object `shp` is a character string with the location of a folder that contains
+the collection of individual files that make up a shapefile. The second argument
+ensures that text columns in the data frame are strings, not factors.
+{:.notes}
 
 ===
 
@@ -85,6 +91,10 @@ CRS:            4269
 ~~~
 {:.output}
 
+
+In this case, we have a `MULTIPOLYGON` object which means that each row
+has a column with information about the boundaries of a county polygon.
+{:.notes}
 
 ===
 
@@ -154,6 +164,10 @@ GEOGCS["GCS_North_American_1983",
 {:.output}
 
 
+The EPSG ID is a numerical code indicating the coordinate reference system, and
+the PROJ.4 string contains parameters of the projection.
+{:.notes}
+
 ===
 
 ### Bounding Box
@@ -182,7 +196,8 @@ entire table or any subset of features. In this example, we subset the United St
 counties by state ID 24 (Maryland). 
 
 Because the `counties` object is a kind of `data.frame`, we can use [dplyr](){:.rlib}
-verbs such as `filter` on it, just as we would with a non-spatial data frame.
+verbs such as `filter` on it, just as we would with a non-spatial data frame. After
+filtering, you can see that the bounding box is now much smaller.
 {:.notes}
 
 
@@ -381,9 +396,9 @@ Sparse geometry binary predicate list of length 1, where the predicate was `with
 {:.output}
 
 
-It can be seen as a type of subsetting based on spatial (rather than numeric or
+Overlaying is a type of subsetting based on spatial (rather than numeric or
 string) matching. Matching is implemented with functions like `st_within(x, y)`.
-The output implies that the 1<sup>st</sup> (and only) point in `sesync` is within the 5th
+The output implies that the 1<sup>st</sup> (and only) point in `sesync` is within the 5<sup>th</sup>
 element of `counties_md`.
 {:.notes}
 
@@ -452,7 +467,8 @@ their PROJ.4 strings.
 
 
 The Census data uses unprojected (longitude, latitude) coordinates, but `huc` is
-in an Albers equal-area projection (indicated as `"+proj=aea"`).
+in an Albers equal-area projection (indicated as `"+proj=aea"`). The set of parameters
+for the `huc` object are commonly used to create maps of the continental United States.
 {:.notes}
 
 ===
@@ -478,7 +494,7 @@ prj <- '+proj=aea +lat_1=29.5 +lat_2=45.5 \
 
 
 PROJ.4 strings contain a reference to the type of projection---this one is another
-Albers Equal Area---along with numeric parameters associated with that
+Albers equal-area---along with numeric parameters associated with that
 projection. An additional important parameter that may differ between two
 coordinate systems is the "datum", which indicates the standard by which the
 irregular surface of the Earth is approximated by an ellipsoid in the
@@ -600,7 +616,7 @@ The individual hydrological units are preserved but any part of them (or any
 whole polygon) lying outside the `state_md` polygon is cut from the output. The
 attribute data remains in the corresponding records of the `data.frame`, but (as
 warned) has not been updated. For example, the "AREA" attribute of any clipped
-HUC does not reflect the new polygon.
+HUC does not reflect the area of the new, smaller polygon.
 {:.notes}
 
 ===
