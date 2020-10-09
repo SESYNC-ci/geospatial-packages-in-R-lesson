@@ -33,7 +33,7 @@ runs the default Makefile target.
   - `make preview` (default) to build `docs/_site` locally during development
   - `make slides` run the `bin/build_*` scripts that populate `docs/_slides`
   - `make upstream` merge updates made in the upstream `lesson-style` repository
-  - `make archive $DATE` freeze the lesson in the `docs/_archive` collection
+  - `make archive DATE="yyyy-mm-dd"` freeze the lesson in the `docs/_archive` collection
   - `make release` zip the handouts for attachment to a GitHub release
 
 Sometimes the "Build All" button in RStudio results in a failure or halted execution.
@@ -204,13 +204,16 @@ and display them in their "Plots" tab, not on the slide.
 
 ## Releases and Handouts
 
-A lesson should be archived after any event in which it is presented&mdash;either in a workshop or à la carte setting. 
+*Before teaching a lesson*: Bump the `tag` value in `docs/_data/lesson.yml`. This will be the version number for the GitHub release. 
+Then, create a release on GitHub using the `tag` value as the version with a "handouts.zip" (created through `make release`) attached. 
+To get the file contents for the release description, use `tree` on the unzipped handouts directory. 
+Copy and paste the output of `tree handouts` into the release description.
 
-Bump the `tag` value in `docs/_data/lesson.yml`. This will be the version number for the GitHub release. Then, archive the lesson html using the makefile. The archive is built (i.e. processed into HTML) page copied into `docs/_archive`. For example:
+*After teaching a lesson*: A lesson should be archived after any event in which it is presented&mdash;either in a workshop or à la carte setting. 
+
+Archive the lesson html using the makefile. The archive is built (i.e. processed into HTML) page copied into `docs/_archive`. For example:
 
 `make archive DATE="2020-07-21"` 
-
-Create a release on GitHub using the `tag` value as the version with a "handouts.zip" (created through `make release`) attached. To get the file contents for the release description, use `tree` on the unzipped handouts directory. 
 
 To manually archive an html, copy the html from  `_site`  into `_archive`. Add the following header to the html file:
 
