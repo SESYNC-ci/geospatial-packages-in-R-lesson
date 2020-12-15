@@ -235,7 +235,8 @@ file tree of the zip's contents.
 ## Lesson Lifecycle
 
 Lesson status should be categorized as Alpha, Beta, Stable, or Archived according to 
-the [lifecycle definitions]. Add the appropriate badge and notes to the lesson readme:
+the [lifecycle definitions]. Add or move the lesson repository to the appropriate category
+on the [curriculum] project page. Add the appropriate badge and notes to the lesson readme:
 
 **Alpha** 
 
@@ -285,3 +286,4 @@ the master branch. The `upstream` commits may not have a shared history with the
 [Reveal.js]: http://lab.hakim.se/reveal-js
 [lessons]: http://www.sesync.org/for-you/cyberinfrastructure/training/%C3%A0-la-carte-lessons
 [lifecycle definitions]: https://github.com/SESYNC-ci/sesync-ci.github.io/blob/master/lesson/lesson-lifecycle.md
+[curriculum]: https://github.com/orgs/SESYNC-ci/projects/2
