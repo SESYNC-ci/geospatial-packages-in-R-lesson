@@ -232,6 +232,31 @@ When preparing the first release, be sure to include all data and worksheets in
 a `handouts.zip` binary attachment and use the `tree` command to generate a
 file tree of the zip's contents.
 
+## Lesson Lifecycle
+
+Lesson status should be categorized as Alpha, Beta, Stable, or Archived according to 
+the [lifecycle definitions]. Add the appropriate badge and notes to the lesson readme:
+
+**Alpha** 
+
+* `[![lifecycle](https://img.shields.io/badge/lifecycle-alpha-pink.svg)](https://github.com/SESYNC-ci/sesync-ci.github.io/blob/master/lesson/lesson-lifecycle.md#alpha)`
+* Add to top of lesson: *Note: This lesson is in alpha status! It is experimental or in a very early phase of develoment.*
+
+**Beta**
+
+* `[![lifecycle](https://img.shields.io/badge/lifecycle-beta-blue.svg)](https://github.com/SESYNC-ci/sesync-ci.github.io/blob/master/lesson/lesson-lifecycle.md#beta)`
+* Add to top of lesson: *Note: This lesson is in beta status! It may have open issues that have not yet been addressed.*
+
+**Stable**
+
+* `[![lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://github.com/SESYNC-ci/sesync-ci.github.io/blob/master/lesson/lesson-lifecycle.md#stable)`
+* Ensure lesson is linked from cyberhelp lessons page. Add a file in `lesson/_posts/` to link to active version of lesson from cyberhelp lesson page with appropriate tags, sticky to pin, permalink with lesson slug name
+
+**Archived**
+
+* `[![lifecycle](https://img.shields.io/badge/lifecycle-archived-lightgrey.svg)](https://github.com/SESYNC-ci/sesync-ci.github.io/blob/master/lesson/lesson-lifecycle.md#archived)`
+* Turn off github pages in `-lesson` repository settings. 
+* Add to instructor notes (in lesson `readme.md`): "This lesson is archived" and if relevant either "and was replaced with the following lesson: ...", "Active lessons covering similar material include: ... ", or similar
 
 ## Working Upstream
 
@@ -259,3 +284,4 @@ the master branch. The `upstream` commits may not have a shared history with the
 
 [Reveal.js]: http://lab.hakim.se/reveal-js
 [lessons]: http://www.sesync.org/for-you/cyberinfrastructure/training/%C3%A0-la-carte-lessons
+[lifecycle definitions]: https://github.com/SESYNC-ci/sesync-ci.github.io/blob/master/lesson/lesson-lifecycle.md
