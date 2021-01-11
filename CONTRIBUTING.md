@@ -299,7 +299,13 @@ the `lesson-style` repository into a lesson, run `git pull upstream master` from
 the master branch. The `upstream` commits may not have a shared history with the
 `master` branch; it is okay to merge using `--allow-unrelated-histories`.
 
+## Permissions
+
+Add repositories to the [Instructors team page] on GitHub with Write permission for
+members of the Instructors team to push changes on lessons. 
+
 [Reveal.js]: http://lab.hakim.se/reveal-js
 [lessons]: http://www.sesync.org/for-you/cyberinfrastructure/training/%C3%A0-la-carte-lessons
 [lifecycle definitions]: https://github.com/SESYNC-ci/sesync-ci.github.io/blob/master/lesson/lesson-lifecycle.md
 [curriculum]: https://github.com/orgs/SESYNC-ci/projects/2
+[Instructors team page]: https://github.com/orgs/SESYNC-ci/teams/instructors/repositories
