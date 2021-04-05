@@ -5,8 +5,18 @@
 
 Raster data is a matrix or cube with additional spatial metadata (e.g. extent,
 resolution, and projection) that allows its values to be mapped onto geographical
-space. The [raster](){:.rlib} package provides the eponymous `raster()` function
+space. The [terra](){:.rlib} package provides the `rast()` function
 for reading the many formats of such data.
+
+In the past (from 2010 to 2020), the [raster](){:.rlib} package was the primary R package 
+for reading and working with raster data. Recently, the developer of [raster](){:.rlib}
+released [terra](){:.rlib}. The package description says that "'terra' is very similar to the 
+'raster' package; but 'terra' is simpler, better, and faster." Older versions of this lesson
+use 'raster,' and you may come across the 'raster' package when searching for help on
+geospatial data analysis in R, but we recommend [terra](){:.rlib} or [stars](){:.rlib} 
+because of their simplicity and speed advantages, and also because they are more likely 
+to be updated and maintained in the future.
+{:.notes}
 
 ===
 
@@ -17,8 +27,8 @@ The file provided in this lesson is cropped and reduced to a lower resolution in
 order to speed processing.
 
 ```{r, message = FALSE, handout = 0}
-library(raster)
-nlcd <- raster("data/nlcd_agg.grd")
+library(terra)
+nlcd <- rast("data/nlcd_agg.tif")
 ```
 
 By default, raster data is *not* loaded into working memory, as you can confirm
@@ -30,7 +40,7 @@ data and computes on each of them in sequence.
 
 ===
 
-The default `print` method for a `raster` object is a summary of metadata contained
+The default `print` method for a `SpatRaster` object is a summary of metadata contained
 in the raster file.
 
 ```{r}
@@ -46,25 +56,25 @@ pre-defined color scheme.
 plot(nlcd)
 ```
 
+You can see or modify the color scheme by calling `coltab(nlcd)`.
+
 ===
 
 The `crop()` function trims a raster object to a given spatial "extent" (or
 range of x and y values).
 
-Here, we extract the `nlcd` raster's bounding box using the `extent()` function, then
-convert the extracted extent to a 2x2 matrix of the lower left
-and upper right corners using the `matrix()` function. Next we crop the raster
-to the extent of the `huc_md` polygon, then display both layers on the same map.
+Here, we extract the `huc_md` polygon's bounding box using the `st_bbox()` function. 
+Next we crop the raster to the extent of the `huc_md` polygon, then display both 
+layers on the same map.
 (We can plot polygon and raster layers together on the same map, just like we can plot
 multiple polygon layers---as long as they have the same coordinate reference system!)
-Also note that the transformed raster is now loaded in R memory, as indicated by
-the size of `nlcd`. We could have also saved the output to disk by specifying an
+We could have also saved the output to disk by specifying an
 optional `filename` argument to `crop`; the same is true for many other
-functions in the [raster](){:.rlib} package.
+functions in the [terra](){:.rlib} package.
 {:.notes}
 
 ```{r, fig.keep = 'last', handout = 0, warning = FALSE}
-extent <- matrix(st_bbox(huc_md), nrow=2)
+extent <- st_bbox(huc_md)
 nlcd <- crop(nlcd, extent)
 plot(nlcd)
 plot(huc_md, col = NA, add = TRUE)
@@ -82,33 +92,27 @@ nlcd[1, 1]
 
 ===
 
-The meaning of this number is not immediately clear. For this particular
-dataset, the mapping of values to land cover classes is described in the data
-attributes:
+The list of unique land cover class values is found by calling `levels()` on the raster.
+Here, we look at the first 20 values.
 
 ```{r}
-head(nlcd@data@attributes[[1]])
+head(levels(nlcd)[[1]], 20)
 ```
 
-Notice the `@` syntax for extracting the attributes from the `nlcd` raster object.
-The `@` operator is used to access properties of an object known as "slots." These
-slots are nested, so we have to access the slot named `data` from the `RasterLayer`
-object, which itself has a slot called `attributes`, which is a list with the attribute
-table as its first element(!)
+Many of the values are blank because these levels correspond to the 
+[numerical NLCD codes](https://www.mrlc.gov/data/legends/national-land-cover-database-2016-nlcd2016-legend)
+(where 0 = unclassified, 11 = open water, etc.) Notice that we called 
+`levels(nlcd)[[1]]` indicating we want the levels for the first layer in the
+raster. There is only one layer in this particular raster, but other raster files
+may contain multiple layers, or "bands."
 {:.notes}
 
 ===
 
-The `Land.Cover.Class` vector gives string names for the land cover type
-corresponding to the matrix values. Note that we need to add 1 to the raster
-value, since these go from 0 to 255, whereas the indexing in R begins at 1.
+Remove the duplicated blanks to see the unique values.
 
-```{r, handout = 0}
-nlcd_attr <- nlcd@data@attributes 
-lc_types <- nlcd_attr[[1]]$Land.Cover.Class
-```
 ```{r}
-levels(lc_types)
+unique(levels(nlcd)[[1]])
 ```
 
 ===
@@ -131,12 +135,17 @@ Logical operations work too: `r1 > 5` returns a raster with pixel values `TRUE`
 or `FALSE` and is often used in combination with the `mask()` function.
 
 ```{r, fig.keep = "last", handout = 0}
-pasture <- mask(nlcd, nlcd == 81,
+pasture_code <- which(levels(nlcd)[[1]] == 'Hay/Pasture') - 1
+pasture <- mask(nlcd, nlcd == pasture_code,
     maskvalue = FALSE)
 plot(pasture)
 ```
 
-We use the `mask` function with the logical condition `nlcd == 81` and specify that we want to 
+We find the numerical code corresponding to the `"Hay/Pasture"` pixel value. Note that
+we have to subtract 1 from the index because the NLCD codes are 0-indexed (counting begins
+with zero) but the vector of levels in R is 1-indexed (counting begins with 1). We call
+the code `pasture_code`.
+We use the `mask` function with the logical condition `nlcd == pasture_code` and specify that we want to 
 unset pixel values where the mask is false (`maskvalue = FALSE`). This results in a raster 
 where all pixels that are not classified as pasture (code `81`) are removed.
 {:.notes}
@@ -149,11 +158,14 @@ function combines values in a block of a given size using a given function.
 ```{r, fig.keep="last", handout = 0}
 nlcd_agg <- aggregate(nlcd,
     fact = 25, fun = modal)
-nlcd_agg@legend <- nlcd@legend
+levels(nlcd_agg) <- levels(nlcd)
+coltab(nlcd_agg) <- coltab(nlcd)
 plot(nlcd_agg)
 ```
 
 Here, `fact = 25` means that we are aggregating blocks 25 x 25 pixels and `fun =
 modal` indicates that the aggregate value is the mode of the original pixels
-(averaging would not work since land cover is a categorical variable).
+(averaging would not work since land cover is a categorical variable). We also need to
+recreate the level names with `levels()` and the color scheme with `coltab()` after
+aggregating.
 {:.notes}

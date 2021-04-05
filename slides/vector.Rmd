@@ -7,7 +7,7 @@ excerpt: Vector Data
 The key R packages for this lesson are
 
 - [sf](){:.rlib}
-- [raster](){:.rlib}
+- [terra](){:.rlib}
 
 ===
 

@@ -7,19 +7,17 @@ excerpt: Mixing Data Types
 Raster and vector geospatial data in R require different packages. 
 The creation of geospatial tools in R has been a community effort, and not
 necessarily a well-organized one. Development is still ongoing on many packages
-dealing with raster and vector data.
-One current stumbling block is that the [raster](){:.rlib} package, which is tightly 
-integrated with the older [sp](){:.rlib} package, has not fully caught up to the [sf](){:.rlib} package. 
-The [stars](https://r-spatial.github.io/stars/) package aims to remedy this problem,
-and others, but has not yet released a "version 1.0" (it's at 0.4 as of this
-writing). In addition, the [terra](){:.rlib} package, which is better integrated with
-[sf](){:.rlib}, may ultimately replace the [raster](){:.rlib} package. It is also still in
-development (version 0.6 as of this writing).
+dealing with raster and vector data. The recent release of [terra](){:.rlib} and
+[stars](){:.rlib} means that raster packages are now integrated with [sf](){:.rlib}.
+The older [raster](){:.rlib} package was integrated with the older vector package
+[sp](){:.rlib}. However [stars](){:.rlib} has not yet released a "version 1.0" 
+(it's at 0.5-2 as of this writing). 
 {:.notes}
 
 Although not needed in this lesson, you may notice in some cases that it is necessary to
 convert a vector object from [sf](){:.rlib} (class beginning with `sfc*`) to [sp](){:.rlib}
-(class beginning with `Spatial*`) for the vector object to interact with rasters.
+(class beginning with `Spatial*`) for the vector object to interact with rasters from the
+older [raster](){:.rlib} package.
 You can do this by calling `sp_object <- as(sf_object, 'Spatial')`.
 {:.notes}
 
@@ -43,18 +41,15 @@ sesync_lc <- extract(nlcd, st_coordinates(sesync))
 ```
 
 ```{r}
-lc_types[sesync_lc + 1]
+sesync_lc
 ```
-
-Note that we need to add 1 to correctly match the land cover type name with its numerical
-code, because R's numbering starts with 1 but the table starts at 0, as mentioned above.
-{:.notes}
 
 ===
 
 When extracting with a polygon, the output is a vector of all raster values for
 pixels falling within that polygon. This code extracts all pixels within the first
 polygon in the Maryland county data frame.
+**NOTE FIXME FIXME FIXME THE TERRA PKG DOES NOT YET SUPPORT EXTRACT FROM SF. SO WE WILL HOLD OFF ON UPDATING THIS FURTHER TILL IT DOES.**
 
 ```{r, handout = 0, warning = FALSE}
 county_nlcd <- extract(nlcd_agg,
