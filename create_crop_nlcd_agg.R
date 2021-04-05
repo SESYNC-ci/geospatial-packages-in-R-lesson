@@ -14,11 +14,11 @@ maryland_ext <- ext(c(xmin = 1394535, xmax = 1845135, ymin = 1724415, ymax = 210
 nlcd_maryland <- crop(nlcd, maryland_ext) 
 nlcd_maryland_agg <- aggregate(nlcd_maryland, fact = 5, fun = 'modal')
 
-# Replace the lost color table and attributes.
-coltab(nlcd_maryland_agg) <- coltab(nlcd)
-levels(nlcd_maryland_agg) <- levels(nlcd)
+# As of April 5, this now works without having to replace the color table and attributes.
+head(coltab(nlcd_maryland_agg)[[1]], 12)
+head(levels(nlcd_maryland_agg)[[1]], 12)
 
-xtif <- writeRaster(nlcd_maryland_agg, '/nfs/public-data/training/nlcd_agg.tif', overwrite = TRUE)
-plot(xtif) # Works!
+nlcd_maryland_agg_tif <- writeRaster(nlcd_maryland_agg, '/nfs/public-data/training/nlcd_agg.tif', overwrite = TRUE)
+plot(nlcd_maryland_agg_tif) # Works!
 
 # Now there is a .tif and a .tif.aux.xml file in the training directory.
