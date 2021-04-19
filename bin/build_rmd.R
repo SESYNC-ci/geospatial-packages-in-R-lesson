@@ -81,8 +81,25 @@ deps <- unique(deps)
 deps <- lapply(deps, FUN = function(d) {
   # create path for htmlwidgets
   htmlwidgets <- str_extract(d$src$file, 'htmlwidgets.*')
-  htmlwidgets_dest <- file.path('docs', 'assets', dirname(htmlwidgets))
-  dir.create(htmlwidgets, showWarnings = FALSE, recursive = TRUE)
+  if (is.na(htmlwidgets)) {
+    if (d$name == 'leaflet-providers') {
+      htmlwidgets = 'htmlwidgets/lib/leaflet-providers'
+      d$src$file = file.path(system.file(package = 'leaflet.providers'), d$script)
+      htmlwidgets_dest <- file.path('docs', 'assets', htmlwidgets, '')
+    } else if (d$name == 'PopupTable') {
+      htmlwidgets = 'htmlwidgets/lib/popup'
+      d$src$file = file.path(
+        system.file(package = 'mapview'),
+        'htmlwidgets',
+        'lib',
+        'css',
+        '')
+      d$stylesheet = 'mapview-popup.css'
+      htmlwidgets_dest <- file.path('docs', 'assets', htmlwidgets)
+    }
+  } else {
+    htmlwidgets_dest <- file.path('docs', 'assets', dirname(htmlwidgets))
+  }
   system2('rsync', c('-a', '--update', d$src$file, htmlwidgets_dest))
   d$src <- htmlwidgets
   return(unclass(d))
