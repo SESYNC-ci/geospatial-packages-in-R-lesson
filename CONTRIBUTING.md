@@ -221,8 +221,9 @@ and display them in their "Plots" tab, not on the slide.
 ## Releases and Handouts
 
 *Before teaching a lesson*: Bump the `tag` value in `docs/_data/lesson.yml`. This will be the version number for the GitHub release. 
-Then, create a release on GitHub using the `tag` value as the version with a "handouts.zip" (created through `make release`) attached. 
-To get the file contents for the release description, use `tree` on the unzipped handouts directory. 
+Then, run `make release` to create a `handouts.zip` file in the lesson's root directory.
+Next, create a release on GitHub, using the `tag` value as the version, with `handouts.zip` (created through `make release`) attached. 
+To get the file contents for the release description, use `tree` on the unzipped `handouts` directory. 
 Copy and paste the output of `tree handouts` into the release description.
 
 *After teaching a lesson*: A lesson should be archived after any event in which it is presented&mdash;either in a workshop or à la carte setting. 
