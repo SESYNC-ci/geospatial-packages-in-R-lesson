@@ -316,16 +316,21 @@ The function `st_transform()` converts an `sfc` between coordinate reference
 systems, specified with the parameter `crs = x`. A numeric `x` must be a valid
 EPSG code; a character `x` is interpreted as a PROJ.4 string.
 
-For example, the following character string is a PROJ.4 string which has
-a list of parameters that correspond to the [EPSG code 42303](https://epsg.io/42303), 
-so you could get the same result by typing `prj <- 42303`.
+For example, the unprojected CRS of `counties` can be represented as the 
+PROJ.4 string `"+proj=longlat +datum=NAD83 +no_defs"`. This character string
+is a list of parameters that correspond to the [EPSG code 4269](https://epsg.io/4269).
+You can transform objects to that projection using the PROJ.4 string as the argument
+to `crs`, or by typing `crs = 4269`. Not all projections have an EPSG code.
+The projection in the PROJ.4 string below does not have an 
+EPSG code, for example. We'll transform all the `sfc` objects to this 
+projection because it is the one used by the NLCD raster layer we'll 
+introduce later in this lesson.
 {:.notes}
 
 ```{r, handout = 0}
 prj <- '+proj=aea +lat_1=29.5 +lat_2=45.5 \
-    +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0    \
-    +ellps=GRS80 +towgs84=0,0,0,0,0,0,0   \
-    +units=m +no_defs'
+        +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 \
+        +datum=WGS84 +units=m +no_defs'
 ```
 
 PROJ.4 strings contain a reference to the type of projection---this one is another

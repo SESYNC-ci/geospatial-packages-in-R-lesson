@@ -14,7 +14,7 @@ released [stars](){:.rlib} (**S**patio-**T**emporal **AR**ray**S**). It is integ
 more closely with [sf](){:.rlib} and related packages, as well as with the "tidyverse"
 family of packages, and has significant performance advantages. Older versions of this lesson
 use `raster`, and you may come across the `raster` package when searching for help on
-geospatial data analysis in R, but we recommend [terra](){:.rlib} or [stars](){:.rlib} 
+geospatial data analysis in R. Nevertheless we recommend [terra](){:.rlib} or [stars](){:.rlib} 
 because of their simplicity and speed advantages, and also because they are more likely 
 to be updated and maintained in the future.
 {:.notes}
@@ -100,7 +100,10 @@ the _bottom_-left corner pixel:
 nlcd[[1]][1, 1]
 ```
 
-
+The index `[1, 1]` corresponds to the bottom left pixel which matches our
+intuition for a two-dimensional image with `x` and `y` coordinates. The "origin"
+should be at the bottom left.
+{:.notes}
 
 ===
 
@@ -110,6 +113,11 @@ variable. We can display the factor levels of `nlcd[[1]]`:
 ```{r}
 levels(nlcd[[1]])
 ```
+
+Writing `pull(nlcd)` is equivalent to `nlcd[[1]]`. This can be useful if 
+you are extracting values from a raster as part of a "pipe," For example
+`nlcd %>% pull %>% levels` would give the same result as the code above.
+{:.notes}
 
 ===
 
@@ -128,17 +136,21 @@ pixel-wise on multiple rasters.
 ===
 
 Logical operations work too: `r1 > 5` returns a raster with pixel values `TRUE`
-or `FALSE` and is often used in combination with the `mask()` function.
+or `FALSE` and is often used to "mask" a raster, or remove pixels that don't
+meet a certain logical condition.
 
 ```{r, fig.keep = "last", handout = 0}
-pasture <- mask(nlcd, nlcd == 81,
-    maskvalue = FALSE)
-plot(pasture)
+forest_types <- c('Evergreen Forest', 'Deciduous Forest', 'Mixed Forest')
+forest <- nlcd
+forest[!forest %in% forest_types] <- NA
+plot(forest)
 ```
 
-We use the `mask` function with the logical condition `nlcd == 81` and specify that we want to 
-unset pixel values where the mask is false (`maskvalue = FALSE`). This results in a raster 
-where all pixels that are not classified as pasture (code `81`) are removed.
+We define a vector including the levels of `nlcd` representing three types of forest and
+create a copy of `nlcd` called `forest`. We "mask out" all pixels in `forest` that do not meet
+the logical condition `forest %in% forest_types`, setting them to `NA`. (The `!` negates a
+logical condition.) This results in a raster 
+where all pixels that are not classified as forest are removed.
 {:.notes}
 
 ===
@@ -148,15 +160,25 @@ function combines values in a block of a given size using a given method.
 
 ```{r, fig.keep="last", handout = 0}
 nlcd_agg <- st_warp(nlcd,
-    cellsize = 10000, method = 'mode', use_gdal = TRUE)
-nlcd_agg@legend <- nlcd@legend
-plot(nlcd_agg)
+                    cellsize = dim(nlcd)/10, 
+                    method = 'mode', 
+                    use_gdal = TRUE)
+
+nlcd_agg <- droplevels(nlcd_agg) 
+levels(nlcd_agg[[1]]) <- levels(nlcd[[1]]) 
 ```
 
-Here, `cellsize = 10000` means aggregate to 10-km resolution (the raster's projection
-is in units of meters) and `method = 'mode'` indicates that the aggregated value is the 
-mode of the original pixels
+Here, `cellsize = dim(nlcd)/10` divides the pixel dimensions of the original
+raster by 10 and sets that as the dimensions of the downsampled raster. Because
+the original `nlcd` raster has 150-meter pixels, this results in 1500-meter resolution.
+*note: as of May 2021 the documentation is incorrect. It says `cellsize` is the 
+size of each pixel but it is actually the dimensions of the output.*
+The argument `method = 'mode'` indicates that the aggregated value is the 
+mode of the original smaller pixels making up each individual larger output pixel
 (averaging would not work since land cover is a categorical variable). 
-`use_gdal = TRUE` ensures that we use the GDAL system library behind the scenes to
-do the aggregation.
+`use_gdal = TRUE` specifies to use the GDAL system library "behind the scenes" to
+do the aggregation, which is needed for aggregation methods including `mode`.
+Unfortunately, the call to GDAL strips away the land cover class names so we 
+replace them by dropping unused levels with `droplevels()` and then replacing the names
+with `levels()`.
 {:.notes}
