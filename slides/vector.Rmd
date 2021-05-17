@@ -7,13 +7,13 @@ excerpt: Vector Data
 The key R packages for this lesson are
 
 - [sf](){:.rlib}
-- [raster](){:.rlib}
+- [stars](){:.rlib}
 
 ===
 
 ### OSGeo Dependencies
 
-Most R packages depend on other R packages. The [sf](){:.rlib} and  [raster](){:.rlib}
+Most R packages depend on other R packages. The [sf](){:.rlib} and  [stars](){:.rlib}
 packages also depend on system libraries.
 
 - [GDAL](https://www.gdal.org) for read/write in geospatial data formats
@@ -213,6 +213,38 @@ with different coordinate systems: you must safeguard your own plots from this
 mistake. The arguments `col` and `pch`, by the way, are graphical parameters
 used in base R, see `?par`.
 {:.notes}
+
+===
+
+### Customizing maps with ggplot2
+
+The `plot` function is great for quick visualizations but the [ggplot2](){:.rlib} 
+package gives you much more flexibility to customize your plots.
+
+ADD SOME TEXT HERE EXPLAINING WAHT THE HELL IS GGPLOT
+
+```{r, handout = 0}
+library(ggplot2)
+
+ggplot() +
+  geom_sf(data = counties_md, aes(fill = ALAND)) +
+  geom_sf(data = sesync, size = 3, color = 'red')
+```
+
+===
+
+You can customize the plot theme and color scales among other things.
+
+```{r, handout = 0}
+theme_set(theme_bw())
+
+ggplot() +
+  geom_sf(data = counties_md, aes(fill = ALAND/1e6), color = NA) +
+  geom_sf(data = sesync, size = 3, color = 'red') +
+  scale_fill_viridis_c(name = 'Land area (sq. km)') +
+  theme(legend.position = c(0.3, 0.3))
+```
+
 
 ===
 

@@ -1,0 +1,43 @@
+---
+title: "creating the cropped NLCD image"
+author: "Quentin D. Read"
+date: "5/12/2021"
+output: html_document
+---
+
+This shows how I used `gdalwarp` to create the cropped NLCD image. This should have been a one liner but `gdalwarp` didn't preserve the attribute table. So I needed to do a workaround and use `terra` to write another image file with attribute table then manually copy that attribute table to the warped raster.
+
+Here use `gdalwarp` with `-tr` (target resolution) to specify that we want 150-m resolution in both directions and `-te` (target extent) to specify the extent (I took it from the dimensions of the `.grd` file used in the old lesson because the script used to create that has been lost to time.)
+
+```{bash, eval = FALSE}
+nlcdpath="/nfs/public-data/NLCD/NLCD_2016_Land_Cover_L48_20190424/NLCD_2016_Land_Cover_L48_20190424.img"
+gdalwarp -tr 150 150 -te 1394535 1724415 1845135 2101515 -of GTiff -co "COMPRESS=LZW" -overwrite ${nlcdpath} /nfs/qread-data/temp/nlcd_agg.tif
+```
+
+So far so good but there is no attribute table. The only way I could figure to make one is read in with terra, use writeRaster to make a dummy image, then copy that image's attribute table to the warped raster.
+
+```{r, eval = FALSE}
+library(terra)
+nlcd <- rast("/nfs/public-data/NLCD/NLCD_2016_Land_Cover_L48_20190424/NLCD_2016_Land_Cover_L48_20190424.img")
+
+nlcdcrop <- crop(nlcd, ext(c(xmin = 1394535, xmax = 1394635, ymin = 1724415, ymax = 1724515)))
+writeRaster(nlcdcrop, '/nfs/qread-data/temp/nlcd_temp.tif')
+```
+
+Now copy the attribute table to the new raster.
+
+```{bash, eval = FALSE}
+cp /nfs/qread-data/temp/nlcd_temp.tif.aux.xml /nfs/qread-data/temp/nlcd_agg.tif.aux.xml
+```
+
+Test.
+
+```{r}
+library(stars)
+r <- read_stars('/nfs/qread-data/temp/nlcd_agg.tif')
+plot(droplevels(r))
+```
+
+Dope! Colors and attributes are preserved!
+
+
