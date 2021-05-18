@@ -7,7 +7,7 @@
 
 ### Exercise 1
 
-Produce a map of Maryland counties with the county that contains SESYNC colored in red, using either `plot()` or `ggplot()`.
+Produce a map of Maryland counties with the county that contains SESYNC colored in red, using either `plot()` or `ggplot()`. **Hint**: use `st_filter()` to find the county that contains SESYNC.
 
 [View solution](#solution-1)
 {:.notes}
@@ -16,7 +16,7 @@ Produce a map of Maryland counties with the county that contains SESYNC colored 
 
 ### Exercise 2
 
-Use `st_buffer` to create a 5km buffer around the `state_md` border and plot it as a dotted line (`plot(..., lty = 'dotted')`) over the true state border. **Hint**: check the layer's units with `st_crs()` and express any distance in those units.
+Use `st_buffer()` to create a 5km buffer around the `state_md` border and plot it as a dotted line over the true state border. Use either `plot(..., lty = 'dotted')` or `ggplot()` with `geom_sf(..., linetype = 'dotted')`. **Hint**: check the layer's units with `st_crs()` and express any distance in those units.
 
 [View solution](#solution-2)
 {:.notes}
