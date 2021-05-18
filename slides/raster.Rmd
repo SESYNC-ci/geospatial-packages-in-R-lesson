@@ -81,7 +81,7 @@ original image file, we have to extract the color scheme using
 `attr(nlcd[[1]], 'colors')` and use it as an argument to `scale_fill_manual()`.
 {:.notes}
 
-```{r, fig.keep = 'last', handout = 0, warning = FALSE}
+```{r, handout = 0, warning = FALSE}
 md_bbox <- st_bbox(huc_md)
 nlcd <- st_crop(nlcd, md_bbox)
 

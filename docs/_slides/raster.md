@@ -124,6 +124,19 @@ original image file, we have to extract the color scheme using
 
 
 
+~~~r
+md_bbox <- st_bbox(huc_md)
+nlcd <- st_crop(nlcd, md_bbox)
+
+ggplot() +
+  geom_stars(data = nlcd) +
+  geom_sf(data = huc_md, fill = NA) +
+  scale_fill_manual(values = attr(nlcd[[1]], 'colors'))
+~~~
+{:title="{{ site.data.lesson.handouts[0] }}" .text-document}
+![ ]({% include asset.html path="images/raster/unnamed-chunk-4-1.png" %})
+{:.captioned}
+
 ===
 
 A raster is fundamentally a data matrix, and individual pixel values can be
