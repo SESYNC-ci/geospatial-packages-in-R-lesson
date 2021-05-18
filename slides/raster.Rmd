@@ -9,11 +9,12 @@ space. The [stars](){:.rlib} package provides the `read_stars()` function
 for reading the many formats of such data.
 
 In the past (from 2010 to 2020), the [raster](){:.rlib} package was the primary R package 
-for reading and working with raster data. Recently, the developers of 
+for reading and working with raster data. Recently, the developers of [sf](){:.rlib}
 released [stars](){:.rlib} (**S**patio-**T**emporal **AR**ray**S**). It is integrated
 more closely with [sf](){:.rlib} and related packages, as well as with the "tidyverse"
-family of packages, and has significant performance advantages. Older versions of this lesson
-use `raster`, and you may come across the `raster` package when searching for help on
+family of packages, and has significant performance advantages. Another new alternative
+is [terra](){:.rlib}, created by the developer of [raster](){:.rlib}. Older versions of this lesson
+use [raster](){:.rlib}, and you may come across the [raster](){:.rlib} package when searching for help on
 geospatial data analysis in R. Nevertheless we recommend [terra](){:.rlib} or [stars](){:.rlib} 
 because of their simplicity and speed advantages, and also because they are more likely 
 to be updated and maintained in the future.
@@ -100,9 +101,9 @@ the _bottom_-left corner pixel:
 nlcd[[1]][1, 1]
 ```
 
-The index `[1, 1]` corresponds to the bottom left pixel which matches our
-intuition for a two-dimensional image with `x` and `y` coordinates. The "origin"
-should be at the bottom left.
+The index `[1, 1]` corresponds to the bottom left pixel because the raster
+represents a two-dimensional image with `x` and `y` coordinates. The origin
+of the axes is at the bottom left.
 {:.notes}
 
 ===
@@ -115,7 +116,7 @@ levels(nlcd[[1]])
 ```
 
 Writing `pull(nlcd)` is equivalent to `nlcd[[1]]`. This can be useful if 
-you are extracting values from a raster as part of a "pipe," For example
+you are extracting values from a raster as part of a "pipe." For example,
 `nlcd %>% pull %>% levels` would give the same result as the code above.
 {:.notes}
 

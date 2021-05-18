@@ -4,25 +4,22 @@ excerpt: Mixing Data Types
 
 ## Crossing Rasters with Vectors
 
-EDIT THIS OBSOLETE COUPLE OF PARAGRAPHS
-
 Raster and vector geospatial data in R require different packages. 
 The creation of geospatial tools in R has been a community effort, and not
 necessarily a well-organized one. Development is still ongoing on many packages
 dealing with raster and vector data.
-One current stumbling block is that the [raster](){:.rlib} package, which is tightly 
-integrated with the older [sp](){:.rlib} package, has not fully caught up to the [sf](){:.rlib} package. 
-The [stars](https://r-spatial.github.io/stars/) package aims to remedy this problem,
-and others, but has not yet released a "version 1.0" (it's at 0.5 as of this
-writing). In addition, the [terra](){:.rlib} package, which is better integrated with
-[sf](){:.rlib}, may ultimately replace the [raster](){:.rlib} package. It is also still in
-development (version 0.6 as of this writing).
+The [stars](https://r-spatial.github.io/stars/) package has not yet released a "version 1.0" 
+(it's at 0.5 as of this writing). Developers are working hard on improving the package but
+if you notice any issues or bugs, report them on their [GitHub repo](https://github.com/r-spatial/stars).
 {:.notes}
 
-Although not needed in this lesson, you may notice in some cases that it is necessary to
+Although not needed in this lesson, you may notice when using some older geospatial packages that it is necessary to
 convert a vector object from [sf](){:.rlib} (class beginning with `sfc*`) to [sp](){:.rlib}
-(class beginning with `Spatial*`) for the vector object to interact with rasters.
-You can do this by calling `sp_object <- as(sf_object, 'Spatial')`.
+(class beginning with `Spatial*`). [sp](){:.rlib} is an older package that was replaced
+by [sf](){:.rlib}, and many geospatial packages still work with [sp](){:.rlib} objects.
+You can do this by calling `sp_object <- as(sf_object, 'Spatial')`. You may also
+need to convert a `stars` object to a `Raster*` class object, which you can do
+by calling `stars_object <- as(sf_object, 'Raster')`.
 {:.notes}
 
 The `st_extract()` function allows subsetting and aggregation of raster values based
@@ -30,10 +27,14 @@ on a vector spatial object. For example we might want to extract the NLCD land c
 class at SESYNC's location.
 
 ```{r, fig.keep='last', handout = 0}
-plot(nlcd)
+plot(nlcd, reset = FALSE)
 plot(sesync, col = 'green',
      pch = 16, cex = 2, add = TRUE)
 ```
+
+When we use `plot()` to combine raster and vector layers we need to set `reset = FALSE` on 
+the first layer we plot so that additional objects can be added to the plot.
+{:.notes}
 
 ===
 
@@ -88,9 +89,8 @@ nlcd %>%
 ===
 
 To get a summary of raster values for **each** polygon in an `sfc`
-object, use `aggregate()` and choose an aggregation function with the `FUN` argument. For
-example, this gives the most common land cover type for each polygon in
-`huc_md`.
+object, use `aggregate()` and specify an aggregation function `FUN`. This
+example gives the most common land cover type for each polygon in `huc_md`.
 
 ```{r, handout = 0, warning = FALSE}
 mymode <- function(x) names(which.max(table(x)))
@@ -104,12 +104,14 @@ so we define a simple one here and pass it to `aggregate()`.
 
 ===
 
-The result is a `stars` object but we can convert it to an `sfc` object containing polygon
+The result is a `stars` object. We can convert it to an `sfc` object containing polygon
 geometry.
 
 ```{r}
 st_as_sf(modal_lc))
 ```
+
+===
 
 Alternatively, we can extract the values from the `stars` object, add them as a new
 column to `huc_md`, and plot:
@@ -118,5 +120,6 @@ column to `huc_md`, and plot:
 huc_md <- huc_md %>% 
   mutate(modal_lc = modal_lc[[1]])
 
-plot(huc_md['modal_lc'])
+ggplot(huc_md, aes(fill = modal_lc)) + 
+  geom_sf()
 ```

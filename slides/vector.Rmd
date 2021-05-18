@@ -221,19 +221,40 @@ used in base R, see `?par`.
 The `plot` function is great for quick visualizations but the [ggplot2](){:.rlib} 
 package gives you much more flexibility to customize your plots.
 
-ADD SOME TEXT HERE EXPLAINING WAHT THE HELL IS GGPLOT
+For those not familiar with [ggplot2](){:.rlib}, a comprehensive introduction can be found in 
+the [Data Visualisation][r4ds] chapter of *R for Data Science* by Wickham and Grolemund,
+or check out SESYNC's [introductory ggplot2 lesson][introggplot2]. 
+{:.notes}
+
+Producing any type of graph with [ggplot2](){:.rlib} requires a similar sequence of steps:
+
+* Begin by calling `ggplot()` and add any further plot elements by "adding" them with `+`;
+* Specify the dataset as well as aesthetic mappings (`aes`), which associate variables in the data to graphical elements (`x` and `y` axes, color, size and shape of points, etc.);
+* Add `geom_` layers, which specify the type of graph;
+* Optionally, specify additional customization options such as axis names and limits, color themes, and more.
+
+===
+
+Let's plot the Maryland county map with `ggplot()`. 
+
+All `sf` objects can be plotted by adding `geom_sf()` layers to the plot,
+which automatically associates the `geometry` column with the `x` and `y` coordinates of the features
+in the correct projection. If there are multiple `geom_sf()` layers, `ggplot()` will
+transform all layers to the projection system of the first layer added to the plot.
+{:.notes}
+
 
 ```{r, handout = 0}
 library(ggplot2)
 
 ggplot() +
   geom_sf(data = counties_md, aes(fill = ALAND)) +
-  geom_sf(data = sesync, size = 3, color = 'red')
+  geom_sf(data = sesync, size = 3, color = 'red') 
 ```
 
 ===
 
-You can customize the plot theme and color scales among other things.
+You can customize the plot theme and color scales, among other things.
 
 ```{r, handout = 0}
 theme_set(theme_bw())
@@ -250,10 +271,10 @@ ggplot() +
 
 ### Spatial Subsetting
 
-An object created with `st_read` is a `data.frame`, which is why the `dplyr`
-function `filter` used above on the **non**-geospatial column named "STATEFP"
-worked normally. The equivalent of a filtering operation on the "geometry"
-column is called a spatial "overlay".
+An object created with `st_read()` is a `data.frame`, which is why the `dplyr`
+function `filter` used above on the **non**-geospatial column named `STATEFP`
+worked normally. The equivalent of a filtering operation on the `geometry`
+column is called a spatial "overlay."
 
 ```{r, message = FALSE}
 st_within(sesync, counties_md)
@@ -261,7 +282,7 @@ st_within(sesync, counties_md)
 
 Overlaying is a type of subsetting based on spatial (rather than numeric or
 string) matching. Matching is implemented with functions like `st_within(x, y)`.
-The output implies that the 1<sup>st</sup> (and only) point in `sesync` is within the 5<sup>th</sup>
+The output `1: 5` means that the 1<sup>st</sup> (and only) point in `sesync` is within the 5<sup>th</sup>
 element of `counties_md`.
 {:.notes}
 
@@ -443,3 +464,6 @@ become less precise over larger distances, where the Earth's curvature is
 noticeable. To calculate geodesic distances that account for that curvature,
 check out the [geosphere](){:.rlib} package.
 {:.notes}
+
+[r4ds]: https://r4ds.had.co.nz/data-visualisation.html
+[introggplot2]: https://cyberhelp.sesync.org/graphics-with-ggplot2-lesson/
