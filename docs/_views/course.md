@@ -23,7 +23,7 @@ Lesson {{ site.data.lesson.lesson }} with *{{ site.data.lesson.instructor }}*
 <a name="{{ id }}"></a>
 {% assign vslides = hslide.content | split: "<p>===</p>" %}
 {% for vslide in vslides %}
-{{ vslide }}
+<section>{{ vslide }}</section>
 {% endfor %}
 [Top of Section](#{{ id }})
 {:.ToS}

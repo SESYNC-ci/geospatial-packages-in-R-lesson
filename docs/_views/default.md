@@ -32,7 +32,7 @@ permalink: /index.html
 <a name="{{ id }}"></a>
 {% assign vslides = hslide.content | split: "<p>===</p>" %}
 {% for vslide in vslides %}
-{{ vslide }}
+<section>{{ vslide }}</section>
 {% endfor %}
 [Top of Section](#{{ id }})
 {:.ToS}
