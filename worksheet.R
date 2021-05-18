@@ -3,9 +3,7 @@
 library(...)
 
 shp <- 'data/cb_2016_us_county_5m'
-counties <- ...(
-    ...,
-    stringsAsFactors = FALSE)
+counties <- ...(...)
 
 sesync <- ...(
     ...(c(-76.503394, 38.976546)),
@@ -27,17 +25,30 @@ plot(...)
 plot(..., add = ...)
 plot(..., col = "green", pch = 20, ...)
 
+## Plotting with ggplot2
+
+library(...)
+
+ggplot() +
+    ...(data = ..., aes(...)) +
+    ...(..., size = 3, color = 'red')  
+
+theme_set(theme_bw())
+
+ggplot() +
+    geom_sf(data = counties_md, aes(fill = ...), ...) +
+    geom_sf(data = sesync, size = 3, color = 'red') +
+    scale_fill_viridis_c(... = 'Land area (sq. km)') +
+    theme(... = c(0.3, 0.3))
+
 ## Coordinate Transforms
 
 shp <- 'data/huc250k'
-huc <- st_read(
-    ...,
-    stringsAsFactors = FALSE)
+huc <- st_read(...)
 
 prj <- '+proj=aea +lat_1=29.5 +lat_2=45.5 \
-    +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0    \
-    +ellps=GRS80 +towgs84=0,0,0,0,0,0,0   \
-    +units=m +no_defs'
+        +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 \
+        +datum=WGS84 +units=m +no_defs'
 
 counties_md <- st_transform(
     counties_md,
@@ -64,14 +75,18 @@ plot(..., border = 'blue',
 ## Raster Data
 
 library(...)
-nlcd <- raster(...)
+nlcd <- ...("data/nlcd_agg.tif", ...)
+nlcd <- droplevels(...)
 
 ## Crop
 
-... <- matrix(..., ...)
-nlcd <- crop(..., ...)
-plot(nlcd)
-plot(...)
+md_bbox <- ...
+nlcd <- st_crop(..., ...)
+
+ggplot() +
+    ...(data = nlcd) +
+    ...(data = ..., fill = NA) +
+    scale_fill_manual(values = attr(nlcd[[1]], ...))
 
 ## Raster data attributes
 
@@ -80,29 +95,46 @@ lc_types <- nlcd_attr...$...
 
 ## Raster math
 
-pasture <- mask(nlcd, nlcd == 81,
-    maskvalue = FALSE)
-plot(pasture)
+forest_types <- c('Evergreen Forest', 'Deciduous Forest', 'Mixed Forest')
+forest <- nlcd
+forest[...(... %in% ...)] <- ...
+plot(forest)
+
+## Downsampling a raster
 
 nlcd_agg <- ...(nlcd,
-    ...,
-    ...)
-nlcd_agg@legend <- ...
-plot(nlcd_agg)
+                ... = 1500, 
+                method = ..., 
+                use_gdal = TRUE)
+
+nlcd_agg <- ...(nlcd_agg) 
+...(...[[1]]) <- ...(nlcd[[1]]) 
 
 ## Mixing rasters and vectors
 
-plot(nlcd)
+plot(nlcd, ... = FALSE)
 plot(sesync, col = 'green',
      pch = 16, cex = 2, ...)
 
-sesync_lc <- ...(nlcd, st_coordinates(...))
+sesync_lc <- ...(nlcd, ...)
 
-county_nlcd <- ...
+baltimore <- nlcd_agg[...]
+plot(baltimore)
 
-modal_lc <- extract(..., ..., ...)
-... <- ... %>%
-    mutate(modal_lc = ...[...])
+nlcd %>%
+    ...(counties_md[1, ]) %>%
+    ... %>%
+    ...
+
+mymode <- function(x) names(which.max(table(x)))
+
+modal_lc <- aggregate(..., ..., ... = mymode) 
+
+huc_md <- huc_md %>% 
+    ...(modal_lc = ...)
+
+ggplot(..., aes(fill = ...)) + 
+    geom_sf()
 
 ## Leaflet
 

@@ -82,8 +82,9 @@ original image file, we have to extract the color scheme using
 {:.notes}
 
 ```{r, fig.keep = 'last', handout = 0, warning = FALSE}
-extent <- st_bbox(huc_md)
-nlcd <- st_crop(nlcd, extent)
+md_bbox <- st_bbox(huc_md)
+nlcd <- st_crop(nlcd, md_bbox)
+
 ggplot() +
   geom_stars(data = nlcd) +
   geom_sf(data = huc_md, fill = NA) +
@@ -143,7 +144,7 @@ meet a certain logical condition.
 ```{r, fig.keep = "last", handout = 0}
 forest_types <- c('Evergreen Forest', 'Deciduous Forest', 'Mixed Forest')
 forest <- nlcd
-forest[!forest %in% forest_types] <- NA
+forest[!(forest %in% forest_types)] <- NA
 plot(forest)
 ```
 
@@ -161,7 +162,7 @@ function combines values in a block of a given size using a given method.
 
 ```{r, fig.keep="last", handout = 0}
 nlcd_agg <- st_warp(nlcd,
-                    cellsize = dim(nlcd)/10, 
+                    cellsize = 1500, 
                     method = 'mode', 
                     use_gdal = TRUE)
 
@@ -169,13 +170,11 @@ nlcd_agg <- droplevels(nlcd_agg)
 levels(nlcd_agg[[1]]) <- levels(nlcd[[1]]) 
 ```
 
-Here, `cellsize = dim(nlcd)/10` divides the pixel dimensions of the original
-raster by 10 and sets that as the dimensions of the downsampled raster. Because
-the original `nlcd` raster has 150-meter pixels, this results in 1500-meter resolution.
-*note: as of May 2021 the documentation is incorrect. It says `cellsize` is the 
-size of each pixel but it is actually the dimensions of the output.*
+Here, `cellsize = 1500` specifies that the raster should be downsampled to 1500-meter
+pixel size. The input raster has 150-meter resolution, so this will convert
+10-by-10 blocks of pixels to single pixels.
 The argument `method = 'mode'` indicates that the aggregated value is the 
-mode of the original smaller pixels making up each individual larger output pixel
+mode of the input pixels making up each output pixel
 (averaging would not work since land cover is a categorical variable). 
 `use_gdal = TRUE` specifies to use the GDAL system library "behind the scenes" to
 do the aggregation, which is needed for aggregation methods including `mode`.

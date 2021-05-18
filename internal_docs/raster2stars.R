@@ -82,7 +82,7 @@ plot(pasture)
 
 # warp to aggregate. Currently cellsize is incorrectly implemented but hopefully this will be fixed soon.
 nlcd_agg <- st_warp(nlcd,
-                    cellsize = dim(nlcd)/10, method = 'mode', use_gdal = TRUE)
+                    cellsize = 1500, method = 'mode', use_gdal = TRUE)
 
 nlcd_agg # Delta is now 1500.
 # Colors are retained but attributes have been stripped 
@@ -92,7 +92,7 @@ levels(nlcd_agg[[1]]) <- levels(nlcd[[1]])
 plot(nlcd_agg)
 
 # extract points
-sesync_lc <- st_extract(nlcd, sesync) # Doesn't work.
+sesync_lc <- st_extract(nlcd, sesync) 
 nlcd[sesync]
 
 # extract polygon

@@ -40,9 +40,7 @@ The [sf](){:.rlib} package reads shapefiles (".shp") and most other vector data:
 library(sf)
 
 shp <- 'data/cb_2016_us_county_5m'
-counties <- st_read(
-  shp,
-  stringsAsFactors = FALSE)
+counties <- st_read(shp)
 ```
 
 The object `shp` is a character string with the location of a folder that contains
@@ -226,6 +224,8 @@ the [Data Visualisation][r4ds] chapter of *R for Data Science* by Wickham and Gr
 or check out SESYNC's [introductory ggplot2 lesson][introggplot2]. 
 {:.notes}
 
+===
+
 Producing any type of graph with [ggplot2](){:.rlib} requires a similar sequence of steps:
 
 * Begin by calling `ggplot()` and add any further plot elements by "adding" them with `+`;
@@ -266,6 +266,16 @@ ggplot() +
   theme(legend.position = c(0.3, 0.3))
 ```
 
+Here, we first set the plot theme for all other `ggplot()` plots we create in this 
+session to a black-and-white theme to get rid of the gray background.
+Next, we divide the land area value by `1e6` to convert it to square km, then
+specify `color = NA` for the county polygons so there is no border drawn around them.
+We add a colorblind-friendly `viridis` fill scale for the polygons and add an
+understandable legend title with the `name` argument to the fill scale. Finally
+we move the legend to coordinates `c(0.3, 0.3)` in the panel (the legend position
+can range from 0 to 1 on both axes). In all cases we add additional customization 
+elements to the base plot using `+`.
+{:.notes}
 
 ===
 
@@ -308,9 +318,7 @@ downloaded from the United States Geological Survey.
 
 ```{r, results = 'hide', message = FALSE, handout = 0}
 shp <- 'data/huc250k'
-huc <- st_read(
-  shp,
-  stringsAsFactors = FALSE)
+huc <- st_read(shp)
 ```
 
 ===
