@@ -8,77 +8,118 @@ Raster and vector geospatial data in R require different packages.
 The creation of geospatial tools in R has been a community effort, and not
 necessarily a well-organized one. Development is still ongoing on many packages
 dealing with raster and vector data.
-One current stumbling block is that the [raster](){:.rlib} package, which is tightly 
-integrated with the older [sp](){:.rlib} package, has not fully caught up to the [sf](){:.rlib} package. 
-The [stars](https://r-spatial.github.io/stars/) package aims to remedy this problem,
-and others, but has not yet released a "version 1.0" (it's at 0.4 as of this
-writing). In addition, the [terra](){:.rlib} package, which is better integrated with
-[sf](){:.rlib}, may ultimately replace the [raster](){:.rlib} package. It is also still in
-development (version 0.6 as of this writing).
+The [stars](https://r-spatial.github.io/stars/) package has not yet released a "version 1.0" 
+(it's at 0.5 as of this writing). Developers are working hard on improving the package but
+if you notice any issues or bugs, report them on their [GitHub repo](https://github.com/r-spatial/stars).
 {:.notes}
 
-Although not needed in this lesson, you may notice in some cases that it is necessary to
+Although not needed in this lesson, you may notice when using some older geospatial packages that it is necessary to
 convert a vector object from [sf](){:.rlib} (class beginning with `sfc*`) to [sp](){:.rlib}
-(class beginning with `Spatial*`) for the vector object to interact with rasters.
-You can do this by calling `sp_object <- as(sf_object, 'Spatial')`.
+(class beginning with `Spatial*`). [sp](){:.rlib} is an older package that was replaced
+by [sf](){:.rlib}, and many geospatial packages still work with [sp](){:.rlib} objects.
+You can do this by calling `sp_object <- as(sf_object, 'Spatial')`. You may also
+need to convert a `stars` object to a `Raster*` class object, which you can do
+by calling `stars_object <- as(sf_object, 'Raster')`.
 {:.notes}
 
-The `extract` function allows subsetting and aggregation of raster values based
+The `st_extract()` function allows subsetting and aggregation of raster values based
 on a vector spatial object. For example we might want to extract the NLCD land cover 
 class at SESYNC's location.
 
 ```{r, fig.keep='last', handout = 0}
-plot(nlcd)
+plot(nlcd, reset = FALSE)
 plot(sesync, col = 'green',
      pch = 16, cex = 2, add = TRUE)
 ```
 
-===
-
-Pull the coordinates from the `sfc` object containing SESYNC's point location and call `extract`.
-When extracting by point locations, the result is a vector of values corresponding to each point. 
-
-```{r, handout = 0}
-sesync_lc <- extract(nlcd, st_coordinates(sesync))
-```
-
-```{r}
-lc_types[sesync_lc + 1]
-```
-
-Note that we need to add 1 to correctly match the land cover type name with its numerical
-code, because R's numbering starts with 1 but the table starts at 0, as mentioned above.
+When we use `plot()` to combine raster and vector layers we need to set `reset = FALSE` on 
+the first layer we plot so that additional objects can be added to the plot.
 {:.notes}
 
 ===
 
-When extracting with a polygon, the output is a vector of all raster values for
-pixels falling within that polygon. This code extracts all pixels within the first
-polygon in the Maryland county data frame.
+Call `st_extract()` on the `nlcd` raster and the `sfc` object containing SESYNC's point location.
+When extracting by point locations, the result is another `sfc` with `POINT` geometry and
+a column containing the pixel values from the raster at each point.
 
-```{r, handout = 0, warning = FALSE}
-county_nlcd <- extract(nlcd_agg,
-    counties_md[1,])
+```{r, handout = 0}
+sesync_lc <- st_extract(nlcd, sesync)
 ```
 
 ```{r}
-table(county_nlcd)
+sesync_lc
+```
+
+===
+
+Instead of returning a point geometry, you might want to mask a raster by a point geometry instead. 
+You can use the indexing operator `[]` to do this. This will set
+all pixels in the raster not overlapping the point geometry to `NA`.
+
+```{r}
+nlcd[sesync]
+```
+
+===
+
+To extract with a polygon, first subset the raster by the polygon geometry. For example
+here we subset the low-resolution NLCD raster by the first row of `counties_md` 
+(Baltimore City), resulting in a raster with smaller dimensions that we can plot.
+
+```{r, handout = 0}
+baltimore <- nlcd_agg[counties_md[1, ]]
+plot(baltimore)
+```
+
+The expression `nlcd_agg[counties_md[1, ]]` is equivalent to `st_crop(nlcd_agg, counties_md[1, ])`.
+The version with `st_crop()` is a bit easier to use with pipes.
+
+===
+
+Here we use a pipe to crop the high-resolution NLCD raster to the boundaries of Baltimore City,
+pull the values as a matrix, and tabulate them.
+
+```{r, handout = 0}
+nlcd %>%
+  st_crop(counties_md[1, ]) %>%
+  pull %>%
+  table
 ```
 
 ===
 
 To get a summary of raster values for **each** polygon in an `sfc`
-object, add an aggregation function to `extract` via the `fun` argument. For
-example, `fun = modal` gives the most common land cover type for each polygon in
-`huc_md`.
+object, use `aggregate()` and specify an aggregation function `FUN`. This
+example gives the most common land cover type for each polygon in `huc_md`.
 
 ```{r, handout = 0, warning = FALSE}
-modal_lc <- extract(nlcd_agg,
-    huc_md, fun = modal)
-huc_md <- huc_md %>%
-  mutate(modal_lc = lc_types[modal_lc + 1])
+mymode <- function(x) names(which.max(table(x)))
+
+modal_lc <- aggregate(nlcd_agg, huc_md, FUN = mymode) 
 ```
 
+The [stars](){:.rlib} package (and base R for that matter) currently have no built-in mode function
+so we define a simple one here and pass it to `aggregate()`.
+{:.notes}
+
+===
+
+The result is a `stars` object. We can convert it to an `sfc` object containing polygon
+geometry.
+
 ```{r}
-huc_md
+st_as_sf(modal_lc))
+```
+
+===
+
+Alternatively, we can extract the values from the `stars` object, add them as a new
+column to `huc_md`, and plot:
+
+```{r, handout = 0}
+huc_md <- huc_md %>% 
+  mutate(modal_lc = modal_lc[[1]])
+
+ggplot(huc_md, aes(fill = modal_lc)) + 
+  geom_sf()
 ```

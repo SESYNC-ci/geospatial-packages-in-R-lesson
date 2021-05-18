@@ -18,7 +18,13 @@ nlcd_maryland_agg <- aggregate(nlcd_maryland, fact = 5, fun = 'modal')
 head(coltab(nlcd_maryland_agg)[[1]], 12)
 head(levels(nlcd_maryland_agg)[[1]], 12)
 
-nlcd_maryland_agg_tif <- writeRaster(nlcd_maryland_agg, '/nfs/public-data/training/nlcd_agg.tif', overwrite = TRUE)
+# Do not edit the projection at this point as it will cause issues later.
+# Transform all sf objects into the raster's projection.
+
+nlcd_maryland_agg_tif <- writeRaster(nlcd_maryland_agg, '/nfs/qread-data/temp/nlcd_agg.tif', overwrite = TRUE)
 plot(nlcd_maryland_agg_tif) # Works!
 
-# Now there is a .tif and a .tif.aux.xml file in the training directory.
+# Now there is a .tif and a .tif.aux.xml file in the temp directory (need to manually move file to training directory due to permissions)
+
+# Print CRS to use in lesson
+crs(nlcd_maryland_agg_tif, proj4 = TRUE)
