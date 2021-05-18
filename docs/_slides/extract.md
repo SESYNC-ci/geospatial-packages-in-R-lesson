@@ -8,29 +8,39 @@ Raster and vector geospatial data in R require different packages.
 The creation of geospatial tools in R has been a community effort, and not
 necessarily a well-organized one. Development is still ongoing on many packages
 dealing with raster and vector data.
-One current stumbling block is that the [raster](){:.rlib} package, which is tightly 
-integrated with the older [sp](){:.rlib} package, has not fully caught up to the [sf](){:.rlib} package. 
-The [stars](https://r-spatial.github.io/stars/) package aims to remedy this problem,
-and others, but has not yet released a "version 1.0" (it's at 0.4 as of this
-writing). In addition, the [terra](){:.rlib} package, which is better integrated with
-[sf](){:.rlib}, may ultimately replace the [raster](){:.rlib} package. It is also still in
-development (version 0.6 as of this writing).
+The [stars](https://r-spatial.github.io/stars/) package has not yet released a "version 1.0" 
+(it's at 0.5 as of this writing). Developers are working hard on improving the package but
+if you notice any issues or bugs, report them on their [GitHub repo](https://github.com/r-spatial/stars).
 {:.notes}
 
-Although not needed in this lesson, you may notice in some cases that it is necessary to
+Although not needed in this lesson, you may notice when using some older geospatial packages that it is necessary to
 convert a vector object from [sf](){:.rlib} (class beginning with `sfc*`) to [sp](){:.rlib}
-(class beginning with `Spatial*`) for the vector object to interact with rasters.
-You can do this by calling `sp_object <- as(sf_object, 'Spatial')`.
+(class beginning with `Spatial*`). [sp](){:.rlib} is an older package that was replaced
+by [sf](){:.rlib}, and many geospatial packages still work with [sp](){:.rlib} objects.
+You can do this by calling `sp_object <- as(sf_object, 'Spatial')`. You may also
+need to convert a `stars` object to a `Raster*` class object, which you can do
+by calling `stars_object <- as(sf_object, 'Raster')`.
 {:.notes}
 
-The `extract` function allows subsetting and aggregation of raster values based
+The `st_extract()` function allows subsetting and aggregation of raster values based
 on a vector spatial object. For example we might want to extract the NLCD land cover 
 class at SESYNC's location.
 
 
 
 ~~~r
-plot(nlcd)
+plot(nlcd, reset = FALSE)
+~~~
+{:title="{{ site.data.lesson.handouts[0] }}" .text-document}
+
+
+~~~
+downsample set to c(3,3)
+~~~
+{:.output}
+
+
+~~~r
 plot(sesync, col = 'green',
      pch = 16, cex = 2, add = TRUE)
 ~~~
@@ -38,49 +48,20 @@ plot(sesync, col = 'green',
 ![ ]({% include asset.html path="images/extract/unnamed-chunk-1-1.png" %})
 {:.captioned}
 
-===
-
-Pull the coordinates from the `sfc` object containing SESYNC's point location and call `extract`.
-When extracting by point locations, the result is a vector of values corresponding to each point. 
-
-
-
-~~~r
-sesync_lc <- extract(nlcd, st_coordinates(sesync))
-~~~
-{:title="{{ site.data.lesson.handouts[0] }}" .text-document}
-
-
-
-
-~~~r
-> lc_types[sesync_lc + 1]
-~~~
-{:title="Console" .input}
-
-
-~~~
-[1] Developed, Medium Intensity
-18 Levels:  Barren Land Cultivated Crops ... Woody Wetlands
-~~~
-{:.output}
-
-
-Note that we need to add 1 to correctly match the land cover type name with its numerical
-code, because R's numbering starts with 1 but the table starts at 0, as mentioned above.
+When we use `plot()` to combine raster and vector layers we need to set `reset = FALSE` on 
+the first layer we plot so that additional objects can be added to the plot.
 {:.notes}
 
 ===
 
-When extracting with a polygon, the output is a vector of all raster values for
-pixels falling within that polygon. This code extracts all pixels within the first
-polygon in the Maryland county data frame.
+Call `st_extract()` on the `nlcd` raster and the `sfc` object containing SESYNC's point location.
+When extracting by point locations, the result is another `sfc` with `POINT` geometry and
+a column containing the pixel values from the raster at each point.
 
 
 
 ~~~r
-county_nlcd <- extract(nlcd_agg,
-    counties_md[1,])
+sesync_lc <- st_extract(nlcd, sesync)
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
 
@@ -88,15 +69,113 @@ county_nlcd <- extract(nlcd_agg,
 
 
 ~~~r
-> table(county_nlcd)
+> sesync_lc
 ~~~
 {:title="Console" .input}
 
 
 ~~~
-county_nlcd
-11 21 22 23 24 41 
- 3  1  4  5  2  1 
+Simple feature collection with 1 feature and 1 field
+Geometry type: POINT
+Dimension:     XY
+Bounding box:  xmin: 1661671 ymin: 1943332 xmax: 1661671 ymax: 1943332
+CRS:           +proj=aea +lat_1=29.5 +lat_2=45.5 
+        +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 
+        +datum=WGS84 +units=m +no_defs
+                 nlcd_agg.tif                geometry
+1 Developed, Medium Intensity POINT (1661671 1943332)
+~~~
+{:.output}
+
+
+===
+
+Instead of returning a point geometry, you might want to mask a raster by a point geometry instead. 
+You can use the indexing operator `[]` to do this. This will set
+all pixels in the raster not overlapping the point geometry to `NA`.
+
+
+
+~~~r
+> nlcd[sesync]
+~~~
+{:title="Console" .input}
+
+
+~~~
+stars object with 2 dimensions and 1 attribute
+attribute(s):
+                     nlcd_agg.tif 
+ Developed, Medium Intensity:1    
+ Unclassified               :0    
+ Open Water                 :0    
+ Developed, Open Space      :0    
+ Developed, Low Intensity   :0    
+ Developed, High Intensity  :0    
+ (Other)                    :0    
+dimension(s):
+  from   to  offset delta                       refsys point values x/y
+x 1781 1781 1394535   150 PROJCS["Albers_Conical_Eq... FALSE   NULL [x]
+y 1055 1055 2101515  -150 PROJCS["Albers_Conical_Eq... FALSE   NULL [y]
+~~~
+{:.output}
+
+
+===
+
+To extract with a polygon, first subset the raster by the polygon geometry. For example
+here we subset the low-resolution NLCD raster by the first row of `counties_md` 
+(Baltimore City), resulting in a raster with smaller dimensions that we can plot.
+
+
+
+~~~r
+baltimore <- nlcd_agg[counties_md[1, ]]
+plot(baltimore)
+~~~
+{:title="{{ site.data.lesson.handouts[0] }}" .text-document}
+![ ]({% include asset.html path="images/extract/unnamed-chunk-5-1.png" %})
+{:.captioned}
+
+===
+
+The expression `nlcd_agg[counties_md[1, ]]` is equivalent to `st_crop(nlcd_agg, counties_md[1, ])`.
+The version with `st_crop()` is a bit easier to use with pipes.
+
+===
+
+Here we use a pipe to crop the high-resolution NLCD raster to the boundaries of Baltimore City,
+pull the values as a matrix, and tabulate them.
+
+
+
+~~~r
+nlcd %>%
+  st_crop(counties_md[1, ]) %>%
+  pull %>%
+  table
+~~~
+{:title="{{ site.data.lesson.handouts[0] }}" .text-document}
+
+
+~~~
+.
+                 Unclassified                    Open Water 
+                            0                           580 
+        Developed, Open Space      Developed, Low Intensity 
+                         1784                          2274 
+  Developed, Medium Intensity     Developed, High Intensity 
+                         2414                          2067 
+                  Barren Land              Deciduous Forest 
+                           62                           563 
+             Evergreen Forest                  Mixed Forest 
+                            8                            78 
+                  Shrub/Scrub                   Herbaceuous 
+                            3                             8 
+                  Hay/Pasture              Cultivated Crops 
+                           26                            22 
+               Woody Wetlands Emergent Herbaceuous Wetlands 
+                           26                             2 
 ~~~
 {:.output}
 
@@ -104,61 +183,74 @@ county_nlcd
 ===
 
 To get a summary of raster values for **each** polygon in an `sfc`
-object, add an aggregation function to `extract` via the `fun` argument. For
-example, `fun = modal` gives the most common land cover type for each polygon in
-`huc_md`.
+object, use `aggregate()` and specify an aggregation function `FUN`. This
+example gives the most common land cover type for each polygon in `huc_md`.
 
 
 
 ~~~r
-modal_lc <- extract(nlcd_agg,
-    huc_md, fun = modal)
-huc_md <- huc_md %>%
-  mutate(modal_lc = lc_types[modal_lc + 1])
+mymode <- function(x) names(which.max(table(x)))
+
+modal_lc <- aggregate(nlcd_agg, huc_md, FUN = mymode) 
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
 
 
+The [stars](){:.rlib} package (and base R for that matter) currently have no built-in mode function
+so we define a simple one here and pass it to `aggregate()`.
+{:.notes}
+
+===
+
+The result is a `stars` object. We can convert it to an `sfc` object containing polygon
+geometry.
+
 
 
 ~~~r
-> huc_md
+> st_as_sf(modal_lc)
 ~~~
 {:title="Console" .input}
 
 
 ~~~
-Simple feature collection with 30 features and 11 fields
-geometry type:  GEOMETRY
-dimension:      XY
-bbox:           xmin: 1396621 ymin: 1837626 xmax: 1797029 ymax: 2037741
-CRS:            +proj=aea +lat_1=29.5 +lat_2=45.5 
-    +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0    
-    +ellps=GRS80 +towgs84=0,0,0,0,0,0,0   
-    +units=m +no_defs
+Simple feature collection with 30 features and 1 field
+Geometry type: GEOMETRY
+Dimension:     XY
+Bounding box:  xmin: 1396621 ymin: 1837626 xmax: 1797029 ymax: 2037741
+CRS:           +proj=aea +lat_1=29.5 +lat_2=45.5 
+        +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 
+        +datum=WGS84 +units=m +no_defs
 First 10 features:
-         AREA PERIMETER HUC250K_ HUC250K_ID HUC_CODE              HUC_NAME REG
-1  6413577966  454290.2      904        916 02050306     Lower Susquehanna  02
-2  1982478663  292729.7      916        927 02040205  Brandywine-Christina  02
-3  5910074657  503796.5      938        948 02070004 Conococheague-Opequon  02
-4  3159193443  506765.4      957        968 02060002     Chester-Sassafras  02
-5  4580816836  433034.1      967        978 05020006          Youghiogheny  05
-6  2502118608  252945.8      976        987 02070009              Monocacy  02
-7  3483549988  415851.4      988        999 02060003    Gunpowder-Patapsco  02
-8  3582821909  935625.3      993       1004 02060001  Upper Chesapeake Bay  02
-9  3117956776  378807.0      999       1009 02070003          Cacapon-Town  02
-10 3481485179  373451.5     1003       1013 02070002  North Branch Potomac  02
-    SUB    ACC      CAT                       geometry         modal_lc
-1  0205 020503 02050306 MULTIPOLYGON (((1683575 203... Deciduous Forest
-2  0204 020402 02040205 MULTIPOLYGON (((1707075 202...      Hay/Pasture
-3  0207 020700 02070004 POLYGON ((1563403 2008455, ...      Hay/Pasture
-4  0206 020600 02060002 POLYGON ((1701439 2037188, ... Cultivated Crops
-5  0502 050200 05020006 POLYGON ((1441528 1985664, ... Deciduous Forest
-6  0207 020700 02070009 POLYGON ((1610557 2016043, ... Cultivated Crops
-7  0206 020600 02060003 POLYGON ((1610557 2016043, ... Deciduous Forest
-8  0206 020600 02060001 MULTIPOLYGON (((1691021 201...       Open Water
-9  0207 020700 02070003 POLYGON ((1496410 1995810, ... Deciduous Forest
-10 0207 020700 02070002 POLYGON ((1468299 1990565, ... Deciduous Forest
+   filea41552ad355a.tif                       geometry
+1      Deciduous Forest MULTIPOLYGON (((1683575 203...
+2           Hay/Pasture MULTIPOLYGON (((1707075 202...
+3      Deciduous Forest POLYGON ((1563403 2008455, ...
+4      Cultivated Crops POLYGON ((1701439 2037188, ...
+5      Deciduous Forest POLYGON ((1441528 1985664, ...
+6           Hay/Pasture POLYGON ((1610557 2016043, ...
+7      Deciduous Forest POLYGON ((1610557 2016043, ...
+8            Open Water MULTIPOLYGON (((1691021 201...
+9      Deciduous Forest POLYGON ((1496410 1995810, ...
+10     Deciduous Forest POLYGON ((1468299 1990565, ...
 ~~~
 {:.output}
 
+
+===
+
+Alternatively, we can extract the values from the `stars` object, add them as a new
+column to `huc_md`, and plot:
+
+
+
+~~~r
+huc_md <- huc_md %>% 
+  mutate(modal_lc = modal_lc[[1]])
+
+ggplot(huc_md, aes(fill = modal_lc)) + 
+  geom_sf()
+~~~
+{:title="{{ site.data.lesson.handouts[0] }}" .text-document}
+![ ]({% include asset.html path="images/extract/unnamed-chunk-9-1.png" %})
+{:.captioned}

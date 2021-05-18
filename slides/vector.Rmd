@@ -51,8 +51,7 @@ ensures that text columns in the data frame are strings, not factors.
 ===
 
 The `counties` object is a `data.frame` that includes a `sfc`, which stands for
-"simple feature column". This special column is usually called "geometry" or
-"geom" (not to be confused with ggplot's `geom`s)!
+"simple feature column". This special column is usually called "geometry."
 
 ```{r}
 head(counties)
@@ -248,8 +247,10 @@ transform all layers to the projection system of the first layer added to the pl
 library(ggplot2)
 
 ggplot() +
-  geom_sf(data = counties_md, aes(fill = ALAND)) +
-  geom_sf(data = sesync, size = 3, color = 'red') 
+  geom_sf(data = counties_md, 
+          aes(fill = ALAND)) +
+  geom_sf(data = sesync, 
+          size = 3, color = 'red') 
 ```
 
 ===
@@ -260,8 +261,10 @@ You can customize the plot theme and color scales, among other things.
 theme_set(theme_bw())
 
 ggplot() +
-  geom_sf(data = counties_md, aes(fill = ALAND/1e6), color = NA) +
-  geom_sf(data = sesync, size = 3, color = 'red') +
+  geom_sf(data = counties_md, 
+          aes(fill = ALAND/1e6), color = NA) +
+  geom_sf(data = sesync, 
+          size = 3, color = 'red') +
   scale_fill_viridis_c(name = 'Land area (sq. km)') +
   theme(legend.position = c(0.3, 0.3))
 ```

@@ -7,13 +7,13 @@ excerpt: Vector Data
 The key R packages for this lesson are
 
 - [sf](){:.rlib}
-- [raster](){:.rlib}
+- [stars](){:.rlib}
 
 ===
 
 ### OSGeo Dependencies
 
-Most R packages depend on other R packages. The [sf](){:.rlib} and  [raster](){:.rlib}
+Most R packages depend on other R packages. The [sf](){:.rlib} and  [stars](){:.rlib}
 packages also depend on system libraries.
 
 - [GDAL](https://www.gdal.org) for read/write in geospatial data formats
@@ -42,9 +42,7 @@ The [sf](){:.rlib} package reads shapefiles (".shp") and most other vector data:
 library(sf)
 
 shp <- 'data/cb_2016_us_county_5m'
-counties <- st_read(
-  shp,
-  stringsAsFactors = FALSE)
+counties <- st_read(shp)
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
 
@@ -57,8 +55,7 @@ ensures that text columns in the data frame are strings, not factors.
 ===
 
 The `counties` object is a `data.frame` that includes a `sfc`, which stands for
-"simple feature column". This special column is usually called "geometry" or
-"geom" (not to be confused with ggplot's `geom`s)!
+"simple feature column". This special column is usually called "geometry."
 
 
 
@@ -374,32 +371,119 @@ used in base R, see `?par`.
 
 ===
 
-### Spatial Subsetting
+### Customizing maps with ggplot2
 
-An object created with `st_read` is a `data.frame`, which is why the `dplyr`
-function `filter` used above on the **non**-geospatial column named "STATEFP"
-worked normally. The equivalent of a filtering operation on the "geometry"
-column is called a spatial "overlay".
+The `plot` function is great for quick visualizations but the [ggplot2](){:.rlib} 
+package gives you much more flexibility to customize your plots.
+
+For those not familiar with [ggplot2](){:.rlib}, a comprehensive introduction can be found in 
+the [Data Visualisation][r4ds] chapter of *R for Data Science* by Wickham and Grolemund,
+or check out SESYNC's [introductory ggplot2 lesson][introggplot2]. 
+{:.notes}
+
+===
+
+Producing any type of graph with [ggplot2](){:.rlib} requires a similar sequence of steps:
+
+* Begin by calling `ggplot()` and add any further plot elements by "adding" them with `+`;
+* Specify the dataset as well as aesthetic mappings (`aes`), which associate variables in the data to graphical elements (`x` and `y` axes, color, size and shape of points, etc.);
+* Add `geom_` layers, which specify the type of graph;
+* Optionally, specify additional customization options such as axis names and limits, color themes, and more.
+
+===
+
+Let's plot the Maryland county map with `ggplot()`. 
+
+All `sf` objects can be plotted by adding `geom_sf()` layers to the plot,
+which automatically associates the `geometry` column with the `x` and `y` coordinates of the features
+in the correct projection. If there are multiple `geom_sf()` layers, `ggplot()` will
+transform all layers to the projection system of the first layer added to the plot.
+{:.notes}
+
 
 
 
 ~~~r
-> st_within(sesync, counties_md)
+library(ggplot2)
+
+ggplot() +
+  geom_sf(data = counties_md, 
+          aes(fill = ALAND)) +
+  geom_sf(data = sesync, 
+          size = 3, color = 'red') 
+~~~
+{:title="{{ site.data.lesson.handouts[0] }}" .text-document}
+![ ]({% include asset.html path="images/vector/unnamed-chunk-12-1.png" %})
+{:.captioned}
+
+===
+
+You can customize the plot theme and color scales, among other things.
+
+
+
+~~~r
+theme_set(theme_bw())
+
+ggplot() +
+  geom_sf(data = counties_md, 
+          aes(fill = ALAND/1e6), color = NA) +
+  geom_sf(data = sesync, 
+          size = 3, color = 'red') +
+  scale_fill_viridis_c(name = 'Land area (sq. km)') +
+  theme(legend.position = c(0.3, 0.3))
+~~~
+{:title="{{ site.data.lesson.handouts[0] }}" .text-document}
+![ ]({% include asset.html path="images/vector/unnamed-chunk-13-1.png" %})
+{:.captioned}
+
+Here, we first set the plot theme for all other `ggplot()` plots we create in this 
+session to a black-and-white theme to get rid of the gray background.
+Next, we divide the land area value by `1e6` to convert it to square km, then
+specify `color = NA` for the county polygons so there is no border drawn around them.
+We add a colorblind-friendly `viridis` fill scale for the polygons and add an
+understandable legend title with the `name` argument to the fill scale. Finally
+we move the legend to coordinates `c(0.3, 0.3)` in the panel (the legend position
+can range from 0 to 1 on both axes). In all cases we add additional customization 
+elements to the base plot using `+`.
+{:.notes}
+
+===
+
+### Spatial Subsetting
+
+An object created with `st_read()` is a `data.frame`, which is why the `dplyr`
+function `filter` used above on the **non**-geospatial column named `STATEFP`
+worked normally. The function `st_filter()` does the equivalent of a filtering 
+operation on the `geometry` column, known as a spatial "overlay."
+
+
+
+~~~r
+> st_filter(counties_md, sesync)
 ~~~
 {:title="Console" .input}
 
 
 ~~~
-Sparse geometry binary predicate list of length 1, where the predicate was `within'
- 1: 5
+Simple feature collection with 1 feature and 9 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -76.84036 ymin: 38.71356 xmax: -76.39408 ymax: 39.2374
+CRS:           4269
+  STATEFP COUNTYFP COUNTYNS       AFFGEOID GEOID         NAME LSAD      ALAND
+1      24      003 01710958 0500000US24003 24003 Anne Arundel   06 1074553083
+     AWATER                       geometry
+1 447833714 MULTIPOLYGON (((-76.84036 3...
 ~~~
 {:.output}
 
 
-Overlaying is a type of subsetting based on spatial (rather than numeric or
-string) matching. Matching is implemented with functions like `st_within(x, y)`.
-The output implies that the 1<sup>st</sup> (and only) point in `sesync` is within the 5<sup>th</sup>
-element of `counties_md`.
+`st_filter` subsets the features of a `sf` object based on spatial (rather than numeric or
+string) matching. Matching is implemented with functions like `st_within(x, y)`. Here we
+filtered the `counties_md` object to retain only the features that intersect with the 
+single point contained in the `sesync` object. Because `sesync` is a single point, this 
+results in a `sfc` with a single row.
 {:.notes}
 
 ===
@@ -426,9 +510,7 @@ downloaded from the United States Geological Survey.
 
 ~~~r
 shp <- 'data/huc250k'
-huc <- st_read(
-  shp,
-  stringsAsFactors = FALSE)
+huc <- st_read(shp)
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
 
@@ -477,18 +559,23 @@ The function `st_transform()` converts an `sfc` between coordinate reference
 systems, specified with the parameter `crs = x`. A numeric `x` must be a valid
 EPSG code; a character `x` is interpreted as a PROJ.4 string.
 
-For example, the following character string is a PROJ.4 string which has
-a list of parameters that correspond to the [EPSG code 42303](https://epsg.io/42303), 
-so you could get the same result by typing `prj <- 42303`.
+For example, the unprojected CRS of `counties` can be represented as the 
+PROJ.4 string `"+proj=longlat +datum=NAD83 +no_defs"`. This character string
+is a list of parameters that correspond to the [EPSG code 4269](https://epsg.io/4269).
+You can transform objects to that projection using the PROJ.4 string as the argument
+to `crs`, or by typing `crs = 4269`. Not all projections have an EPSG code.
+The projection in the PROJ.4 string below does not have an 
+EPSG code, for example. We'll transform all the `sfc` objects to this 
+projection because it is the one used by the NLCD raster layer we'll 
+introduce later in this lesson.
 {:.notes}
 
 
 
 ~~~r
 prj <- '+proj=aea +lat_1=29.5 +lat_2=45.5 \
-    +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0    \
-    +ellps=GRS80 +towgs84=0,0,0,0,0,0,0   \
-    +units=m +no_defs'
+        +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 \
+        +datum=WGS84 +units=m +no_defs'
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
 
@@ -532,15 +619,20 @@ watershed boundaries, and SESYNC's location on a single map.
 
 
 ~~~r
-plot(counties_md$geometry)
-plot(huc$geometry,
+plot(st_geometry(counties_md))
+plot(st_geometry(huc),
      border = 'blue', add = TRUE)
 plot(sesync, col = 'green',
      pch = 20, add = TRUE)
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
-![ ]({% include asset.html path="images/vector/unnamed-chunk-18-1.png" %})
+![ ]({% include asset.html path="images/vector/unnamed-chunk-20-1.png" %})
 {:.captioned}
+
+We use the `st_geometry()` function on the two polygon layers we plot, which 
+only plots the polygon boundaries (the `geometry` column) rather than filling
+the areas with colors.
+{:.notes}
 
 ===
 
@@ -565,7 +657,7 @@ state_md <- st_union(counties_md)
 plot(state_md)
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
-![ ]({% include asset.html path="images/vector/unnamed-chunk-19-1.png" %})
+![ ]({% include asset.html path="images/vector/unnamed-chunk-21-1.png" %})
 {:.captioned}
 
 To perform a union of all sub-geometries in a single `sfc`, we use the
@@ -608,7 +700,7 @@ plot(huc_md, border = 'blue',
      col = NA, add = TRUE)
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
-![ ]({% include asset.html path="images/vector/unnamed-chunk-21-1.png" %})
+![ ]({% include asset.html path="images/vector/unnamed-chunk-23-1.png" %})
 {:.captioned}
 
 The `st_intersection()` function intersects its first argument with the second.
@@ -633,3 +725,6 @@ become less precise over larger distances, where the Earth's curvature is
 noticeable. To calculate geodesic distances that account for that curvature,
 check out the [geosphere](){:.rlib} package.
 {:.notes}
+
+[r4ds]: https://r4ds.had.co.nz/data-visualisation.html
+[introggplot2]: https://cyberhelp.sesync.org/graphics-with-ggplot2-lesson/

@@ -71,6 +71,8 @@ baltimore <- nlcd_agg[counties_md[1, ]]
 plot(baltimore)
 ```
 
+===
+
 The expression `nlcd_agg[counties_md[1, ]]` is equivalent to `st_crop(nlcd_agg, counties_md[1, ])`.
 The version with `st_crop()` is a bit easier to use with pipes.
 
@@ -108,7 +110,7 @@ The result is a `stars` object. We can convert it to an `sfc` object containing 
 geometry.
 
 ```{r}
-st_as_sf(modal_lc))
+st_as_sf(modal_lc)
 ```
 
 ===

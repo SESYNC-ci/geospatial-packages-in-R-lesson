@@ -141,7 +141,9 @@ Logical operations work too: `r1 > 5` returns a raster with pixel values `TRUE`
 or `FALSE` and is often used to "mask" a raster, or remove pixels that don't
 meet a certain logical condition.
 
-```{r, fig.keep = "last", handout = 0}
+===
+
+```{r, handout = 0}
 forest_types <- c('Evergreen Forest', 'Deciduous Forest', 'Mixed Forest')
 forest <- nlcd
 forest[!(forest %in% forest_types)] <- NA
