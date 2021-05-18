@@ -283,17 +283,18 @@ elements to the base plot using `+`.
 
 An object created with `st_read()` is a `data.frame`, which is why the `dplyr`
 function `filter` used above on the **non**-geospatial column named `STATEFP`
-worked normally. The equivalent of a filtering operation on the `geometry`
-column is called a spatial "overlay."
+worked normally. The function `st_filter()` does the equivalent of a filtering 
+operation on the `geometry` column, known as a spatial "overlay."
 
 ```{r, message = FALSE}
-st_within(sesync, counties_md)
+st_filter(counties_md, sesync)
 ```
 
-Overlaying is a type of subsetting based on spatial (rather than numeric or
-string) matching. Matching is implemented with functions like `st_within(x, y)`.
-The output `1: 5` means that the 1<sup>st</sup> (and only) point in `sesync` is within the 5<sup>th</sup>
-element of `counties_md`.
+`st_filter` subsets the features of a `sf` object based on spatial (rather than numeric or
+string) matching. Matching is implemented with functions like `st_within(x, y)`. Here we
+filtered the `counties_md` object to retain only the features that intersect with the 
+single point contained in the `sesync` object. Because `sesync` is a single point, this 
+results in a `sfc` with a single row.
 {:.notes}
 
 ===
@@ -395,12 +396,17 @@ Now that the three objects share a projection, we can plot the county boundaries
 watershed boundaries, and SESYNC's location on a single map.
 
 ```{r, fig.keep = "last", handout = 0}
-plot(counties_md$geometry)
-plot(huc$geometry,
+plot(st_geometry(counties_md))
+plot(st_geometry(huc),
      border = 'blue', add = TRUE)
 plot(sesync, col = 'green',
      pch = 20, add = TRUE)
 ```
+
+We use the `st_geometry()` function on the two polygon layers we plot, which 
+only plots the polygon boundaries (the `geometry` column) rather than filling
+the areas with colors.
+{:.notes}
 
 ===
 
