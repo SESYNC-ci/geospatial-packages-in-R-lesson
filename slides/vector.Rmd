@@ -86,7 +86,7 @@ built from points, polygons are built from lines, and so on.
 
 We can create any of these spatial objects from coordinates.
 Here's an `sfc` object with a single "POINT", corresponding to SESYNC's position
-in WGS84 degrees latitude and degrees longitude, with the same coordinate
+in degrees latitude and degrees longitude, with the same coordinate
 reference system as the `counties` object.
 
 ```{r, handout = 0}
@@ -110,6 +110,23 @@ st_crs(counties)
 The EPSG ID is a numerical code indicating the coordinate reference system, and
 the PROJ.4 string contains parameters of the projection.
 {:.notes}
+
+===
+
+In order for two spatial objects to be comparable, they must be represented in the same coordinate reference system. 
+This can be a geographic coordinate system or a projected coordinate system.
+{:.notes}
+
+**Geographic coordinate systems**, like the one we saw when we called `st_crs(counties)`, represent locations as degrees of latitude and longitude on the surface of the Earth, modeled as an ellipsoid (a slightly flattened sphere). The *datum* of a geographic coordinate system is the set of parameters representing the exact shape of the ellipsoid. The `counties` object uses the 1983 North American Datum, or NAD83 for short. Most world maps use the WGS84 datum.
+{:.notes}
+
+A **projected coordinate system** converts geographical coordinates into Cartesian or rectangular (X, Y) coordinates for making two-dimensional maps. Since it is impossible to provide an exact two-dimensional representation of a three-dimensional object like Earth without losing some information, specialized projections were developed for different regions of the world and different analytical applications. For example, the Mercator projection (left) preserves shapes and angles, which is useful for navigation, but it greatly inflates areas at the poles. The Lambert equal-area projection (right) preserves areas at the cost of shape distortion away from its center.
+{:.notes}
+
+![Projections]({% include asset.html path="images/proj.png" %})  
+*Projections can preserve shapes or areas, but not both.* 
+
+[Source](http://www.perrygeo.com/tissot-indicatrix-examining-the-distortion-of-map-projections.html)
 
 ===
 
