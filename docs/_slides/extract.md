@@ -124,13 +124,13 @@ y 1055 1055 2101515  -150 PROJCS["Albers_Conical_Eq... FALSE   NULL [y]
 ===
 
 To extract with a polygon, first subset the raster by the polygon geometry. For example
-here we subset the low-resolution NLCD raster by the first row of `counties_md` 
+here we subset the NLCD raster by the first row of `counties_md` 
 (Baltimore City), resulting in a raster with smaller dimensions that we can plot.
 
 
 
 ~~~r
-baltimore <- nlcd_agg[counties_md[1, ]]
+baltimore <- nlcd[counties_md[1, ]]
 plot(baltimore)
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
@@ -139,12 +139,12 @@ plot(baltimore)
 
 ===
 
-The expression `nlcd_agg[counties_md[1, ]]` is equivalent to `st_crop(nlcd_agg, counties_md[1, ])`.
+The expression `nlcd[counties_md[1, ]]` is equivalent to `st_crop(nlcd, counties_md[1, ])`.
 The version with `st_crop()` is a bit easier to use with pipes.
 
 ===
 
-Here we use a pipe to crop the high-resolution NLCD raster to the boundaries of Baltimore City,
+Here we use a pipe to crop the NLCD raster to the boundaries of Baltimore City,
 pull the values as a matrix, and tabulate them.
 
 

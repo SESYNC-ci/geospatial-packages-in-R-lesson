@@ -118,7 +118,7 @@ plot(sesync, col = 'green',
 
 sesync_lc <- ...(nlcd, ...)
 
-baltimore <- nlcd_agg[...]
+baltimore <- nlcd[...]
 plot(baltimore)
 
 nlcd %>%
