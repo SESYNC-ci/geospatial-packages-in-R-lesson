@@ -67,10 +67,10 @@ The `counties` object is a `data.frame` that includes a `sfc`, which stands for
 
 ~~~
 Simple feature collection with 6 features and 9 fields
-geometry type:  MULTIPOLYGON
-dimension:      XY
-bbox:           xmin: -114.7556 ymin: 29.26116 xmax: -81.10192 ymax: 38.77443
-CRS:            4269
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -114.7556 ymin: 29.26116 xmax: -81.10192 ymax: 38.77443
+CRS:           4269
   STATEFP COUNTYFP COUNTYNS       AFFGEOID GEOID      NAME LSAD       ALAND
 1      04      015 00025445 0500000US04015 04015    Mohave   06 34475567011
 2      12      035 00308547 0500000US12035 12035   Flagler   06  1257365642
@@ -283,12 +283,6 @@ grid_md <- st_make_grid(counties_md,
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
 
 
-~~~
-although coordinates are longitude/latitude, st_relate_pattern assumes that they are planar
-~~~
-{:.output}
-
-
 ===
 
 Question
@@ -311,12 +305,24 @@ curvature can be ignored.
 
 
 ~~~
-Geometry set for 13 features 
-geometry type:  POLYGON
-dimension:      XY
-bbox:           xmin: -79.48765 ymin: 37.91172 xmax: -75.04894 ymax: 39.72312
-CRS:            4269
+Geometry set for 16 features 
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: -79.48765 ymin: 37.91172 xmax: -75.04894 ymax: 39.72312
+CRS:           4269
 First 5 geometries:
+~~~
+{:.output}
+
+
+~~~
+POLYGON ((-79.48765 37.91172, -78.37797 37.9117...
+~~~
+{:.output}
+
+
+~~~
+POLYGON ((-78.37797 37.91172, -77.26829 37.9117...
 ~~~
 {:.output}
 
@@ -334,19 +340,7 @@ POLYGON ((-76.15862 37.91172, -75.04894 37.9117...
 
 
 ~~~
-POLYGON ((-78.37797 38.36457, -77.26829 38.3645...
-~~~
-{:.output}
-
-
-~~~
-POLYGON ((-77.26829 38.36457, -76.15862 38.3645...
-~~~
-{:.output}
-
-
-~~~
-POLYGON ((-76.15862 38.36457, -75.04894 38.3645...
+POLYGON ((-79.48765 38.36457, -78.37797 38.3645...
 ~~~
 {:.output}
 

@@ -1,5 +1,5 @@
 - name: htmlwidgets
-  version: 1.5.1
+  version: 1.5.3
   src: htmlwidgets/www
   meta: ~
   script: htmlwidgets.js
@@ -38,18 +38,26 @@
   attachment: ~
   package: ~
   all_files: yes
-- name: Proj4Leaflet
-  version: 1.0.1
+- name: proj4
+  version: 2.6.2
   src: htmlwidgets/plugins/Proj4Leaflet
   meta: ~
-  script:
-  - proj4-compressed.js
-  - proj4leaflet.js
+  script: proj4.min.js
   stylesheet: ~
   head: ~
   attachment: ~
   package: ~
-  all_files: yes
+  all_files: no
+- name: Proj4Leaflet
+  version: 1.0.1
+  src: htmlwidgets/plugins/Proj4Leaflet
+  meta: ~
+  script: proj4leaflet.js
+  stylesheet: ~
+  head: ~
+  attachment: ~
+  package: ~
+  all_files: no
 - name: rstudio_leaflet
   version: 1.3.1
   src: htmlwidgets/lib/rstudio_leaflet
@@ -61,7 +69,7 @@
   package: ~
   all_files: yes
 - name: leaflet-binding
-  version: 2.0.3
+  version: 2.0.4.1
   src: htmlwidgets
   meta: ~
   script: leaflet.js
@@ -70,3 +78,80 @@
   attachment: ~
   package: ~
   all_files: no
+- name: leaflet-providers
+  version: 1.9.0
+  src: htmlwidgets/lib/leaflet-providers
+  meta: ~
+  script: leaflet-providers_1.9.0.js
+  stylesheet: ~
+  head: ~
+  attachment: ~
+  package: ~
+  all_files: no
+- name: leaflet-providers-plugin
+  version: 2.0.4.1
+  src: htmlwidgets/plugins/leaflet-providers-plugin
+  meta: ~
+  script: leaflet-providers-plugin.js
+  stylesheet: ~
+  head: ~
+  attachment: ~
+  package: ~
+  all_files: yes
+- name: HomeButton
+  version: 0.0.1
+  src: htmlwidgets/lib/HomeButton
+  meta: ~
+  script:
+  - home-button.js
+  - easy-button-src.min.js
+  stylesheet: home-button.css
+  head: ~
+  attachment: ~
+  package: ~
+  all_files: yes
+- name: clipboard
+  version: 0.0.1
+  src: htmlwidgets/lib/clipboard
+  meta: ~
+  script: setClipboardText.js
+  stylesheet: ~
+  head: ~
+  attachment: ~
+  package: ~
+  all_files: yes
+- name: mapviewCSS
+  version: 0.0.1
+  src: htmlwidgets/lib/css
+  meta: ~
+  script: ~
+  stylesheet:
+  - mapview-popup.css
+  - mapview.css
+  head: ~
+  attachment: ~
+  package: ~
+  all_files: yes
+- name: nlcd_agg - 1_2c97bf
+  version: '1'
+  src: htmlwidgets/lib/stars
+  meta: ~
+  script:
+  - data_stars_nlcd_agg1fa03b7.txt
+  stylesheet: ~
+  head: ~
+  attachment: ~
+  package: ~
+  all_files: yes
+- name: joda
+  version: 0.0.1
+  src: htmlwidgets/lib/joda
+  meta: ~
+  script:
+  - joda.js
+  - addImageQuery-bindings.js
+  stylesheet: ~
+  head: ~
+  attachment: ~
+  package: ~
+  all_files: yes

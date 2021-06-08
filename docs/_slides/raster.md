@@ -78,18 +78,20 @@ in the raster file.
 
 
 ~~~
-class      : RasterLayer 
-dimensions : 2514, 3004, 7552056  (nrow, ncol, ncell)
-resolution : 150, 150  (x, y)
-extent     : 1394535, 1845135, 1724415, 2101515  (xmin, xmax, ymin, ymax)
-crs        : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
-source     : /nfs/public-data/training/nlcd_agg.grd 
-names      : nlcd_2011_landcover_2011_edition_2014_03_31 
-values     : 0, 95  (min, max)
-attributes :
-        ID      COUNT Red Green Blue Land.Cover.Class Opacity
- from:   0 7854240512   0     0    0     Unclassified       1
-  to : 255          0   0     0    0                        0
+stars object with 2 dimensions and 1 attribute
+attribute(s), summary of first 1e+05 cells:
+                  nlcd_agg.tif   
+ Deciduous Forest        :32576  
+ Cultivated Crops        :13014  
+ Developed, Open Space   :11063  
+ Hay/Pasture             :10729  
+ Mixed Forest            : 9260  
+ Developed, Low Intensity: 8034  
+ (Other)                 :15324  
+dimension(s):
+  from   to  offset delta                       refsys point values x/y
+x    1 3004 1394535   150 PROJCS["Albers_Conical_Eq... FALSE   NULL [x]
+y    1 2514 2101515  -150 PROJCS["Albers_Conical_Eq... FALSE   NULL [y]
 ~~~
 {:.output}
 
@@ -105,6 +107,12 @@ pre-defined color scheme.
 > plot(nlcd)
 ~~~
 {:title="Console" .input}
+
+
+~~~
+downsample set to c(5,5)
+~~~
+{:.output}
 ![ ]({% include asset.html path="images/raster/unnamed-chunk-3-1.png" %})
 {:.captioned}
 

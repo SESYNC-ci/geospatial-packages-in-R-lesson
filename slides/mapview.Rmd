@@ -39,7 +39,7 @@ be added as map layers using `+`. Mapview will try to make the necessary
 transformation to display your data in [EPSG:3857](https://epsg.io/3857).
 
 ```{r, handout = 0}
-mapview(nlcd, legend = FALSE, alpha = 0.3, 
+mapview(nlcd_agg, legend = FALSE, alpha = 0.3, 
         map.types = 'OpenStreetMap') +
     mapview(huc_md, legend = FALSE, alpha.regions = 0.2)
 ```
