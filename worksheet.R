@@ -136,27 +136,12 @@ huc_md <- huc_md %>%
 ggplot(..., aes(fill = ...)) + 
     geom_sf()
 
-## Leaflet
+## Mapview
 
 library(...)
-... %>%
-    ... %>%
-    setView(lng = -77, lat = 39, 
-        zoom = 7)
+...(huc_md)
 
-leaflet() %>%
-    addTiles() %>%
-    ...(
-        data = ...) %>%
-    setView(lng = -77, lat = 39, 
-        zoom = 7)
+mapview(..., legend = FALSE, ... = 0.3, 
+        map.types = 'OpenStreetMap') +
+    mapview(..., legend = FALSE, ... = 0.2)
 
-leaflet() %>%
-    addTiles() %>%
-    ...(
-        "http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi",
-        layers = "nexrad-n0r-900913", group = "base_reflect",
-        options = WMSTileOptions(format = "image/png", transparent = TRUE),
-        attribution = "weather data © 2012 IEM Nexrad") %>%
-    setView(lng = -77, lat = 39, 
-        zoom = 7)

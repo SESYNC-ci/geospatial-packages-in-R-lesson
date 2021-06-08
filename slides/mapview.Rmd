@@ -1,0 +1,67 @@
+---
+---
+
+## Interactive Maps
+
+The [mapview](){:.rlib} package is a great way to quickly view vector or 
+raster data interactively, using a JavaScript library called leaflet. 
+It produces interactive maps (with controls to zoom, pan and toggle
+layers) combining local data with base layers from web mapping services.
+
+===
+
+You can pass a vector or raster object to the `mapview()` function, which will create a map
+centered over your spatial object over a base tiled map.
+
+By default, it imports tiles from [Carto](https://carto.com/help/building-maps/basemap-list/)
+but you can switch to [OpenStreetMap](https://www.openstreetmap.org), 
+[ESRI World Imagery](https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9), 
+or [OpenTopoMap](https://wiki.openstreetmap.org/wiki/OpenTopoMap)
+by clicking on the tile icon in the upper left.
+{:.notes}
+
+```{r, handout = 0}
+library(mapview)
+mapview(huc_md)
+```
+
+We are using all default arguments for `mapview()`, but there are
+many additional options that you can set. You can see a few of them in the
+next example.
+The map shows up in the "Viewer" tab in RStudio because, like everything with
+JavaScript, it relies on your browser to render the image.
+{:.notes}
+
+===
+
+Additional spatial datasets (points, lines, polygons, rasters) in your R environment can
+be added as map layers using `+`. Mapview will try to make the necessary 
+transformation to display your data in [EPSG:3857](https://epsg.io/3857).
+
+```{r, handout = 0}
+mapview(nlcd, legend = FALSE, alpha = 0.3, 
+        map.types = 'OpenStreetMap') +
+    mapview(huc_md, legend = FALSE, alpha.regions = 0.2)
+```
+
+If you hover your mouse over one of the polygon features, you can see the polygon ID,
+and if you click on it, a pop-up appears with more details. You can zoom and pan the
+map with your mouse; restore the zoom to the default or zoom in on one map layer using
+one of the buttons at the bottom of the pane.
+{:.notes}
+
+Notice also that we passed a few extra arguments to `mapview()` to customize the map. 
+Setting `legend = FALSE` gets rid of the large legend panel. Setting
+`alpha` for a raster layer and `alpha.regions` for a polygon layer to low values
+makes them more transparent so that we can see the underlying map.
+Finally, setting `map.types` changes which base map displays by default.
+See `?mapview` and `?mapviewOptions` for more options.
+{:.notes}
+
+The [mapview](){:.rlib} package uses the R package [leaflet](){:.rlib} behind the 
+scenes, which is an R interface to the leaflet JavaScript library. [mapview](){:.rlib}
+is great for quick dives into your data, but [leaflet](){:.rlib} provides a lot more
+options and customizability if you want to embed maps into websites. For
+an in-depth leaflet tutorial, check out the 
+[SESYNC lesson on leaflet in R](https://cyberhelp.sesync.org/leaflet-in-R-lesson/).
+{:.notes}

@@ -19,6 +19,6 @@ sorter:
   - vector
   - raster
   - extract
-  - leaflet
+  - mapview
   - refs
   - exercise
