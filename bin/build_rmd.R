@@ -96,6 +96,9 @@ deps <- lapply(deps, FUN = function(d) {
         '')
       d$stylesheet = 'mapview-popup.css'
       htmlwidgets_dest <- file.path('docs', 'assets', htmlwidgets)
+    } else if (grepl('data_stars', d$script)) {
+      htmlwidgets = 'htmlwidgets/lib/stars'
+      htmlwidgets_dest <- file.path('docs', 'assets', htmlwidgets)
     }
   } else {
     htmlwidgets_dest <- file.path('docs', 'assets', dirname(htmlwidgets))
