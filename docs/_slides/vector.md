@@ -6,14 +6,14 @@ excerpt: Vector Data
 
 The key R packages for this lesson are
 
-- [sf](){:.rlib}
-- [stars](){:.rlib}
+- [sf][sf]
+- [stars][stars]
 
 ===
 
 ### OSGeo Dependencies
 
-Most R packages depend on other R packages. The [sf](){:.rlib} and  [stars](){:.rlib}
+Most R packages depend on other R packages. The [sf][sf] and  [stars][stars]
 packages also depend on system libraries.
 
 - [GDAL](https://www.gdal.org) for read/write in geospatial data formats
@@ -24,7 +24,7 @@ System libraries cannot be installed by R's `install.packages()`, but can be
 bundled with these packages and for private use by them. Either way, the
 necessary libraries are maintained by the good people at the [Open Source
 Geospatial Foundation](https://github.com/OSGeo) for free and easy distribution. When
-you load [sf](){:.rlib}, it will return an error if any dependencies are not found. 
+you load [sf][sf], it will return an error if any dependencies are not found. 
 {:.notes}
 
 ===
@@ -34,7 +34,7 @@ you load [sf](){:.rlib}, it will return an error if any dependencies are not fou
 The [US Census
 website](http://www2.census.gov/geo/tiger/GENZ2014/shp/cb_2014_us_county_5m.zip)
 distributes county polygons (and much more) that are provided with the handouts.
-The [sf](){:.rlib} package reads shapefiles (".shp") and most other vector data:
+The [sf][sf] package reads shapefiles (".shp") and most other vector data:
 
 
 
@@ -349,7 +349,7 @@ POLYGON ((-79.48765 38.36457, -78.37797 38.3645...
 
 ### Plot Layers
 
-Spatial objects defined by [sf](){:.rlib} are compatible with the `plot`
+Spatial objects defined by [sf][sf] are compatible with the `plot`
 function. Setting the `plot` parameter `add = TRUE` allows an existing plot to
 serve as a layer underneath the new one. The two layers should have the same
 coordinate reference system.
@@ -499,7 +499,7 @@ results in a `sfc` with a single row.
 
 ===
 
-The overlay functions in the [sf](){:.rlib} package follow the pattern
+The overlay functions in the [sf][sf] package follow the pattern
 `st_predicate(x, y)` and perform the test "x [is] predicate y". Some key
 examples are:
 
@@ -725,7 +725,7 @@ HUC does not reflect the area of the new, smaller polygon.
 ===
 
 The GEOS library provides many functions dealing with distances and areas. Many
-of these are accessible through the [sf](){:.rlib} package, including:
+of these are accessible through the [sf][sf] package, including:
 
 - `st_buffer`: to create a buffer of specific width around a geometry
 - `st_distance`: to calculate the shortest distance between geometries
@@ -739,3 +739,6 @@ check out the [geosphere](){:.rlib} package.
 
 [r4ds]: https://r4ds.had.co.nz/data-visualisation.html
 [introggplot2]: https://cyberhelp.sesync.org/graphics-with-ggplot2-lesson/
+[sf]: https://r-spatial.github.io/sf/
+[stars]: https://r-spatial.github.io/stars/
+

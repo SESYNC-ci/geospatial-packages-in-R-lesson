@@ -3,7 +3,7 @@
 
 ## Interactive Maps
 
-The [mapview](){:.rlib} package is a great way to quickly view vector or 
+The [mapview][mapview] package is a great way to quickly view vector or 
 raster data interactively, using a JavaScript library called leaflet. 
 It produces interactive maps (with controls to zoom, pan and toggle
 layers) combining local data with base layers from web mapping services.
@@ -68,10 +68,13 @@ Finally, setting `map.types` changes which base map displays by default.
 See `?mapview` and `?mapviewOptions` for more options.
 {:.notes}
 
-The [mapview](){:.rlib} package uses the R package [leaflet](){:.rlib} behind the 
-scenes, which is an R interface to the leaflet JavaScript library. [mapview](){:.rlib}
-is great for quick dives into your data, but [leaflet](){:.rlib} provides a lot more
+The [mapview][mapview] package uses the R package [leaflet][leaflet] behind the 
+scenes, which is an R interface to the leaflet JavaScript library. [mapview][mapview]
+is great for quick dives into your data, but [leaflet][leaflet] provides a lot more
 options and customizability if you want to embed maps into websites. For
 an in-depth leaflet tutorial, check out the 
 [SESYNC lesson on leaflet in R](https://cyberhelp.sesync.org/leaflet-in-R-lesson/).
 {:.notes}
+
+[mapview]: https://r-spatial.github.io/mapview/
+[leaflet]: https://rstudio.github.io/leaflet/

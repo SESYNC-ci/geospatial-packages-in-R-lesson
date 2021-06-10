@@ -5,17 +5,17 @@
 
 Raster data is a matrix or cube with additional spatial metadata (e.g. extent,
 resolution, and projection) that allows its values to be mapped onto geographical
-space. The [stars](){:.rlib} package provides the `read_stars()` function
+space. The [stars][stars] package provides the `read_stars()` function
 for reading the many formats of such data.
 
 In the past (from 2010 to 2020), the [raster](){:.rlib} package was the primary R package 
-for reading and working with raster data. Recently, the developers of [sf](){:.rlib}
-released [stars](){:.rlib} (**S**patio-**T**emporal **AR**ray**S**). It is integrated
-more closely with [sf](){:.rlib} and related packages, as well as with the "tidyverse"
+for reading and working with raster data. Recently, the developers of [sf][sf]
+released [stars][stars] (**S**patio-**T**emporal **AR**ray**S**). It is integrated
+more closely with [sf][sf] and related packages, as well as with the "tidyverse"
 family of packages, and has significant performance advantages. Another new alternative
 is [terra](){:.rlib}, created by the developer of [raster](){:.rlib}. Older versions of this lesson
 use [raster](){:.rlib}, and you may come across the [raster](){:.rlib} package when searching for help on
-geospatial data analysis in R. Nevertheless we recommend [terra](){:.rlib} or [stars](){:.rlib} 
+geospatial data analysis in R. Nevertheless we recommend [terra](){:.rlib} or [stars][stars] 
 because of their simplicity and speed advantages, and also because they are more likely 
 to be updated and maintained in the future.
 {:.notes}
@@ -184,3 +184,6 @@ Unfortunately, the call to GDAL strips away the land cover class names so we
 replace them by dropping unused levels with `droplevels()` and then replacing the names
 with `levels()`.
 {:.notes}
+
+[sf]: https://r-spatial.github.io/sf/
+[stars]: https://r-spatial.github.io/stars/

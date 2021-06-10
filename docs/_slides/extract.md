@@ -8,15 +8,15 @@ Raster and vector geospatial data in R require different packages.
 The creation of geospatial tools in R has been a community effort, and not
 necessarily a well-organized one. Development is still ongoing on many packages
 dealing with raster and vector data.
-The [stars](https://r-spatial.github.io/stars/) package has not yet released a "version 1.0" 
+The [stars][stars] package has not yet released a "version 1.0" 
 (it's at 0.5 as of this writing). Developers are working hard on improving the package but
 if you notice any issues or bugs, report them on their [GitHub repo](https://github.com/r-spatial/stars).
 {:.notes}
 
 Although not needed in this lesson, you may notice when using some older geospatial packages that it is necessary to
-convert a vector object from [sf](){:.rlib} (class beginning with `sfc*`) to [sp](){:.rlib}
+convert a vector object from [sf][sf] (class beginning with `sfc*`) to [sp](){:.rlib}
 (class beginning with `Spatial*`). [sp](){:.rlib} is an older package that was replaced
-by [sf](){:.rlib}, and many geospatial packages still work with [sp](){:.rlib} objects.
+by [sf][sf], and many geospatial packages still work with [sp](){:.rlib} objects.
 You can do this by calling `sp_object <- as(sf_object, 'Spatial')`. You may also
 need to convert a `stars` object to a `Raster*` class object, which you can do
 by calling `stars_object <- as(sf_object, 'Raster')`.
@@ -196,7 +196,7 @@ modal_lc <- aggregate(nlcd_agg, huc_md, FUN = mymode)
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
 
 
-The [stars](){:.rlib} package (and base R for that matter) currently have no built-in mode function
+The [stars][stars] package (and base R for that matter) currently have no built-in mode function
 so we define a simple one here and pass it to `aggregate()`.
 {:.notes}
 
@@ -254,3 +254,7 @@ ggplot(huc_md, aes(fill = modal_lc)) +
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
 ![ ]({% include asset.html path="images/extract/unnamed-chunk-9-1.png" %})
 {:.captioned}
+
+[sf]: https://r-spatial.github.io/sf/
+[stars]: https://r-spatial.github.io/stars/
+

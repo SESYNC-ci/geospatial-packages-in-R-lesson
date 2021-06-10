@@ -25,7 +25,7 @@ Use `st_buffer()` to create a 5km buffer around the `state_md` border and plot i
 
 ### Exercise 3
 
-The function `map` from the [purrr](){:.rlib} package aggregates across an entire raster. Use it to figure out the proportion of `nlcd` pixels that are covered by deciduous forest (value = `'Deciduous Forest'`).
+The function `map` from the [purrr](){:.rlib} package aggregates across an entire raster. Use it to figure out the proportion of `nlcd` pixels that are covered by deciduous forest (value = `'Deciduous Forest'`). **Hint**: use `==` to make a raster where only deciduous forest cells are `TRUE`, then use `map` to apply the function `mean` to that raster.
 
 [View solution](#solution-3)
 {:.notes}
