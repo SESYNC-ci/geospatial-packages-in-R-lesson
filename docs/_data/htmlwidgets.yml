@@ -132,6 +132,16 @@
   attachment: ~
   package: ~
   all_files: yes
+- name: leaflet-providers
+  version: 1.9.0
+  src: htmlwidgets/lib/leaflet-providers
+  meta: ~
+  script: leaflet-providers_1.9.0.js
+  stylesheet: ~
+  head: ~
+  attachment: ~
+  package: ~
+  all_files: no
 - name: nlcd_agg - 1_2c97bf
   version: '1'
   src: htmlwidgets/lib/stars

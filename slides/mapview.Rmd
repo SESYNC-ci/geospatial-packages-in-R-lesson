@@ -39,10 +39,17 @@ be added as map layers using `+`. Mapview will try to make the necessary
 transformation to display your data in [EPSG:3857](https://epsg.io/3857).
 
 ```{r, handout = 0}
-mapview(nlcd_agg, legend = FALSE, alpha = 0.3, 
+mapview(nlcd_agg, legend = FALSE, alpha = 0.5, 
         map.types = 'OpenStreetMap') +
     mapview(huc_md, legend = FALSE, alpha.regions = 0.2)
 ```
+
+The [EPSG:3857](https://epsg.io/3857) projection, also known as 
+[Web Mercator](https://en.wikipedia.org/wiki/Web_Mercator_projection), will look
+familiar to you if you've ever used Google Maps, Apple Maps, or OpenStreetMap. It's 
+used in practically all online map applications. It sacrifices a little accuracy to
+dramatically speed up page load times.
+{:.notes}
 
 If you hover your mouse over one of the polygon features, you can see the polygon ID,
 and if you click on it, a pop-up appears with more details. You can zoom and pan the

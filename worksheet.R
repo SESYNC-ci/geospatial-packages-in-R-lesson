@@ -141,7 +141,7 @@ ggplot(..., aes(fill = ...)) +
 library(...)
 ...(huc_md)
 
-mapview(..., legend = FALSE, ... = 0.3, 
+mapview(..., legend = FALSE, ... = 0.5, 
         map.types = 'OpenStreetMap') +
     mapview(..., legend = FALSE, ... = 0.2)
 

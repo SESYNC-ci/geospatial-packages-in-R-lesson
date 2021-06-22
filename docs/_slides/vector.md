@@ -564,6 +564,15 @@ in an Albers equal-area projection (indicated as `"+proj=aea"`). The set of para
 for the `huc` object are commonly used to create maps of the continental United States.
 {:.notes}
 
+**Important Note**: As of 2021, PROJ.4 strings are slowly being phased out and replaced with 
+a new and more powerful representation of coordinate systems, the Well Known Text (WKT2)
+format. R geospatial packages are [making this transition](https://r-spatial.org/r/2020/03/17/wkt.html).
+The code in this lesson should still work for the foreseeable future, so don't worry if you see
+any unexpected warnings that we don't mention here. Keep in mind, though, that
+development of geospatial R packages is always ongoing, and this lesson may be updated in the future
+to reflect that development.
+{:.notes}
+
 ===
 
 The function `st_transform()` converts an `sfc` between coordinate reference
