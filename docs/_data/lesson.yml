@@ -4,6 +4,7 @@ handouts:
  - data/cb_2016_us_county_5m
  - data/huc250k
  - data/nlcd_agg.tif
+ - data/nlcd_agg.tif.aux.xml
 tag: v0.8
 lesson: 7
 instructor: Quentin Read
