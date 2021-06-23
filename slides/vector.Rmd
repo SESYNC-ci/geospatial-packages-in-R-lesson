@@ -18,7 +18,7 @@ packages also depend on system libraries.
 
 - [GDAL](https://www.gdal.org) for read/write in geospatial data formats
 - [GEOS](https://trac.osgeo.org/geos) for geometry operations
-- [PROJ.4](http://proj4.org/) for cartographic projections
+- [PROJ](https://proj.org/) for cartographic projections
 
 System libraries cannot be installed by R's `install.packages()`, but can be
 bundled with these packages and for private use by them. Either way, the
