@@ -135,8 +135,8 @@ sesync <- st_sfc(st_point(
 
 ### Coordinate Reference Systems
 
-A key feature of a **geo**spatial data type is its associated CRS, stored as an
-EPSG ID and an equivalent PROJ.4 string. We can print the CRS of a spatial 
+A key feature of a **geo**spatial data type is its associated CRS, stored in
+Well Known Text (WKT) format. We can print the CRS of a spatial 
 object with `st_crs()`.
 
 
@@ -161,8 +161,8 @@ GEOGCS["GCS_North_American_1983",
 {:.output}
 
 
-The EPSG ID is a numerical code indicating the coordinate reference system, and
-the PROJ.4 string contains parameters of the projection.
+The WKT contains parameters of the projection. 
+The last line includes the EPSG ID, a numerical code indicating the coordinate reference system.
 {:.notes}
 
 ===
@@ -528,19 +528,27 @@ huc <- st_read(shp)
 
 ===
 
-Compare the coordinate reference systems of `counties` and `huc`, as given by
-their PROJ.4 strings.
+Compare the coordinate reference systems of `counties` and `huc` by looking at 
+the WKT of both objects.
 
 
 
 ~~~r
-> st_crs(counties_md)$proj4string
+> st_crs(counties_md)
 ~~~
 {:title="Console" .input}
 
 
 ~~~
-[1] "+proj=longlat +datum=NAD83 +no_defs "
+Coordinate Reference System:
+  User input: 4269 
+  wkt:
+GEOGCS["GCS_North_American_1983",
+    DATUM["North_American_Datum_1983",
+        SPHEROID["GRS_1980",6378137,298.257222101]],
+    PRIMEM["Greenwich",0],
+    UNIT["Degree",0.017453292519943295],
+    AUTHORITY["EPSG","4269"]]
 ~~~
 {:.output}
 
@@ -548,29 +556,45 @@ their PROJ.4 strings.
 
 
 ~~~r
-> st_crs(huc)$proj4string
+> st_crs(huc)
 ~~~
 {:title="Console" .input}
 
 
 ~~~
-[1] "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +datum=NAD27 +units=m +no_defs "
+Coordinate Reference System:
+  No user input
+  wkt:
+PROJCS["NAD_1927_Albers",
+    GEOGCS["GCS_North_American_1927",
+        DATUM["North_American_Datum_1927",
+            SPHEROID["Clarke_1866",6378206.4,294.9786982]],
+        PRIMEM["Greenwich",0.0],
+        UNIT["Degree",0.0174532925199433],
+        AUTHORITY["EPSG","4267"]],
+    PROJECTION["Albers_Conic_Equal_Area"],
+    PARAMETER["False_Easting",0.0],
+    PARAMETER["False_Northing",0.0],
+    PARAMETER["longitude_of_center",-96.0],
+    PARAMETER["Standard_Parallel_1",29.5],
+    PARAMETER["Standard_Parallel_2",45.5],
+    PARAMETER["latitude_of_center",23.0],
+    UNIT["Meter",1.0]]
 ~~~
 {:.output}
 
 
 The Census data uses unprojected (longitude, latitude) coordinates, but `huc` is
-in an Albers equal-area projection (indicated as `"+proj=aea"`). The set of parameters
-for the `huc` object are commonly used to create maps of the continental United States.
+in an Albers equal-area projection (indicated as `PROJECTION["Albers_Conic_Equal_Area"]`). 
+Maps of the continental United States often use the Albers projection.
 {:.notes}
 
-**Important Note**: As of 2021, PROJ.4 strings are slowly being phased out and replaced with 
-a new and more powerful representation of coordinate systems, the Well Known Text (WKT2)
-format. R geospatial packages are [making this transition](https://r-spatial.org/r/2020/03/17/wkt.html).
-The code in this lesson should still work for the foreseeable future, so don't worry if you see
-any unexpected warnings that we don't mention here. Keep in mind, though, that
-development of geospatial R packages is always ongoing, and this lesson may be updated in the future
-to reflect that development.
+**Important Note**: Until recently, coordinate systems were represented with PROJ.4 strings,
+but in 2020 the developers of [sf][sf] replaced them with the more precise 
+[Well Known Text](https://r-spatial.org/r/2020/03/17/wkt.html) format. 
+We will still use PROJ.4 strings in this lesson to transform coordinate systems.
+Keep in mind, though, that development of geospatial R packages is always ongoing, 
+and this lesson may be updated in the future to reflect that development.
 {:.notes}
 
 ===
@@ -583,7 +607,11 @@ For example, the unprojected CRS of `counties` can be represented as the
 PROJ.4 string `"+proj=longlat +datum=NAD83 +no_defs"`. This character string
 is a list of parameters that correspond to the [EPSG code 4269](https://epsg.io/4269).
 You can transform objects to that projection using the PROJ.4 string as the argument
-to `crs`, or by typing `crs = 4269`. Not all projections have an EPSG code.
+to `crs`, or by typing `crs = 4269`. The EPSG code or PROJ.4 string is translated
+to the WKT format.
+{:.notes}
+
+Not all projections have an EPSG code.
 The projection in the PROJ.4 string below does not have an 
 EPSG code, for example. We'll transform all the `sfc` objects to this 
 projection because it is the one used by the NLCD raster layer we'll 
@@ -601,7 +629,7 @@ prj <- '+proj=aea +lat_1=29.5 +lat_2=45.5 \
 
 
 PROJ.4 strings contain a reference to the type of projection---this one is another
-Albers equal-area---along with numeric parameters associated with that
+Albers equal-area, as indicated by `+proj=aea`---along with numeric parameters associated with that
 projection. An additional important parameter that may differ between two
 coordinate systems is the "datum", which indicates the standard by which the
 irregular surface of the Earth is approximated by an ellipsoid in the

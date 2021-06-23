@@ -132,12 +132,12 @@
   attachment: ~
   package: ~
   all_files: yes
-- name: nlcd_agg - 1_bf8a7e
+- name: nlcd_agg - 1_c38b76
   version: '1'
   src: htmlwidgets/lib/stars
   meta: ~
   script:
-  - data_stars_nlcd_agg1a48f06.txt
+  - data_stars_nlcd_agg17a08df.txt
   stylesheet: ~
   head: ~
   attachment: ~

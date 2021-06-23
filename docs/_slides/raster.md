@@ -57,11 +57,16 @@ most analyses in R, you can actually process raster datasets larger than the RAM
 available on your computer; `stars` automatically loads pieces of the
 data and computes on each of them in sequence. By default, `stars` will load small
 rasters into working memory and large rasters as proxies unless you specify otherwise.
-In addition, we call `droplevels(nlcd)` to remove empty factor levels. The 
+{:.notes}
+
+Also note that the `nlcd_agg.tif` file is accompanied by a metadata file called
+`nlcd_agg.tif.aux.xml` that stores information including descriptive names for the different
+land cover classes.
+We need to call `droplevels(nlcd)` to remove empty factor levels. The 
 [NLCD 2016 legend](https://www.mrlc.gov/data/legends/national-land-cover-database-2016-nlcd2016-legend)
 classification codes are not sequential and begin with 11, but factor levels in R begin with 1. 
 Using `droplevels` gets rid of the empty levels so that the legends on the plots 
-we will make in a moment do not include blank levels.
+we will make in a moment do not include blank levels. 
 {:.notes}
 
 ===
@@ -265,9 +270,12 @@ nlcd_agg <- st_warp(nlcd,
 
 nlcd_agg <- droplevels(nlcd_agg) 
 levels(nlcd_agg[[1]]) <- levels(nlcd[[1]]) 
+
+plot(nlcd_agg)
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
-
+![ ]({% include asset.html path="images/raster/unnamed-chunk-8-1.png" %})
+{:.captioned}
 
 Here, `cellsize = 1500` specifies that the raster should be downsampled to 1500-meter
 pixel size. The input raster has 150-meter resolution, so this will convert

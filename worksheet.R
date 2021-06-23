@@ -110,6 +110,8 @@ nlcd_agg <- ...(nlcd,
 nlcd_agg <- ...(nlcd_agg) 
 ...(...[[1]]) <- ...(nlcd[[1]]) 
 
+plot(...)
+
 ## Mixing rasters and vectors
 
 plot(nlcd, ... = FALSE)
