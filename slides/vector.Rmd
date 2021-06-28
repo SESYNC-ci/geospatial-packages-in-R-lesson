@@ -181,18 +181,10 @@ grid_md <- st_make_grid(counties_md,
                         n = 4)
 ```
 
-===
-
-Question
-: What was the message issued by the last command all about?
-
-Answer
-: {:.fragment} It is a reminder that all geometric calculations are performed as
-if the coordinates (in this case longitude and latitude) are Cartesian x,y
-coordinates. This is OK because we are working at a small scale where the Earth's
-curvature can be ignored.
-
-===
+The `st_make_grid()` function draws a rectangular grid on the surface of a sphere. At the 
+relatively small spatial scale of the state of Maryland, the difference between a flat surface
+and the surface of a sphere is minimal.
+{:.notes}
 
 ```{r}
 grid_md
