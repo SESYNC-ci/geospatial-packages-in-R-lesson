@@ -6,7 +6,7 @@ handouts:
  - data/nlcd_agg.tif
  - data/nlcd_agg.tif.aux.xml
 tag: v0.8
-lesson: 7
+lesson: 5
 instructor: Quentin Read
 lifecycle: stable # status for lifecycle badge
 badgecolor: green # color for lifecycle badge
