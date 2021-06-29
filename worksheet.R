@@ -88,11 +88,6 @@ ggplot() +
     ...(data = ..., fill = NA) +
     scale_fill_manual(values = attr(nlcd[[1]], ...))
 
-## Raster data attributes
-
-nlcd_attr <- ...
-lc_types <- nlcd_attr...$...
-
 ## Raster math
 
 forest_types <- c('Evergreen Forest', 'Deciduous Forest', 'Mixed Forest')
