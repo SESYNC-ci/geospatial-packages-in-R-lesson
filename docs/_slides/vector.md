@@ -671,7 +671,7 @@ plot(sesync, col = 'green',
 
 We use the `st_geometry()` function on the two polygon layers we plot, which 
 only plots the polygon boundaries (the `geometry` column) rather than filling
-the areas with colors.
+the areas with colors. `st_geometry(x)` is equivalent to `x$geometry`.
 {:.notes}
 
 ===
@@ -736,7 +736,7 @@ geometries
 
 ~~~r
 plot(state_md)
-plot(huc_md, border = 'blue',
+plot(st_geometry(huc_md), border = 'blue',
      col = NA, add = TRUE)
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
@@ -753,17 +753,15 @@ HUC does not reflect the area of the new, smaller polygon.
 
 ===
 
-The GEOS library provides many functions dealing with distances and areas. Many
-of these are accessible through the [sf][sf] package, including:
+The [sf][sf] package provides many functions dealing with distances and areas. 
 
 - `st_buffer`: to create a buffer of specific width around a geometry
 - `st_distance`: to calculate the shortest distance between geometries
 - `st_area`: to calculate the area of polygons
 
-Keep in mind that all these functions use **planar** geometry equations and thus
-become less precise over larger distances, where the Earth's curvature is
-noticeable. To calculate geodesic distances that account for that curvature,
-check out the [geosphere](){:.rlib} package.
+These functions were recently updated to use geodesic distances that account for Earth's curvature,
+making them accurate even at large spatial scales.
+You might also want to check out the [geosphere](){:.rlib} package.
 {:.notes}
 
 [r4ds]: https://r4ds.had.co.nz/data-visualisation.html

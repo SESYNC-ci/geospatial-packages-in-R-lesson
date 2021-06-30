@@ -56,7 +56,7 @@ counties_md <- st_transform(
 huc <- ...(huc, ...)
 sesync <- ...
 
-plot(counties_md$geometry)
+plot(st_geometry(...))
 plot(...,
      border = 'blue', add = TRUE)
 plot(..., col = 'green',
@@ -69,6 +69,7 @@ plot(...)
 
 huc_md <- ...(..., ...)
 
+plot(state_md)
 plot(..., border = 'blue',
      col = NA, add = TRUE)
 
