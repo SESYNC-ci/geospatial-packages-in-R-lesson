@@ -5,7 +5,7 @@ handouts:
  - data/huc250k
  - data/nlcd_agg.tif
  - data/nlcd_agg.tif.aux.xml
-tag: v0.8
+tag: v0.9
 lesson: 5
 instructor: Quentin Read
 lifecycle: stable # status for lifecycle badge
