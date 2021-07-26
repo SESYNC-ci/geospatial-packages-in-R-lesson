@@ -234,9 +234,9 @@ meet a certain logical condition.
 
 ~~~r
 forest_types <- c('Evergreen Forest', 'Deciduous Forest', 'Mixed Forest')
-forest <- nlcd
-forest[!(forest %in% forest_types)] <- NA
-plot(forest)
+forest_mask <- nlcd
+forest_mask[!(forest_mask %in% forest_types)] <- NA
+plot(forest_mask)
 ~~~
 {:title="{{ site.data.lesson.handouts[0] }}" .text-document}
 
@@ -249,7 +249,7 @@ downsample set to c(3,3)
 {:.captioned}
 
 We define a vector including the levels of `nlcd` representing three types of forest and
-create a copy of `nlcd` called `forest`. We "mask out" all pixels in `forest` that do not meet
+create a copy of `nlcd` called `forest_mask`. We "mask out" all pixels in `forest_mask` that do not meet
 the logical condition `forest %in% forest_types`, setting them to `NA`. (The `!` negates a
 logical condition.) This results in a raster 
 where all pixels that are not classified as forest are removed.

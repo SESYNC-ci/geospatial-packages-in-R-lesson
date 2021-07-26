@@ -32,7 +32,7 @@ you load [sf][sf], it will return an error if any dependencies are not found.
 ### Vector Data
 
 The [US Census
-website](http://www2.census.gov/geo/tiger/GENZ2014/shp/cb_2014_us_county_5m.zip)
+website](https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.2014.html)
 distributes county polygons (and much more) that are provided with the handouts.
 The [sf][sf] package reads shapefiles (".shp") and most other vector data:
 
@@ -44,8 +44,7 @@ counties <- st_read(shp)
 ```
 
 The object `shp` is a character string with the location of a folder that contains
-the collection of individual files that make up a shapefile. The second argument
-ensures that text columns in the data frame are strings, not factors.
+the collection of individual files that make up a shapefile.
 {:.notes}
 
 ===
@@ -326,7 +325,7 @@ examples are:
 ### Coordinate Transforms
 
 For the next part of this lesson, we import a new polygon layer corresponding to
-the 1:250k [map of US hydrological units (HUC)](http://water.usgs.gov/GIS/dsdl/huc250k_shp.zip)
+the 1:250k [map of US hydrological units (HUC)](https://water.usgs.gov/GIS/metadata/usgswrd/XML/huc250k.xml)
 downloaded from the United States Geological Survey.
 
 ```{r, results = 'hide', message = FALSE, handout = 0}
