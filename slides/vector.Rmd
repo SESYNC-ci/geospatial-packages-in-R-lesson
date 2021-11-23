@@ -501,7 +501,7 @@ You might also want to check out the [geosphere](){:.rlib} package.
 {:.notes}
 
 [r4ds]: https://r4ds.had.co.nz/data-visualisation.html
-[introggplot2]: https://cyberhelp.sesync.org/graphics-with-ggplot2-lesson/
+[introggplot2]: {{ site.gh-pages }}/graphics-with-ggplot2-lesson/
 [sf]: https://r-spatial.github.io/sf/
 [stars]: https://r-spatial.github.io/stars/
 

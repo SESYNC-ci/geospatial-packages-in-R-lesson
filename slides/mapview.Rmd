@@ -70,7 +70,7 @@ scenes, which is an R interface to the leaflet JavaScript library. [mapview][map
 is great for quick dives into your data, but [leaflet][leaflet] provides a lot more
 options and customizability if you want to embed maps into websites. For
 an in-depth leaflet tutorial, check out the 
-[SESYNC lesson on leaflet in R](https://cyberhelp.sesync.org/leaflet-in-R-lesson/).
+[SESYNC lesson on leaflet in R]({{ site.gh-pages }}/leaflet-in-R-lesson/).
 {:.notes}
 
 [mapview]: https://r-spatial.github.io/mapview/
