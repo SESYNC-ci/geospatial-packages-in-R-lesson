@@ -10,7 +10,7 @@
 - [Spatial Data Science with R and terra](https://rspatial.org/terra/index.html) *uses the terra package instead of stars*
 - [CRAN Task View: Analysis of Spatial Data](https://cran.r-project.org/web/views/Spatial.html)
 - P. Marchand. [Introduction to geospatial data analysis in R](https://pmarchand1.github.io/atelier_rgeo/rgeo_workshop.html) 
-- ["Legacy" version of this lesson](https://cyberhelp.sesync.org/geospatial-packages-in-R-lesson/2020/07/21/) *uses the raster package instead of stars*
+- ["Legacy" version of this lesson]({{ site.gh-pages }}/geospatial-packages-in-R-lesson/2020/07/21/) *uses the raster package instead of stars*
 
 ===
 

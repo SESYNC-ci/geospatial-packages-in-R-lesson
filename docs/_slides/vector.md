@@ -69,7 +69,7 @@ Simple feature collection with 6 features and 9 fields
 Geometry type: MULTIPOLYGON
 Dimension:     XY
 Bounding box:  xmin: -114.7556 ymin: 29.26116 xmax: -81.10192 ymax: 38.77443
-CRS:           4269
+Geodetic CRS:  NAD83
   STATEFP COUNTYFP COUNTYNS       AFFGEOID GEOID      NAME LSAD       ALAND
 1      04      015 00025445 0500000US04015 04015    Mohave   06 34475567011
 2      12      035 00308547 0500000US12035 12035   Flagler   06  1257365642
@@ -148,14 +148,22 @@ object with `st_crs()`.
 
 ~~~
 Coordinate Reference System:
-  User input: 4269 
+  User input: NAD83 
   wkt:
-GEOGCS["GCS_North_American_1983",
-    DATUM["North_American_Datum_1983",
-        SPHEROID["GRS_1980",6378137,298.257222101]],
-    PRIMEM["Greenwich",0],
-    UNIT["Degree",0.017453292519943295],
-    AUTHORITY["EPSG","4269"]]
+GEOGCRS["NAD83",
+    DATUM["North American Datum 1983",
+        ELLIPSOID["GRS 1980",6378137,298.257222101,
+            LENGTHUNIT["metre",1]]],
+    PRIMEM["Greenwich",0,
+        ANGLEUNIT["degree",0.0174532925199433]],
+    CS[ellipsoidal,2],
+        AXIS["latitude",north,
+            ORDER[1],
+            ANGLEUNIT["degree",0.0174532925199433]],
+        AXIS["longitude",east,
+            ORDER[2],
+            ANGLEUNIT["degree",0.0174532925199433]],
+    ID["EPSG",4269]]
 ~~~
 {:.output}
 
@@ -256,14 +264,22 @@ or POLYGON), even though it has a CRS attribute.
 
 ~~~
 Coordinate Reference System:
-  User input: 4269 
+  User input: NAD83 
   wkt:
-GEOGCS["GCS_North_American_1983",
-    DATUM["North_American_Datum_1983",
-        SPHEROID["GRS_1980",6378137,298.257222101]],
-    PRIMEM["Greenwich",0],
-    UNIT["Degree",0.017453292519943295],
-    AUTHORITY["EPSG","4269"]]
+GEOGCRS["NAD83",
+    DATUM["North American Datum 1983",
+        ELLIPSOID["GRS 1980",6378137,298.257222101,
+            LENGTHUNIT["metre",1]]],
+    PRIMEM["Greenwich",0,
+        ANGLEUNIT["degree",0.0174532925199433]],
+    CS[ellipsoidal,2],
+        AXIS["latitude",north,
+            ORDER[1],
+            ANGLEUNIT["degree",0.0174532925199433]],
+        AXIS["longitude",east,
+            ORDER[2],
+            ANGLEUNIT["degree",0.0174532925199433]],
+    ID["EPSG",4269]]
 ~~~
 {:.output}
 
@@ -300,7 +316,7 @@ Geometry set for 16 features
 Geometry type: POLYGON
 Dimension:     XY
 Bounding box:  xmin: -79.48765 ymin: 37.91172 xmax: -75.04894 ymax: 39.72312
-CRS:           4269
+Geodetic CRS:  NAD83
 First 5 geometries:
 ~~~
 {:.output}
@@ -472,7 +488,7 @@ Simple feature collection with 1 feature and 9 fields
 Geometry type: MULTIPOLYGON
 Dimension:     XY
 Bounding box:  xmin: -76.84036 ymin: 38.71356 xmax: -76.39408 ymax: 39.2374
-CRS:           4269
+Geodetic CRS:  NAD83
   STATEFP COUNTYFP COUNTYNS       AFFGEOID GEOID         NAME LSAD      ALAND
 1      24      003 01710958 0500000US24003 24003 Anne Arundel   06 1074553083
      AWATER                       geometry
@@ -532,14 +548,22 @@ the WKT of both objects.
 
 ~~~
 Coordinate Reference System:
-  User input: 4269 
+  User input: NAD83 
   wkt:
-GEOGCS["GCS_North_American_1983",
-    DATUM["North_American_Datum_1983",
-        SPHEROID["GRS_1980",6378137,298.257222101]],
-    PRIMEM["Greenwich",0],
-    UNIT["Degree",0.017453292519943295],
-    AUTHORITY["EPSG","4269"]]
+GEOGCRS["NAD83",
+    DATUM["North American Datum 1983",
+        ELLIPSOID["GRS 1980",6378137,298.257222101,
+            LENGTHUNIT["metre",1]]],
+    PRIMEM["Greenwich",0,
+        ANGLEUNIT["degree",0.0174532925199433]],
+    CS[ellipsoidal,2],
+        AXIS["latitude",north,
+            ORDER[1],
+            ANGLEUNIT["degree",0.0174532925199433]],
+        AXIS["longitude",east,
+            ORDER[2],
+            ANGLEUNIT["degree",0.0174532925199433]],
+    ID["EPSG",4269]]
 ~~~
 {:.output}
 
@@ -554,23 +578,46 @@ GEOGCS["GCS_North_American_1983",
 
 ~~~
 Coordinate Reference System:
-  No user input
+  User input: NAD_1927_Albers 
   wkt:
-PROJCS["NAD_1927_Albers",
-    GEOGCS["GCS_North_American_1927",
-        DATUM["North_American_Datum_1927",
-            SPHEROID["Clarke_1866",6378206.4,294.9786982]],
-        PRIMEM["Greenwich",0.0],
-        UNIT["Degree",0.0174532925199433],
-        AUTHORITY["EPSG","4267"]],
-    PROJECTION["Albers_Conic_Equal_Area"],
-    PARAMETER["False_Easting",0.0],
-    PARAMETER["False_Northing",0.0],
-    PARAMETER["longitude_of_center",-96.0],
-    PARAMETER["Standard_Parallel_1",29.5],
-    PARAMETER["Standard_Parallel_2",45.5],
-    PARAMETER["latitude_of_center",23.0],
-    UNIT["Meter",1.0]]
+PROJCRS["NAD_1927_Albers",
+    BASEGEOGCRS["NAD27",
+        DATUM["North American Datum 1927",
+            ELLIPSOID["Clarke 1866",6378206.4,294.9786982,
+                LENGTHUNIT["metre",1]],
+            ID["EPSG",6267]],
+        PRIMEM["Greenwich",0,
+            ANGLEUNIT["Degree",0.0174532925199433]]],
+    CONVERSION["unnamed",
+        METHOD["Albers Equal Area",
+            ID["EPSG",9822]],
+        PARAMETER["Latitude of false origin",23,
+            ANGLEUNIT["Degree",0.0174532925199433],
+            ID["EPSG",8821]],
+        PARAMETER["Longitude of false origin",-96,
+            ANGLEUNIT["Degree",0.0174532925199433],
+            ID["EPSG",8822]],
+        PARAMETER["Latitude of 1st standard parallel",29.5,
+            ANGLEUNIT["Degree",0.0174532925199433],
+            ID["EPSG",8823]],
+        PARAMETER["Latitude of 2nd standard parallel",45.5,
+            ANGLEUNIT["Degree",0.0174532925199433],
+            ID["EPSG",8824]],
+        PARAMETER["Easting at false origin",0,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8826]],
+        PARAMETER["Northing at false origin",0,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8827]]],
+    CS[Cartesian,2],
+        AXIS["(E)",east,
+            ORDER[1],
+            LENGTHUNIT["metre",1,
+                ID["EPSG",9001]]],
+        AXIS["(N)",north,
+            ORDER[2],
+            LENGTHUNIT["metre",1,
+                ID["EPSG",9001]]]]
 ~~~
 {:.output}
 
@@ -764,7 +811,7 @@ You might also want to check out the [geosphere](){:.rlib} package.
 {:.notes}
 
 [r4ds]: https://r4ds.had.co.nz/data-visualisation.html
-[introggplot2]: https://cyberhelp.sesync.org/graphics-with-ggplot2-lesson/
+[introggplot2]: {{ site.gh-pages }}/graphics-with-ggplot2-lesson/
 [sf]: https://r-spatial.github.io/sf/
 [stars]: https://r-spatial.github.io/stars/
 

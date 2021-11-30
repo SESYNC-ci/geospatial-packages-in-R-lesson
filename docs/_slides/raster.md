@@ -32,17 +32,6 @@ order to speed processing.
 
 ~~~r
 library(stars)
-~~~
-{:title="{{ site.data.lesson.handouts[0] }}" .text-document}
-
-
-~~~
-Warning: package 'abind' was built under R version 4.0.4
-~~~
-{:.output}
-
-
-~~~r
 nlcd <- read_stars("data/nlcd_agg.tif", proxy = FALSE)
 nlcd <- droplevels(nlcd)
 ~~~
@@ -94,9 +83,9 @@ attribute(s), summary of first 1e+05 cells:
  Developed, Low Intensity: 8034  
  (Other)                 :15324  
 dimension(s):
-  from   to  offset delta                       refsys point values x/y
-x    1 3004 1394535   150 PROJCS["Albers_Conical_Eq... FALSE   NULL [x]
-y    1 2514 2101515  -150 PROJCS["Albers_Conical_Eq... FALSE   NULL [y]
+  from   to  offset delta                    refsys point values x/y
+x    1 3004 1394535   150 Albers_Conical_Equal_Area FALSE   NULL [x]
+y    1 2514 2101515  -150 Albers_Conical_Equal_Area FALSE   NULL [y]
 ~~~
 {:.output}
 

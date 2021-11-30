@@ -78,12 +78,12 @@ sesync_lc <- st_extract(nlcd, sesync)
 Simple feature collection with 1 feature and 1 field
 Geometry type: POINT
 Dimension:     XY
-Bounding box:  xmin: 1661671 ymin: 1943332 xmax: 1661671 ymax: 1943332
+Bounding box:  xmin: 1661671 ymin: 1943333 xmax: 1661671 ymax: 1943333
 CRS:           +proj=aea +lat_1=29.5 +lat_2=45.5 
         +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 
         +datum=WGS84 +units=m +no_defs
                  nlcd_agg.tif                geometry
-1 Developed, Medium Intensity POINT (1661671 1943332)
+1 Developed, Medium Intensity POINT (1661671 1943333)
 ~~~
 {:.output}
 
@@ -114,9 +114,9 @@ attribute(s):
  Developed, High Intensity  :0    
  (Other)                    :0    
 dimension(s):
-  from   to  offset delta                       refsys point values x/y
-x 1781 1781 1394535   150 PROJCS["Albers_Conical_Eq... FALSE   NULL [x]
-y 1055 1055 2101515  -150 PROJCS["Albers_Conical_Eq... FALSE   NULL [y]
+  from   to  offset delta                    refsys point values x/y
+x 1781 1781 1394535   150 Albers_Conical_Equal_Area FALSE   NULL [x]
+y 1055 1055 2101515  -150 Albers_Conical_Equal_Area FALSE   NULL [y]
 ~~~
 {:.output}
 
@@ -163,7 +163,7 @@ nlcd %>%
                  Unclassified                    Open Water 
                             0                           580 
         Developed, Open Space      Developed, Low Intensity 
-                         1784                          2274 
+                         1784                          2276 
   Developed, Medium Intensity     Developed, High Intensity 
                          2414                          2067 
                   Barren Land              Deciduous Forest 
@@ -217,22 +217,22 @@ geometry.
 Simple feature collection with 30 features and 1 field
 Geometry type: GEOMETRY
 Dimension:     XY
-Bounding box:  xmin: 1396621 ymin: 1837626 xmax: 1797029 ymax: 2037741
+Bounding box:  xmin: 1396621 ymin: 1837626 xmax: 1797030 ymax: 2037741
 CRS:           +proj=aea +lat_1=29.5 +lat_2=45.5 
         +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 
         +datum=WGS84 +units=m +no_defs
 First 10 features:
-   filebc513297f93c.tif                       geometry
-1      Deciduous Forest MULTIPOLYGON (((1683575 203...
-2           Hay/Pasture MULTIPOLYGON (((1707075 202...
-3      Deciduous Forest POLYGON ((1563403 2008455, ...
-4      Cultivated Crops POLYGON ((1701439 2037188, ...
-5      Deciduous Forest POLYGON ((1441528 1985664, ...
-6           Hay/Pasture POLYGON ((1610557 2016043, ...
-7      Deciduous Forest POLYGON ((1610557 2016043, ...
-8            Open Water MULTIPOLYGON (((1691021 201...
-9      Deciduous Forest POLYGON ((1496410 1995810, ...
-10     Deciduous Forest POLYGON ((1468299 1990565, ...
+   file17599b2083c4f7.tif                       geometry
+1        Deciduous Forest MULTIPOLYGON (((1683575 203...
+2             Hay/Pasture MULTIPOLYGON (((1707075 202...
+3        Deciduous Forest POLYGON ((1563404 2008455, ...
+4        Cultivated Crops POLYGON ((1701439 2037188, ...
+5        Deciduous Forest POLYGON ((1441528 1985664, ...
+6             Hay/Pasture POLYGON ((1610557 2016043, ...
+7        Deciduous Forest POLYGON ((1610557 2016043, ...
+8              Open Water MULTIPOLYGON (((1691021 201...
+9        Deciduous Forest POLYGON ((1496410 1995810, ...
+10       Deciduous Forest POLYGON ((1468299 1990565, ...
 ~~~
 {:.output}
 
