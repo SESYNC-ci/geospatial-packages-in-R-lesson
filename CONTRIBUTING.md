@@ -119,7 +119,10 @@ git push
 Go to the lesson repository's GitHub settings and select `master/docs` as the
 GitHub Pages source. Update the repository's description with the
 website address `https://cyberhelp.sesync.org/*-lesson` and verify the page
-exists.
+exists. 
+
+- **Note**: the `cyberhelp.sesync.org` domain redirect may be discontinued. If so,
+use `https://sesync-ci.github.io/*-lesson` instead.
 
 Create a `README.md` file at the top of your `*-lesson` repository, following
 this template:
@@ -138,7 +141,7 @@ tips on running the tutorial for instructors
 The National Socio-Environmental Synthesis Center (SESYNC) curates and runs
 tutorials on using cyberinfrastructure in pursuit of the Center's scientific
 mission. Visit [www.sesync.org](https://www.sesync.org) to learn more about
-SESYNC and [cyberhelp.sesync.org](https://cyberhelp.sesync.org) for more
+SESYNC and [SESYNC's cyberhelp site](https://sesync-ci.github.io) for more
 tutorials and ideas.
 ```
 
