@@ -68,3 +68,15 @@ p.captioned {
 .ToS {
     text-align: right;
 }
+
+.closeout {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 4px 8px;
+    color: white;
+    background-color: firebrick;
+    font-weight: bold;
+}
